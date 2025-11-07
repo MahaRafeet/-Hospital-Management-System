@@ -2,7 +2,6 @@
 
 # 🏥✨ Hospital Management System ✨🏥
 
-<img src="https://cdn.pixabay.com/photo/2017/06/13/12/46/hospital-2391221_1280.png" width="600" alt="Hospital Illustration"/>
 
 ![Made with Java](https://img.shields.io/badge/Made%20with-Java-orange?style=for-the-badge&logo=openjdk)
 ![OOP](https://img.shields.io/badge/Concepts-OOP-blueviolet?style=for-the-badge&logo=databricks)
@@ -36,6 +35,19 @@ Built with solid **Object-Oriented Programming (OOP)** principles, it’s clean,
 🔢 **Auto-ID Generation** – Every record gets a unique ID automatically  
 
 ---
+🌟 Demo Preview
+
+Example of patient record output in console ⬇️
+
+===== All Patients =====
+ID: PER-22929
+First Name: Ahmed
+Last Name: Alawi
+Gender: Male
+Email: ahmed@example.com
+Blood Group: A+
+Emergency Contact: 91234567
+------------
 
 
 👩‍💻 Author
