@@ -34,6 +34,6 @@ Built with solid **Object-Oriented Programming (OOP)** principles, it’s clean,
 
 👩‍💻 Author
 
-Developed with ❤️ by Maha Rafeet
+Developed by Maha Rafeet
 
 🎯 Passionate about software that makes a difference!
