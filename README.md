@@ -31,27 +31,7 @@ Built with solid **Object-Oriented Programming (OOP)** principles, it’s clean,
 
 ---
 
-## 🧱 Project Structure
 
-📁 src
-├── Entities/ # Core data classes (Patient, Doctor, Department…)
-├── Interfaces/ # Reusable behaviors like Displayable, Manageable
-├── Services/ # Logic: Add, Update, Search, Remove, etc.
-├── Utils/ # Helper classes (Validation, ID generation)
-└── Main.java # Program entry point
-
----
-
-## 🚀 How to Run
-
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/MahaRafeet/exp.git
-Open it in your IDE (IntelliJ, Eclipse, or VS Code).
-
-Navigate to Main.java and run the program.
-
-Enjoy your digital hospital experience! 💙
 👩‍💻 Author
 
 Developed with ❤️ by Maha Rafeet
