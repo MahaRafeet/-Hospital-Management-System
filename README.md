@@ -35,20 +35,6 @@ Built with solid **Object-Oriented Programming (OOP)** principles, it’s clean,
 🔢 **Auto-ID Generation** – Every record gets a unique ID automatically  
 
 ---
-🌟 Demo Preview
-
-Example of patient record output in console ⬇️
-
-===== All Patients =====
-ID: PER-22929
-First Name: Ahmed
-Last Name: Alawi
-Gender: Male
-Email: ahmed@example.com
-Blood Group: A+
-Emergency Contact: 91234567
-------------
-
 
 👩‍💻 Author
 
