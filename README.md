@@ -1,10 +1,16 @@
-# 🏥 Hospital Management System
+<div align="center">
+
+# 🏥✨ Hospital Management System ✨🏥
+
+<img src="https://cdn.pixabay.com/photo/2017/06/13/12/46/hospital-2391221_1280.png" width="600" alt="Hospital Illustration"/>
 
 ![Made with Java](https://img.shields.io/badge/Made%20with-Java-orange?style=for-the-badge&logo=openjdk)
 ![OOP](https://img.shields.io/badge/Concepts-OOP-blueviolet?style=for-the-badge&logo=databricks)
 ![Console App](https://img.shields.io/badge/Type-Console--Based-green?style=for-the-badge&logo=gnometerminal)
 ![Status](https://img.shields.io/badge/Status-Completed-success?style=for-the-badge)
 ![Version](https://img.shields.io/badge/Version-1.0-yellow?style=for-the-badge)
+
+</div>
 
 ---
 
