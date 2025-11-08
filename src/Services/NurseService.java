@@ -21,48 +21,28 @@ public class NurseService implements Searchable, Manageable {
 
         System.out.println("\n===== Add New Nurse =====");
         System.out.println("Generated Nurse ID: " + nurse.getNurseId());
-        System.out.print("Enter first name: ");
-        nurse.setFirstName(scanner.nextLine());
-
-        System.out.print("Enter last name: ");
-        nurse.setLastName(scanner.nextLine());
-
+        nurse.setFirstName(InputHandler.getStringInput("Enter first name: "));
+        nurse.setLastName(InputHandler.getStringInput("Enter last name: "));
         nurse.setGender();
-
-        System.out.print("Enter date of birth (yyyy-mm-dd): ");
-        String dobStr = scanner.nextLine();
-        nurse.setDateOfBirth(LocalDate.parse(dobStr));
-
-        System.out.print("Enter address: ");
-        nurse.setAddress(scanner.nextLine());
-
-        System.out.print("Enter email: ");
-        nurse.setEmail(scanner.nextLine());
-
-        System.out.print("Enter phone number: ");
-        nurse.setPhoneNumber(scanner.nextLine());
-
-        System.out.print("Enter Nurse Qualification: ");
-        nurse.setQualification(scanner.nextLine());
-
-        System.out.print("Enter Nurse department Id: ");
+        nurse.setDateOfBirth(InputHandler.getDateInput("Enter date of birth (yyyy-mm-dd): "));
+        nurse.setAddress(InputHandler.getStringInput("Enter address: "));
+        nurse.setEmail(InputHandler.getStringInput("Enter email: "));
+        nurse.setPhoneNumber(InputHandler.getStringInput("Enter phone number: "));
+        nurse.setQualification(InputHandler.getStringInput("Enter Nurse Qualification: "));
         nurse.setDepartmentId();
+        nurse.setShift(InputHandler.getStringInput("Enter Nurse shift: "));
 
-        System.out.print("Enter Nurse shift: ");
-        nurse.setShift(scanner.nextLine());
-
-        System.out.print("Enter assigned Patients (comma separated): ");
-        String assignedPatientInput = scanner.nextLine();
+        String assignedPatientInput = InputHandler.getStringInput(
+                "Enter assigned Patients (comma separated, or leave empty): "
+        );
         nurse.setAssignedPatients(
                 assignedPatientInput.isEmpty()
                         ? new ArrayList<>()
-                        : Arrays.asList(assignedPatientInput.split(","))
+                        : Arrays.asList(assignedPatientInput.split("\\s*,\\s*"))
         );
 
-        System.out.println("Nurse Information Collected Successfully.");
-
+        System.out.println("✅ Nurse Information Collected Successfully.");
         return nurse;
-
     }
 
     public void save(Nurse nurse) {
@@ -72,8 +52,7 @@ public class NurseService implements Searchable, Manageable {
 
     public Nurse editNurse() {
         System.out.println("\n===== Edit Nurse =====");
-        System.out.print("Enter the nurse ID to edit: ");
-        String nurseId = scanner.nextLine();
+        String nurseId = InputHandler.getStringInput("Enter the nurse ID to edit: ").trim();
 
         Nurse nurseToEdit = null;
         for (Nurse nurse : nurseList) {
@@ -87,58 +66,35 @@ public class NurseService implements Searchable, Manageable {
             System.out.println("Nurse ID not found.");
             return null;
         }
+        String choice = InputHandler.getStringInput("Enter choice: ").trim();
 
-        System.out.println("Select what to update:");
-        System.out.println("1 - First Name");
-        System.out.println("2 - Last Name");
-        System.out.println("3 - Email");
-        System.out.println("4 - Phone Number");
-        System.out.println("5 - Qualification");
-        System.out.println("6 - Shift");
-        System.out.println("7 - Assigned Patients");
-        System.out.println("8- Department ID");
-        System.out.println("0 - Cancel");
-
-        String choice = scanner.nextLine();
-        if (choice.equals("1")) {
-            System.out.print("Enter new first name: ");
-            nurseToEdit.setFirstName(scanner.nextLine());
-        } else if (choice.equals("2")) {
-            System.out.print("Enter new last name: ");
-            nurseToEdit.setLastName(scanner.nextLine());
-        } else if (choice.equals("3")) {
-            System.out.print("Enter new email: ");
-            nurseToEdit.setEmail(scanner.nextLine());
-        } else if (choice.equals("4")) {
-            System.out.print("Enter new phone number: ");
-            nurseToEdit.setPhoneNumber(scanner.nextLine());
-        } else if (choice.equals("5")) {
-            System.out.print("Enter new Qualification: ");
-            nurseToEdit.setQualification(scanner.nextLine());
-        } else if (choice.equals("6")) {
-            System.out.print("Enter new shift: ");
-            nurseToEdit.setShift(scanner.nextLine());
-        } else if (choice.equals("7")) {
-            System.out.print("Enter new Assigned Patient (Comma separated):");
-            String assignedPatient = scanner.nextLine();
-            nurseToEdit.setAssignedPatients(assignedPatient.isEmpty() ? new ArrayList<>() : Arrays.asList(assignedPatient.split(",")));
-
-        } else if (choice.equals("8")) {
-            System.out.print("Enter new Department Id: ");
-            nurseToEdit.setDepartmentId();
-
-        } else if (choice.equals("0")) {
-            System.out.println("Edit cancelled.");
-            return nurseToEdit;
-        } else {
-            System.out.println("Invalid choice.");
-            return nurseToEdit;
+        switch (choice) {
+            case "1" -> nurseToEdit.setFirstName(InputHandler.getStringInput("Enter new first name: "));
+            case "2" -> nurseToEdit.setLastName(InputHandler.getStringInput("Enter new last name: "));
+            case "3" -> nurseToEdit.setEmail(InputHandler.getStringInput("Enter new email: "));
+            case "4" -> nurseToEdit.setPhoneNumber(InputHandler.getStringInput("Enter new phone number: "));
+            case "5" -> nurseToEdit.setQualification(InputHandler.getStringInput("Enter new Qualification: "));
+            case "6" -> nurseToEdit.setShift(InputHandler.getStringInput("Enter new shift: "));
+            case "7" -> {
+                String assignedPatient = InputHandler.getStringInput("Enter new Assigned Patients (comma separated, or leave empty): ");
+                nurseToEdit.setAssignedPatients(
+                        assignedPatient.isEmpty() ? new ArrayList<>() : Arrays.asList(assignedPatient.split("\\s*,\\s*"))
+                );
+            }
+            case "8" -> nurseToEdit.setDepartmentId();
+            case "0" -> {
+                System.out.println("Edit cancelled.");
+                return nurseToEdit;
+            }
+            default -> {
+                System.out.println("Invalid choice.");
+                return nurseToEdit;
+            }
         }
 
-        System.out.println("Nurse updated successfully.");
+        System.out.println("✅ Nurse updated successfully.");
         return nurseToEdit;
     }
-
 
     public void getNursesByDepartment() {
         System.out.print("Enter department ID to search: ");
