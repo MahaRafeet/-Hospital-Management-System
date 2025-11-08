@@ -158,15 +158,12 @@ public class Appointment implements Displayable {
     }
 
     public void setStatus(String status) {
-        Scanner scanner = new Scanner(System.in);
-        // Allowed statuses
         String[] allowedStatuses = {"Completed", "Scheduled", "Canceled"};
         boolean valid = false;
         while (!valid) {
-
             if (!ValidationUtils.isValidString(status)) {
                 System.out.println("Status cannot be null or empty, please Try Again");
-                status = scanner.nextLine().trim();
+                status = InputHandler.getStringInput("Enter Status: ");
                 continue;
             }
 
@@ -179,8 +176,7 @@ public class Appointment implements Displayable {
 
             if (!valid) {
                 System.out.println("Invalid status. Allowed values are: Completed, Scheduled, or Canceled.");
-                System.out.print("Enter status again: ");
-                status = scanner.nextLine().trim();
+                status = InputHandler.getStringInput("Enter status again: ");
             }
         }
 
