@@ -117,35 +117,28 @@ public class Appointment implements Displayable {
     }
 
     public void setAppointmentDate() {
-        Scanner scanner = new Scanner(System.in);
         boolean valid = false;
 
         while (!valid) {
-            System.out.print("Enter Appointment Date (yyyy-MM-dd): ");
-            String input = scanner.nextLine().trim();
+            LocalDate date = InputHandler.getDateInput("Enter Appointment Date (yyyy-MM-dd): ");
 
-            try {
-                LocalDate date = LocalDate.parse(input);
-
-                if (ValidationUtils.isNull(date)) {
-                    System.out.println("Appointment date cannot be null.");
-                    continue;
-                }
-
-                if (ValidationUtils.isPastDate(date)) {
-                    System.out.println("Appointment date cannot be in the past.");
-                    continue;
-                }
-
-                this.appointmentDate = date;
-                valid = true;
-                System.out.println("Appointment date set successfully: " + date);
-
-            } catch (Exception e) {
-                System.out.println("Invalid date format. Please enter in format yyyy-MM-dd (e.g., 2025-12-10).");
+            if (ValidationUtils.isNull(date)) {
+                System.out.println("Appointment date cannot be null.");
+                continue;
             }
+
+            if (ValidationUtils.isPastDate(date)) {
+                System.out.println("Appointment date cannot be in the past.");
+                continue;
+            }
+
+            this.appointmentDate = date;
+            valid = true;
+            System.out.println("Appointment date set successfully: " + date);
         }
     }
+
+
 
 
     public String getAppointmentTime() {
