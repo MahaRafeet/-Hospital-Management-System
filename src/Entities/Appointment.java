@@ -1,6 +1,7 @@
 package Entities;
 
 import Interfaces.Displayable;
+import Utils.InputHandler;
 import Utils.ValidationUtils;
 
 import java.time.LocalDate;
@@ -82,35 +83,30 @@ public class Appointment implements Displayable {
     }
 
     public void setDoctorId() {
-        Scanner scanner = new Scanner(System.in);
-        String doctorId;
         boolean valid = false;
 
         while (!valid) {
-            System.out.print("Enter Doctor ID: ");
-            doctorId = scanner.nextLine().trim();
+            String doctorIdInput = InputHandler.getStringInput("Enter Doctor ID: ");
 
-            // Check if empty or null
-            if (!ValidationUtils.isValidString(doctorId)) {
+            if (!ValidationUtils.isValidString(doctorIdInput)) {
                 System.out.println("Doctor ID cannot be null or empty.");
-                continue; // ask again
+                continue;
             }
 
             boolean found = false;
-            // ✅ Make sure this refers to the correct service list
             for (Doctor doctor : doctorList) {
-                if (doctor.getDoctorId().equalsIgnoreCase(doctorId)) {
+                if (doctor.getDoctorId().equalsIgnoreCase(doctorIdInput)) {
                     found = true;
                     break;
                 }
             }
 
             if (found) {
-                this.doctorId = doctorId;
+                this.doctorId = doctorIdInput;
                 valid = true;
                 System.out.println("Doctor ID verified successfully.");
             } else {
-                System.out.println(" Doctor ID not found in the system. Please try again.");
+                System.out.println("Doctor ID not found in the system. Please try again.");
             }
         }
     }
