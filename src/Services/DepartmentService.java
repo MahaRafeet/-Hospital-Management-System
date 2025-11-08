@@ -40,15 +40,20 @@ public class DepartmentService implements Manageable, Searchable {
         newDept.setDepartmentId(newId);
         newDept.setDepartmentName(name);
         newDept.setHeadDoctorId();
-        System.out.print("Enter Bed Capacity: ");
-        newDept.setBedCapacity(Integer.parseInt(scanner.nextLine()));
+        int bedCapacity = InputHandler.getIntInput("Enter Bed Capacity: ");
+        newDept.setBedCapacity(bedCapacity);
+        int availableBeds = InputHandler.getIntInput("Enter Available Beds: ");
+        newDept.setAvailableBeds(availableBeds);
 
-        System.out.print("Enter Available Beds: ");
-        newDept.setAvailableBeds(Integer.parseInt(scanner.nextLine()));
+        String doctorsList = InputHandler.getStringInput("Enter new list of Doctors (comma separated): ");
+        newDept.setDoctors(
+                doctorsList.isEmpty() ? new ArrayList<>() : Arrays.asList(doctorsList.split("\\s*,\\s*"))
+        );
 
-        // Initialize empty doctor/nurse lists
-        newDept.setDoctors(new ArrayList<>());
-        newDept.setNurses(new ArrayList<>());
+        String nursesList = InputHandler.getStringInput("Enter new list of Nurses (comma separated): ");
+        newDept.setNurses(
+                nursesList.isEmpty() ? new ArrayList<>() : Arrays.asList(nursesList.split("\\s*,\\s*"))
+        );
         System.out.println("The new Department Information Collected successfully!");
         departmentList.add(newDept);
         return newDept;
@@ -56,8 +61,7 @@ public class DepartmentService implements Manageable, Searchable {
 
     public Department editDepartment() {
         System.out.println("----------Editing Department------------- ");
-        System.out.print("Enter the Department ID to edit : ");
-        String departmentIdToEdit = scanner.nextLine().trim();
+        String departmentIdToEdit = InputHandler.getStringInput("Enter the Department ID to edit : ").trim();
         Department departmentToEdit = null;
         for (Department department1 : departmentList) {
             if (department1.getDepartmentId().equalsIgnoreCase(departmentIdToEdit)) {
@@ -90,29 +94,26 @@ public class DepartmentService implements Manageable, Searchable {
             }
             case 3 -> {
                 System.out.println("Current Doctors: " + departmentToEdit.getDoctors());
-                System.out.print("Enter new list of Doctors (comma separated): ");
-                String doctorsList = scanner.nextLine().trim();
+                String doctorsList = InputHandler.getStringInput("Enter new list of Doctors (comma separated):").trim();
                 departmentToEdit.setDoctors(
                         doctorsList.isEmpty() ? new ArrayList<>() : Arrays.asList(doctorsList.split("\\s*,\\s*"))
                 );
             }
             case 4 -> {
                 System.out.println("Current Nurses: " + departmentToEdit.getNurses());
-                System.out.print("Enter new list of Nurses (comma separated): ");
-                String nursesList = scanner.nextLine().trim();
+                String nursesList = InputHandler.getStringInput("Enter new list of Nurses (comma separated):").trim();
                 departmentToEdit.setNurses(
                         nursesList.isEmpty() ? new ArrayList<>() : Arrays.asList(nursesList.split("\\s*,\\s*"))
                 );
             }
             case 5 -> {
                 System.out.println("Current Bed Capacity: " + departmentToEdit.getBedCapacity());
-                System.out.print("Enter new Bed Capacity: ");
-                departmentToEdit.setBedCapacity(Integer.parseInt(scanner.nextLine()));
+                departmentToEdit.setBedCapacity(InputHandler.getIntInput("Enter new Bed Capacity:"));
             }
             case 6 -> {
                 System.out.println("Current Available Beds: " + departmentToEdit.getAvailableBeds());
-                System.out.print("Enter new Available Beds: ");
-                departmentToEdit.setAvailableBeds(Integer.parseInt(scanner.nextLine()));
+                int newAvailableBeds = InputHandler.getIntInput("Enter new Available Beds: ");
+                departmentToEdit.setAvailableBeds(newAvailableBeds);
             }
             case 7 -> System.out.println("Exiting edit...");
             default -> System.out.println("Invalid choice!");
@@ -127,8 +128,7 @@ public class DepartmentService implements Manageable, Searchable {
         System.out.println("\n*** Assign Doctor to Department ***");
 
         // Get Doctor ID
-        System.out.print("Enter the Doctor ID: ");
-        String docId = scanner.nextLine().trim();
+        String docId = InputHandler.getStringInput("Enter the Doctor ID: ");
 
         // Find the doctor
         Doctor doctorToAssign = null;
@@ -145,8 +145,7 @@ public class DepartmentService implements Manageable, Searchable {
         }
 
         // Get Department ID
-        System.out.print("Enter the Department ID: ");
-        String depID = scanner.nextLine().trim();
+        String depID = InputHandler.getStringInput("Enter the Department ID: ");
 
         // Find the department
         Department departmentToAssign = null;
@@ -175,8 +174,7 @@ public class DepartmentService implements Manageable, Searchable {
         System.out.println("\n*** Assign Nurse to Department ***");
 
         // Get Nurse ID
-        System.out.print("Enter the Nurse ID: ");
-        String nurseId = scanner.nextLine().trim();
+        String nurseId = InputHandler.getStringInput("Enter the Nurse ID: ");
 
         // Find the nurse
         Nurse nurseToAssign = null;
@@ -193,8 +191,7 @@ public class DepartmentService implements Manageable, Searchable {
         }
 
         // Get Department ID
-        System.out.print("Enter the Department ID: ");
-        String depId = scanner.nextLine().trim();
+        String depId = InputHandler.getStringInput("Enter the Department ID: ");
 
         // Find the department
         Department departmentToAssign = null;
@@ -256,8 +253,7 @@ public class DepartmentService implements Manageable, Searchable {
 
     @Override
     public void remove() {
-        System.out.println("please enter the department ID to remove ");
-        String depIdToRemove = scanner.nextLine();
+        String depIdToRemove = InputHandler.getStringInput("Enter Department ID to remove: ").trim();
         Department departmentToRemove = null;
         for (Department department : departmentList) {
             if (department.getDepartmentId().equals(depIdToRemove)) {
