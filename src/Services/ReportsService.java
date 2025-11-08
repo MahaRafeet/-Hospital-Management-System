@@ -1,6 +1,7 @@
 package Services;
 
 import Entities.*;
+import Utils.InputHandler;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -13,16 +14,7 @@ public class ReportsService {
     // ===================== 1. Daily Appointments Report =====================
     public static void generateDailyAppointmentsReport() {
         System.out.println("\n===== Daily Appointments Report =====");
-        System.out.print("Enter date (YYYY-MM-DD): ");
-        String dateInput = scanner.nextLine().trim();
-
-        LocalDate date;
-        try {
-            date = LocalDate.parse(dateInput);
-        } catch (Exception e) {
-            System.out.println("Invalid date format. Please try again.");
-            return;
-        }
+        LocalDate date = InputHandler.getDateInput("Enter date (YYYY-MM-DD): ");
 
         List<Appointment> dailyAppointments = AppointmentService.appointmentList.stream()
                 .filter(a -> a.getAppointmentDate().equals(date))
