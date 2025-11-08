@@ -139,8 +139,6 @@ public class Appointment implements Displayable {
     }
 
 
-
-
     public String getAppointmentTime() {
         return appointmentTime;
     }

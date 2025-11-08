@@ -21,6 +21,7 @@ public class Department implements Displayable {
     private List<String> nurses;
     private Integer bedCapacity;
     private Integer availableBeds;
+
     // Default constructor
     public Department(String s, String cardiology, int i) {
         this.departmentId = "";
@@ -48,18 +49,19 @@ public class Department implements Displayable {
     }
 
     public void setDepartmentId(String departmentId) {
-        if(!ValidationUtils.isValidString(departmentId)){
+        if (!ValidationUtils.isValidString(departmentId)) {
             System.out.println("Department ID cannot be null or empty.");
             return;
         }
         this.departmentId = departmentId;
     }
+
     public String getDepartmentName() {
         return departmentName;
     }
 
     public void setDepartmentName(String departmentName) {
-        if(!ValidationUtils.isValidString(departmentName)){
+        if (!ValidationUtils.isValidString(departmentName)) {
             System.out.println("Department Name cannot be null or empty.");
             return;
         }
@@ -113,7 +115,7 @@ public class Department implements Displayable {
     }
 
     public void setDoctors(List<String> doctors) {
-        if(ValidationUtils.isNull(doctors)){
+        if (ValidationUtils.isNull(doctors)) {
             System.out.println("Doctors list cannot be null or empty");
             return;
         }
@@ -125,7 +127,7 @@ public class Department implements Displayable {
     }
 
     public void setNurses(List<String> nurses) {
-        if(ValidationUtils.isNull(nurses)){
+        if (ValidationUtils.isNull(nurses)) {
             System.out.println("Nurses list cannot be null or empty");
             return;
         }
@@ -160,7 +162,7 @@ public class Department implements Displayable {
             }
         }
         this.bedCapacity = bedCapacity;
-        }
+    }
 
 
     public int getAvailableBeds() {
@@ -177,15 +179,16 @@ public class Department implements Displayable {
         this.availableBeds = availableBeds;
         System.out.println("✅ Available beds set to: " + availableBeds);
     }
+
     @Override
-    public void displayInfo(){
+    public void displayInfo() {
         System.out.println("Department ID     : " + departmentId);
         System.out.println("Department Name   : " + departmentName);
         System.out.println("Head Doctor ID    : " + headDoctorId);
 
         System.out.println("Doctors:");
         if (doctors != null && !doctors.isEmpty()) {
-            System.out.println( doctors);
+            System.out.println(doctors);
         } else {
             System.out.println("  None");
         }
@@ -199,8 +202,9 @@ public class Department implements Displayable {
         System.out.println("Bed Capacity      : " + bedCapacity);
         System.out.println("Available Beds    : " + availableBeds);
     }
+
     @Override
-    public void displaySummery(){
+    public void displaySummery() {
         System.out.println("Department ID   : " + departmentId);
         System.out.println("Department Name : " + departmentName);
         System.out.println("Head Doctor ID  : " + headDoctorId);

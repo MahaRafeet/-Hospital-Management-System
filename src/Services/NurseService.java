@@ -143,7 +143,7 @@ public class NurseService implements Searchable, Manageable {
 
     public void showAssignedPatients() {
         System.out.println("\n===== Show Assigned Patients =====");
-        String nurseId =InputHandler.getStringInput("Enter Nurse ID:");
+        String nurseId = InputHandler.getStringInput("Enter Nurse ID:");
 
         Nurse selectedNurse = null;
         for (Nurse nurse : nurseList) {

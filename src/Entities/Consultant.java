@@ -33,10 +33,12 @@ public class Consultant extends Doctor implements Displayable {
 
         return consultationTypes;
     }
+
     public void setConsultationTypes(List<String> consultationTypes) {
         if (ValidationUtils.isNull(consultationTypes) || consultationTypes.isEmpty()) {
             System.out.println("Consultation types cannot be null or empty");
-            return; }
+            return;
+        }
         this.consultationTypes = consultationTypes;
     }
 

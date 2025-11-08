@@ -150,7 +150,6 @@ public class PatientService implements Searchable, Manageable {
     }
 
 
-
     // Overloaded addPatient methods with fewer parameters
     public static void addPatient(String firstName, String lastName, String phoneNumber) {
         Patient patient = new Patient();
@@ -178,20 +177,20 @@ public class PatientService implements Searchable, Manageable {
         System.out.println("\nEditing patient ID: " + updatedPatient.getPatientId());
 
         System.out.println("""
-            ─────────────────────────────
-            Select field to edit:
-            1 - First Name
-            2 - Last Name
-            3 - Address
-            4 - Date of Birth
-            5 - Gender
-            6 - Email
-            7 - Phone
-            8 - Blood Group
-            9 - Allergies
-            0 - Exit
-            ─────────────────────────────
-            """);
+                ─────────────────────────────
+                Select field to edit:
+                1 - First Name
+                2 - Last Name
+                3 - Address
+                4 - Date of Birth
+                5 - Gender
+                6 - Email
+                7 - Phone
+                8 - Blood Group
+                9 - Allergies
+                0 - Exit
+                ─────────────────────────────
+                """);
 
         String choice = InputHandler.getStringInput("Enter your choice: ");
 
@@ -199,7 +198,8 @@ public class PatientService implements Searchable, Manageable {
             case "1" -> updatedPatient.setFirstName(InputHandler.getStringInput("Enter new first name: "));
             case "2" -> updatedPatient.setLastName(InputHandler.getStringInput("Enter new last name: "));
             case "3" -> updatedPatient.setAddress(InputHandler.getStringInput("Enter new address: "));
-            case "4" -> updatedPatient.setDateOfBirth(InputHandler.getDateInput("Enter new date of birth (yyyy-MM-dd): "));
+            case "4" ->
+                    updatedPatient.setDateOfBirth(InputHandler.getDateInput("Enter new date of birth (yyyy-MM-dd): "));
             case "5" -> updatedPatient.setGender();
             case "6" -> updatedPatient.setEmail(InputHandler.getStringInput("Enter new email: "));
             case "7" -> updatedPatient.setPhoneNumber(InputHandler.getStringInput("Enter new phone number: "));
@@ -305,13 +305,13 @@ public class PatientService implements Searchable, Manageable {
 
         while (true) {
             System.out.println("""
-                -------------------------
-                 Patient Search Menu
-                1 - Search by ID
-                2 - Search by Keyword
-                0 - Exit Search
-                -------------------------
-                """);
+                    -------------------------
+                     Patient Search Menu
+                    1 - Search by ID
+                    2 - Search by Keyword
+                    0 - Exit Search
+                    -------------------------
+                    """);
 
             String searchChoice = InputHandler.getStringInput("Enter your choice: ").trim();
 

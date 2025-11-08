@@ -92,6 +92,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
         String patientId = InputHandler.getStringInput("Please enter Patient ID to view appointments: ");
         return getAppointmentsByPatientId(patientId);
     }
+
     // ✅ Version 2: used internally (like inside Patient.displayInfo)
     public static List<Appointment> getAppointmentsByPatientId(String patientId) {
         List<Appointment> appointments = new ArrayList<>();

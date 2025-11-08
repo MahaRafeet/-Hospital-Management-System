@@ -62,7 +62,7 @@ public class MedicalRecordService implements Manageable, Searchable {
         System.out.println("7- Notes");
         System.out.println("8- Exit");
 
-            int choice = InputHandler.getIntInput("Enter your choice:");
+        int choice = InputHandler.getIntInput("Enter your choice:");
 
         switch (choice) {
             case 1 -> {
@@ -157,7 +157,7 @@ public class MedicalRecordService implements Manageable, Searchable {
 
     // ========================= PATIENT HISTORY =========================
     public void displayPatientHistory() {
-        String patientId =InputHandler.getStringInput("Please enter Patient ID to view history: ").trim();
+        String patientId = InputHandler.getStringInput("Please enter Patient ID to view history: ").trim();
         System.out.println("\n===== Patient History for ID: " + patientId + " =====");
         boolean found = false;
         for (MedicalRecord record : medicalRecordList) {
