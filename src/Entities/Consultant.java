@@ -1,8 +1,11 @@
 package Entities;
 
 import Interfaces.Displayable;
+import Utils.InputHandler;
 import Utils.ValidationUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -30,12 +33,10 @@ public class Consultant extends Doctor implements Displayable {
 
         return consultationTypes;
     }
-
     public void setConsultationTypes(List<String> consultationTypes) {
         if (ValidationUtils.isNull(consultationTypes) || consultationTypes.isEmpty()) {
             System.out.println("Consultation types cannot be null or empty");
-            return;
-        }
+            return; }
         this.consultationTypes = consultationTypes;
     }
 
