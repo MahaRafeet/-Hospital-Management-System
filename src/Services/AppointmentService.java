@@ -151,8 +151,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
     }
 
     public static Appointment rescheduleAppointment() {
-        System.out.print("Enter appointment ID to reschedule: ");
-        String appointmentId = scanner.nextLine().trim();
+        String appointmentId = InputHandler.getStringInput("Enter appointment ID to reschedule:").trim();
 
         Appointment foundAppointment = null;
 
@@ -243,8 +242,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
 
     @Override
     public void cancelAppointment() {
-        System.out.print("Enter appointment ID to cancel: ");
-        String appointmentId = scanner.nextLine();
+        String appointmentId = InputHandler.getStringInput("Enter appointment ID to cancel: ").trim();
         for (Appointment appointment : appointmentList) {
             if (appointment.getAppointmentId().equals(appointmentId)) {
                 appointment.setStatus("Canceled");
@@ -280,8 +278,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
     }
 
     public static void completeAppointment() {
-        System.out.print("Enter Appointment ID to mark as completed: ");
-        String appointmentId = scanner.nextLine().trim();
+        String appointmentId = InputHandler.getStringInput("Enter Appointment ID to mark as completed: ").trim();
 
         // Check for null or empty input
         if (!ValidationUtils.isValidString(appointmentId)) {
