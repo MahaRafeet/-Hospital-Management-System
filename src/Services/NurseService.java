@@ -97,8 +97,7 @@ public class NurseService implements Searchable, Manageable {
     }
 
     public void getNursesByDepartment() {
-        System.out.print("Enter department ID to search: ");
-        String departmentId = scanner.nextLine();
+        String departmentId = InputHandler.getStringInput("Enter department ID to search:").trim();
         boolean found = false;
         for (Nurse nurse : nurseList) {
             if (nurse.getDepartmentId().equalsIgnoreCase(departmentId)) {
@@ -112,8 +111,7 @@ public class NurseService implements Searchable, Manageable {
     }
 
     public void getNursesByShift() {
-        System.out.print("Enter shift to search (e.g., Morning, Evening, Night): ");
-        String shift = scanner.nextLine();
+        String shift = InputHandler.getStringInput("Enter shift to search (e.g., Morning, Evening, Night):").trim();
         boolean found = false;
         for (Nurse nurse : nurseList) {
             if (nurse.getShift().equalsIgnoreCase(shift)) {
@@ -127,8 +125,7 @@ public class NurseService implements Searchable, Manageable {
     }
 
     public void searchNurseByName() {
-        System.out.print("Enter nurse first and last name: ");
-        String name = scanner.nextLine();
+        String name = InputHandler.getStringInput("Enter nurse first and last name: ").trim();
         boolean found = false;
         for (Nurse nurse : nurseList) {
             String fullName = nurse.getFirstName() + " " + nurse.getLastName();
@@ -146,8 +143,7 @@ public class NurseService implements Searchable, Manageable {
 
     public void showAssignedPatients() {
         System.out.println("\n===== Show Assigned Patients =====");
-        System.out.print("Enter Nurse ID: ");
-        String nurseId = scanner.nextLine().trim();
+        String nurseId =InputHandler.getStringInput("Enter Nurse ID:");
 
         Nurse selectedNurse = null;
         for (Nurse nurse : nurseList) {
@@ -177,8 +173,7 @@ public class NurseService implements Searchable, Manageable {
 
     public void assignNurseToPatient() {
         System.out.println("\n===== Assign Nurse to Patient =====");
-        System.out.print("Enter Nurse ID: ");
-        String nurseId = scanner.nextLine().trim();
+        String nurseId = InputHandler.getStringInput("Enter Nurse ID: ").trim();
 
         Nurse selectedNurse = null;
         for (Nurse nurse : nurseList) {
@@ -193,8 +188,7 @@ public class NurseService implements Searchable, Manageable {
             return;
         }
 
-        System.out.print("Enter Patient ID to assign: ");
-        String patientId = scanner.nextLine().trim();
+        String patientId = InputHandler.getStringInput("Enter Patient ID to assign: ").trim();
 
         List<String> assignedPatients = selectedNurse.getAssignedPatients();
         if (assignedPatients.contains(patientId)) {
@@ -230,8 +224,7 @@ public class NurseService implements Searchable, Manageable {
 
     @Override
     public void remove() {
-        System.out.print("Enter the nurse ID to remove: ");
-        String nurseIdToRemove = scanner.nextLine();
+        String nurseIdToRemove = InputHandler.getStringInput("Enter the nurse ID to remove: ").trim();
         Nurse nurseToRemove = null;
         for (Nurse nurse : nurseList) {
             if (nurse.getNurseId().equals(nurseIdToRemove)) {
