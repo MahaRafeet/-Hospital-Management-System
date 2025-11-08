@@ -47,17 +47,14 @@ public class Appointment implements Displayable {
     }
 
     public void setPatientId() {
-        Scanner scanner = new Scanner(System.in);
-
         String inputId;
         boolean valid = false;
 
         while (!valid) {
-            System.out.print("Enter Patient ID: ");
-            inputId = scanner.nextLine().trim();
+            inputId = InputHandler.getStringInput("Enter Patient ID: ");
 
             if (!ValidationUtils.isValidString(inputId)) {
-                System.out.println(" Patient ID cannot be null or empty.");
+                System.out.println("Patient ID cannot be null or empty.");
                 continue;
             }
 
