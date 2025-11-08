@@ -75,20 +75,10 @@ public class PatientService implements Searchable, Manageable {
         addPatient((Patient) outPatient);
 
         // Collect OutPatient-specific fields
-        System.out.print("Enter number of visits: ");
-        outPatient.setVisitCount(Integer.parseInt(scanner.nextLine()));
+        int visitCount = InputHandler.getIntInput("Enter number of visits: ");
+        outPatient.setVisitCount(visitCount);
 
-        LocalDate lastVisit = null;
-        do {
-            System.out.print("Enter last visit date (yyyy-MM-dd): ");
-            String dateInput = scanner.nextLine();
-            if (ValidationUtils.isValidDate(dateInput)) {
-                lastVisit = LocalDate.parse(dateInput);
-                break;
-            } else {
-                System.out.println("Invalid date format. Try again.");
-            }
-        } while (true);
+        LocalDate lastVisit = InputHandler.getDateInput("Enter last visit date (yyyy-MM-dd): ");
         outPatient.setLastVisitDate(lastVisit);
 
         // Select preferred doctor
@@ -105,73 +95,60 @@ public class PatientService implements Searchable, Manageable {
 
             int choice;
             do {
-                System.out.print("Enter your choice (1-" + DoctorService.doctorList.size() + "): ");
-                try {
-                    choice = Integer.parseInt(scanner.nextLine());
-                    if (choice >= 1 && choice <= DoctorService.doctorList.size()) {
-                        break;
-                    }
-                    System.out.println("Invalid choice! Try again.");
-                } catch (NumberFormatException e) {
-                    System.out.println("Please enter a valid number.");
-                    choice = -1;
+                choice = InputHandler.getIntInput("Enter your choice (1-" + DoctorService.doctorList.size() + "): ");
+                if (choice >= 1 && choice <= DoctorService.doctorList.size()) {
+                    break;
                 }
+                System.out.println("Invalid choice! Try again.");
             } while (true);
 
             Doctor selectedDoctor = DoctorService.doctorList.get(choice - 1);
-            if (selectedDoctor == null || selectedDoctor.getDoctorId() == null) {
-                System.out.println("Invalid doctor selection.");
-                outPatient.setPreferredDoctorId(null);
-            } else {
-                outPatient.setPreferredDoctorId(selectedDoctor.getDoctorId());
-            }
+            outPatient.setPreferredDoctorId(
+                    (selectedDoctor != null && selectedDoctor.getDoctorId() != null)
+                            ? selectedDoctor.getDoctorId()
+                            : null
+            );
         }
-
-
         patientList.add(outPatient);
         System.out.println("OutPatient added successfully!");
 
     }
 
     public static void addEmergencyPatient(EmergencyPatient emergencyPatient) {
-        addPatient((InPatient) emergencyPatient); // Collect base info
+        // Collect base info
+        addPatient((InPatient) emergencyPatient);
 
-        System.out.print("Enter emergency type (e.g., Accident, Heart Attack, etc.): ");
-        emergencyPatient.setEmergencyType(scanner.nextLine());
+        // Emergency type
+        String emergencyType = InputHandler.getStringInput("Enter emergency type (e.g., Accident, Heart Attack, etc.): ");
+        emergencyPatient.setEmergencyType(emergencyType);
 
-        // Arrival Mode
+        // Arrival mode
         String arrivalMode;
         do {
-            System.out.print("Enter arrival mode (Ambulance / Walk-in): ");
-            arrivalMode = scanner.nextLine().trim();
+            arrivalMode = InputHandler.getStringInput("Enter arrival mode (Ambulance / Walk-in): ").trim();
             if (arrivalMode.equalsIgnoreCase("Ambulance") || arrivalMode.equalsIgnoreCase("Walk-in")) {
                 break;
-            } else {
-                System.out.println("Invalid mode. Please enter 'Ambulance' or 'Walk-in'.");
             }
+            System.out.println("Invalid mode. Please enter 'Ambulance' or 'Walk-in'.");
         } while (true);
         emergencyPatient.setArrivalMode(arrivalMode);
 
         // Triage level (1–5)
         int triageLevel;
         do {
-            System.out.print("Enter triage level (1-5): ");
-            try {
-                triageLevel = Integer.parseInt(scanner.nextLine());
-                if (triageLevel >= 1 && triageLevel <= 5) break;
-                System.out.println("Triage level must be between 1 and 5.");
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number.");
-            }
+            triageLevel = InputHandler.getIntInput("Enter triage level (1-5): ");
+            if (triageLevel >= 1 && triageLevel <= 5) break;
+            System.out.println("Triage level must be between 1 and 5.");
         } while (true);
         emergencyPatient.setTriageLevel(triageLevel);
 
         // Admitted via ER
-        System.out.print("Was the patient admitted from ER? (yes/no): ");
-        String admitted = scanner.nextLine().trim().toLowerCase();
-        emergencyPatient.setAdmittedViaER(admitted.equals("yes"));
+        boolean admittedViaER = InputHandler.getConfirmation("Was the patient admitted from ER? (yes/no): ");
+        emergencyPatient.setAdmittedViaER(admittedViaER);
+
         System.out.println("Emergency patient added successfully!");
     }
+
 
 
     // Overloaded addPatient methods with fewer parameters
@@ -186,90 +163,62 @@ public class PatientService implements Searchable, Manageable {
 
     // Edit patient
     public Patient editPatient() {
-        System.out.println("Please enter the patient ID to edit: ");
-        String patientId = scanner.nextLine();
+        String patientId = InputHandler.getStringInput("Enter the patient ID to edit: ");
 
         Optional<Patient> patientOpt = patientList.stream()
-                .filter(p -> p.getPatientId().equals(patientId))
+                .filter(p -> p.getPatientId().equalsIgnoreCase(patientId))
                 .findFirst();
 
         if (patientOpt.isEmpty()) {
-            System.out.println("The patient ID does not exist.");
+            System.out.println("❌ The patient ID does not exist.");
             return null;
         }
 
-        Patient updatedPatient = patientOpt.get();  // ✅ Use the existing patient
-        System.out.println("Editing patient ID: " + updatedPatient.getPatientId());
+        Patient updatedPatient = patientOpt.get();
+        System.out.println("\nEditing patient ID: " + updatedPatient.getPatientId());
 
         System.out.println("""
-                1 - First Name
-                2 - Last Name
-                3 - Address
-                4 - Date of Birth
-                5 - Gender
-                6 - Email
-                7 - Phone
-                8 - Blood Group
-                9 - Allergies
-                0 - Exit
-                """);
+            ─────────────────────────────
+            Select field to edit:
+            1 - First Name
+            2 - Last Name
+            3 - Address
+            4 - Date of Birth
+            5 - Gender
+            6 - Email
+            7 - Phone
+            8 - Blood Group
+            9 - Allergies
+            0 - Exit
+            ─────────────────────────────
+            """);
 
-        System.out.print("Enter your choice: ");
-        String choice = scanner.nextLine();
+        String choice = InputHandler.getStringInput("Enter your choice: ");
 
         switch (choice) {
-            case "1" -> {
-                System.out.print("Enter new first name: ");
-                updatedPatient.setFirstName(scanner.nextLine());
-            }
-            case "2" -> {
-                System.out.print("Enter new last name: ");
-                updatedPatient.setLastName(scanner.nextLine());
-            }
-            case "3" -> {
-                System.out.print("Enter new address: ");
-                updatedPatient.setAddress(scanner.nextLine());
-            }
-            case "4" -> {
-                String input;
-                do {
-                    System.out.print("Enter new date of birth (yyyy-MM-dd): ");
-                    input = scanner.nextLine();
-                    if (ValidationUtils.isValidDate(input)) {
-                        updatedPatient.setDateOfBirth(LocalDate.parse(input));
-                        break;
-                    } else {
-                        System.out.println("Invalid date format.");
-                    }
-                } while (true);
-            }
-            case "5" -> {
-                System.out.print("Enter new gender: ");
-                updatedPatient.setGender();
-            }
-            case "6" -> {
-                System.out.print("Enter new email: ");
-                updatedPatient.setEmail(scanner.nextLine());
-            }
-            case "7" -> {
-                System.out.print("Enter new phone: ");
-                updatedPatient.setPhoneNumber(scanner.nextLine());
-            }
-            case "8" -> {
-                System.out.print("Enter new blood group: ");
-                updatedPatient.setBloodGroup();
-            }
+            case "1" -> updatedPatient.setFirstName(InputHandler.getStringInput("Enter new first name: "));
+            case "2" -> updatedPatient.setLastName(InputHandler.getStringInput("Enter new last name: "));
+            case "3" -> updatedPatient.setAddress(InputHandler.getStringInput("Enter new address: "));
+            case "4" -> updatedPatient.setDateOfBirth(InputHandler.getDateInput("Enter new date of birth (yyyy-MM-dd): "));
+            case "5" -> updatedPatient.setGender();
+            case "6" -> updatedPatient.setEmail(InputHandler.getStringInput("Enter new email: "));
+            case "7" -> updatedPatient.setPhoneNumber(InputHandler.getStringInput("Enter new phone number: "));
+            case "8" -> updatedPatient.setBloodGroup();
             case "9" -> {
-                System.out.print("Enter new allergies (comma separated): ");
-                String input = scanner.nextLine();
-                updatedPatient.setAllergies(input.isEmpty() ? new ArrayList<>() :
-                        Arrays.stream(input.split(",")).map(String::trim).collect(Collectors.toList()));
+                String input = InputHandler.getStringInput("Enter new allergies (comma separated, or leave blank): ");
+                updatedPatient.setAllergies(
+                        input.isEmpty() ? new ArrayList<>() :
+                                Arrays.stream(input.split(",")).map(String::trim).collect(Collectors.toList())
+                );
             }
             case "0" -> {
                 System.out.println("Exiting editing menu...");
                 return updatedPatient;
             }
-            default -> System.out.println("Invalid choice.");
+            default -> {
+                System.out.println("Invalid choice. No changes made.");
+                return updatedPatient;
+            }
         }
 
         System.out.println(" Patient updated successfully!");
@@ -356,26 +305,24 @@ public class PatientService implements Searchable, Manageable {
 
         while (true) {
             System.out.println("""
-                    -------------------------
-                     Patient Search Menu
-                    1 - Search by ID
-                    2 - Search by Keyword
-                    0 - Exit Search
-                    -------------------------
-                    """);
+                -------------------------
+                 Patient Search Menu
+                1 - Search by ID
+                2 - Search by Keyword
+                0 - Exit Search
+                -------------------------
+                """);
 
-            System.out.print("Enter your choice: ");
-            String searchChoice = scanner.nextLine().trim();
+            String searchChoice = InputHandler.getStringInput("Enter your choice: ").trim();
 
             switch (searchChoice) {
                 case "1" -> {
-                    System.out.print("Enter Patient ID to search: ");
-                    String patientId = scanner.nextLine();
+                    String patientId = InputHandler.getStringInput("Enter Patient ID to search: ");
                     service.searchById(patientId);
                 }
+
                 case "2" -> {
-                    System.out.print("Enter keyword to search: ");
-                    String keyword = scanner.nextLine().toLowerCase();
+                    String keyword = InputHandler.getStringInput("Enter keyword to search: ").trim().toLowerCase();
                     boolean found = false;
 
                     for (Patient patient : patientList) {
@@ -390,24 +337,28 @@ public class PatientService implements Searchable, Manageable {
                                         (patient.getInsuranceId() != null && patient.getInsuranceId().toLowerCase().contains(keyword)) ||
                                         (patient.getBloodGroup() != null && patient.getBloodGroup().toLowerCase().contains(keyword)) ||
                                         (patient.getEmergencyContact() != null && patient.getEmergencyContact().contains(keyword)) ||
-                                        (patient.getAllergies() != null && patient.getAllergies().stream().anyMatch(a -> a.toLowerCase().contains(keyword)));
+                                        (patient.getAllergies() != null && patient.getAllergies()
+                                                .stream()
+                                                .anyMatch(a -> a.toLowerCase().contains(keyword)));
 
                         if (match) {
                             patient.displayInfo();
-                            System.out.println("---------------");
+                            System.out.println("-------------------------------");
                             found = true;
                         }
                     }
 
                     if (!found) {
-                        System.out.println(" No patients found matching: " + keyword);
+                        System.out.println("No patients found matching: " + keyword);
                     }
                 }
+
                 case "0" -> {
                     System.out.println("Exiting search menu...");
-                    return; // exits the loop
+                    return;
                 }
-                default -> System.out.println(" Invalid choice! Please enter 1, 2, or 0.");
+
+                default -> System.out.println("⚠ Invalid choice! Please enter 1, 2, or 0.");
             }
         }
     }
