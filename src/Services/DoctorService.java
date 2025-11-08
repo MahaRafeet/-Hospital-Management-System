@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class DoctorService implements Manageable, Searchable {
     public static List<Doctor> doctorList = new ArrayList<>();
     public static Scanner scanner = new Scanner(System.in);
@@ -82,9 +83,7 @@ public class DoctorService implements Manageable, Searchable {
 
         System.out.print("Enter consultation types (comma separated): ");
         String typesInput = scanner.nextLine();
-        consultant.setConsultationTypes(
-                typesInput.isEmpty() ? new ArrayList<>() : Arrays.asList(typesInput.split(","))
-        );
+        consultant.setConsultationTypes( typesInput.isEmpty() ? new ArrayList<>() : Arrays.asList(typesInput.split(",")) );
 
         System.out.print("Is online consultation available? (yes/no): ");
         String onlineInput = scanner.nextLine();

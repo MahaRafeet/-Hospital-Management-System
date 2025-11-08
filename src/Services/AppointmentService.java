@@ -7,6 +7,7 @@ import Entities.Appointment;
 import Interfaces.Appointable;
 import Interfaces.Manageable;
 import Interfaces.Searchable;
+import Utils.InputHandler;
 import Utils.ValidationUtils;
 
 import java.util.ArrayList;
@@ -23,22 +24,21 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
         appointment.setPatientId();
         appointment.setDoctorId();
         appointment.setAppointmentDate();
-        System.out.print("Enter Appointment Time (HH:mm): ");
-        appointment.setAppointmentTime(scanner.nextLine());
-        System.out.print("Enter Reason for Visit: ");
-        appointment.setReason(scanner.nextLine());
-        System.out.print("Enter Status (Scheduled, Completed, Canceled): ");
-        appointment.setStatus(scanner.nextLine());
-        System.out.println("Enter any Notes: ");
-        appointment.setNotes(scanner.nextLine());
+        String time = InputHandler.getStringInput("Enter Appointment Time (HH:mm): ");
+        appointment.setAppointmentTime(time);
+        String reason = InputHandler.getStringInput("Enter Reason for Visit: ");
+        appointment.setReason(reason);
+        String status = InputHandler.getStringInput("Enter Status (Scheduled, Completed, Canceled): ");
+        appointment.setStatus(status);
+        String notes = InputHandler.getStringInput("Enter any Notes: ");
+        appointment.setNotes(notes);
         System.out.println("Appointment added successfully with ID: " + appointment.getAppointmentId());
         return appointment;
 
     }
 
     public static Appointment editAppointment(Appointment appointment) {
-        System.out.println("Enter the appointment ID to edit:");
-        String appointmentIdToEdit = scanner.nextLine();
+        String appointmentIdToEdit = InputHandler.getStringInput("Enter the appointment ID to edit:");
         if (!checkIfIdExist(appointmentIdToEdit)) {
             System.out.println("The appointment id is not exist ");
         } else {
@@ -50,39 +50,38 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
             System.out.println("4-Status");
             System.out.println("5-Notes");
             System.out.println("6-Exit");
-            System.out.print("Enter your choice: ");
-            Integer choice = scanner.nextInt();
-            if (choice == 1) {
-                System.out.println("The old appointment date is : " + appointment.getAppointmentDate());
-                System.out.print("Enter new appointment date (yyyy-mm-dd): ");
-                scanner.nextLine(); // Consume newline
-                appointment.setAppointmentDate();
-                System.out.println("The appointment date updated successfully");
-            } else if (choice == 2) {
-                System.out.println("The old appointment time was : " + appointment.getAppointmentTime());
-                System.out.print("Enter new appointment time (HH:mm): ");
-                appointment.setAppointmentTime(scanner.nextLine());
-                System.out.println("The appointment time updated successfully");
-            } else if (choice == 3) {
-                System.out.println("The old Reason of this appointment was : " + appointment.getReason());
-                System.out.print("Enter the new reason ");
-                appointment.setReason(scanner.nextLine());
-            } else if (choice == 4) {
-                System.out.println("The old status of this appointment was : " + appointment.getStatus());
-                System.out.print("Enter the new status :");
-                appointment.setStatus(scanner.nextLine());
-                System.out.println("The status updated Successfully");
-            } else if (choice == 5) {
-                System.out.println("The old notes was " + appointment.getNotes());
-                System.out.println("Enter the new notes : ");
-                appointment.setNotes(scanner.nextLine());
-                System.out.println("The Notes are updated Successfully");
-            } else if (choice == 6) {
-                System.out.println("Exiting edit menu.");
-                return appointment;
-            } else {
-                System.out.println("Invalid choice. Please try again.");
-
+            Integer choice = InputHandler.getIntInput("Enter your choice: ");
+            switch (choice) {
+                case 1 -> {
+                    System.out.println("The old appointment date is : " + appointment.getAppointmentDate());
+                    appointment.setAppointmentDate();
+                    System.out.println("The appointment date updated successfully");
+                }
+                case 2 -> {
+                    System.out.println("The old appointment time was : " + appointment.getAppointmentTime());
+                    String newTime = InputHandler.getStringInput("Enter new appointment time (HH:mm): ");
+                    appointment.setAppointmentTime(newTime);
+                    System.out.println("The appointment time updated successfully");
+                }
+                case 3 -> {
+                    System.out.println("The old Reason of this appointment was : " + appointment.getReason());
+                    String newReason = InputHandler.getStringInput("Enter the new reason ");
+                    appointment.setReason(newReason);
+                }
+                case 4 -> {
+                    System.out.println("The old status of this appointment was : " + appointment.getStatus());
+                    String newStatus = InputHandler.getStringInput("Enter the new status :");
+                    appointment.setStatus(newStatus);
+                    System.out.println("The status updated Successfully");
+                }
+                case 5 -> {
+                    System.out.println("The old notes was " + appointment.getNotes());
+                    String newNotes = InputHandler.getStringInput("Enter the new notes : ");
+                    appointment.setNotes(newNotes);
+                    System.out.println("The Notes are updated Successfully");
+                }
+                case 6 -> System.out.println("Exiting edit menu.");
+                default -> System.out.println("Invalid choice. Please try again.");
             }
         }
         return appointment;
@@ -90,11 +89,9 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
 
     // ✅ Version 1: used when you want to ask the user for the ID (menu use)
     public static List<Appointment> getAppointmentsByPatientIdInteractive() {
-        System.out.print("Please enter Patient ID to view appointments: ");
-        String patientId = scanner.nextLine().trim();
+        String patientId = InputHandler.getStringInput("Please enter Patient ID to view appointments: ");
         return getAppointmentsByPatientId(patientId);
     }
-
     // ✅ Version 2: used internally (like inside Patient.displayInfo)
     public static List<Appointment> getAppointmentsByPatientId(String patientId) {
         List<Appointment> appointments = new ArrayList<>();
@@ -110,8 +107,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
 
     public static List<Appointment> getAppointmentsByDoctor() {
         List<Appointment> doctorAppointments = new ArrayList<>();
-        System.out.print("Enter Doctor ID: ");
-        String doctorId = scanner.nextLine();
+        String doctorId = InputHandler.getStringInput("Enter Doctor ID: ");
         boolean isFound = false;
 
         System.out.println("===== Appointments for Doctor ID: " + doctorId + " =====");
@@ -132,8 +128,8 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
     }
 
     public static List<Appointment> getAppointmentsByDate() {
-        System.out.print("Enter Appointment Date (yyyy-mm-dd): ");
-        LocalDate appointmentDate = LocalDate.parse(scanner.nextLine());
+        String inputDate = InputHandler.getStringInput("Enter Appointment Date (yyyy-mm-dd): ");
+        LocalDate appointmentDate = LocalDate.parse(inputDate);
         List<Appointment> appointmentsOnDate = new ArrayList<>();
         boolean isFound = false;
 
