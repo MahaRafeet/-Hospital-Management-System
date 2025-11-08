@@ -3,6 +3,7 @@ package Services;
 import Entities.MedicalRecord;
 import Interfaces.Manageable;
 import Interfaces.Searchable;
+import Utils.InputHandler;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,23 +20,13 @@ public class MedicalRecordService implements Manageable, Searchable {
         System.out.println("\n===== Add New Medical Record =====");
         medicalRecord.setPatientId();
         medicalRecord.setDoctorId();
+        medicalRecord.setVisitDate(InputHandler.getDateInput("Enter Visit Date (yyyy-mm-dd): "));
+        medicalRecord.setDiagnosis(InputHandler.getStringInput("Enter Diagnosis: ").trim());
+        medicalRecord.setPrescription(InputHandler.getStringInput("Enter Prescription: ").trim());
+        medicalRecord.setTestResults(InputHandler.getStringInput("Enter Test Results: ").trim());
+        medicalRecord.setNotes(InputHandler.getStringInput("Enter Notes: ").trim());
 
-        System.out.print("Enter Visit Date (yyyy-mm-dd): ");
-        medicalRecord.setVisitDate(LocalDate.parse(scanner.nextLine().trim()));
-
-        System.out.print("Enter Diagnosis: ");
-        medicalRecord.setDiagnosis(scanner.nextLine().trim());
-
-        System.out.print("Enter Prescription: ");
-        medicalRecord.setPrescription(scanner.nextLine().trim());
-
-        System.out.print("Enter Test Results: ");
-        medicalRecord.setTestResults(scanner.nextLine().trim());
-
-        System.out.print("Enter Notes: ");
-        medicalRecord.setNotes(scanner.nextLine().trim());
-
-        System.out.println("The new Medical Record information collected successfully!");
+        System.out.println("✅ The new Medical Record information collected successfully!");
         return medicalRecord;
     }
 
@@ -47,9 +38,7 @@ public class MedicalRecordService implements Manageable, Searchable {
     // ========================= EDIT =========================
     public static MedicalRecord editMedicalRecord(MedicalRecord medicalRecord) {
         System.out.println("\n===== Edit Medical Record =====");
-        System.out.print("Enter the Record ID to edit: ");
-        String recordIdToEdit = scanner.nextLine().trim();
-
+        String recordIdToEdit = InputHandler.getStringInput("Enter the Record ID to edit:").trim();
         MedicalRecord recordToEdit = null;
         for (MedicalRecord rec : medicalRecordList) {
             if (rec.getRecordId().equalsIgnoreCase(recordIdToEdit)) {
@@ -73,58 +62,42 @@ public class MedicalRecordService implements Manageable, Searchable {
         System.out.println("7- Notes");
         System.out.println("8- Exit");
 
-        int choice = Integer.parseInt(scanner.nextLine().trim());
+            int choice = InputHandler.getIntInput("Enter your choice:");
 
         switch (choice) {
-            case 1:
+            case 1 -> {
                 System.out.println("Current Patient ID: " + recordToEdit.getPatientId());
-                System.out.print("Enter new Patient ID: ");
                 recordToEdit.setPatientId();
-                break;
-
-            case 2:
+            }
+            case 2 -> {
                 System.out.println("Current Doctor ID: " + recordToEdit.getDoctorId());
-                System.out.print("Enter new Doctor ID: ");
                 recordToEdit.setDoctorId();
-                break;
-
-            case 3:
+            }
+            case 3 -> {
                 System.out.println("Current Visit Date: " + recordToEdit.getVisitDate());
-                System.out.print("Enter new Visit Date (yyyy-mm-dd): ");
-                recordToEdit.setVisitDate(LocalDate.parse(scanner.nextLine().trim()));
-                break;
-
-            case 4:
+                recordToEdit.setVisitDate(InputHandler.getDateInput("Enter new Visit Date (yyyy-mm-dd): "));
+            }
+            case 4 -> {
                 System.out.println("Current Diagnosis: " + recordToEdit.getDiagnosis());
-                System.out.print("Enter new Diagnosis: ");
-                recordToEdit.setDiagnosis(scanner.nextLine().trim());
-                break;
-
-            case 5:
+                recordToEdit.setDiagnosis(InputHandler.getStringInput("Enter new Diagnosis: ").trim());
+            }
+            case 5 -> {
                 System.out.println("Current Prescription: " + recordToEdit.getPrescription());
-                System.out.print("Enter new Prescription: ");
-                recordToEdit.setPrescription(scanner.nextLine().trim());
-                break;
-
-            case 6:
+                recordToEdit.setPrescription(InputHandler.getStringInput("Enter new Prescription: ").trim());
+            }
+            case 6 -> {
                 System.out.println("Current Test Results: " + recordToEdit.getTestResults());
-                System.out.print("Enter new Test Results: ");
-                recordToEdit.setTestResults(scanner.nextLine().trim());
-                break;
-
-            case 7:
+                recordToEdit.setTestResults(InputHandler.getStringInput("Enter new Test Results: ").trim());
+            }
+            case 7 -> {
                 System.out.println("Current Notes: " + recordToEdit.getNotes());
-                System.out.print("Enter new Notes: ");
-                recordToEdit.setNotes(scanner.nextLine().trim());
-                break;
-
-            case 8:
+                recordToEdit.setNotes(InputHandler.getStringInput("Enter new Notes: ").trim());
+            }
+            case 8 -> {
                 System.out.println("Exiting edit.");
                 return recordToEdit;
-
-            default:
-                System.out.println("⚠️ Invalid choice!");
-                return recordToEdit;
+            }
+            default -> System.out.println("⚠️ Invalid choice!");
         }
 
         System.out.println("✅ Medical Record updated successfully!");
@@ -135,8 +108,7 @@ public class MedicalRecordService implements Manageable, Searchable {
     // ========================= SEARCH BY PATIENT =========================
 //  version 1: used when you want to ask the user (like from a menu)
     public static List<MedicalRecord> getRecordsByPatientIdInteractive() {
-        System.out.print("Please enter Patient ID to search records: ");
-        String patientId = scanner.nextLine().trim();
+        String patientId = InputHandler.getStringInput("Please enter Patient ID to search records:").trim();
         return getRecordsByPatientId(patientId);
     }
 
@@ -166,8 +138,7 @@ public class MedicalRecordService implements Manageable, Searchable {
 
     // ========================= SEARCH BY DOCTOR =========================
     public static List<MedicalRecord> getRecordsByDoctorId() {
-        System.out.println("Please enter Doctor ID to search records: ");
-        String doctorId = scanner.nextLine().trim();
+        String doctorId = InputHandler.getStringInput("Please enter Doctor ID to search records:").trim();
         List<MedicalRecord> doctorRecords = new ArrayList<>();
         boolean found = false;
         System.out.println("\n===== Medical Records by Doctor ID: " + doctorId + " =====");
@@ -186,8 +157,7 @@ public class MedicalRecordService implements Manageable, Searchable {
 
     // ========================= PATIENT HISTORY =========================
     public void displayPatientHistory() {
-        System.out.print("Please enter Patient ID to view history: ");
-        String patientId = scanner.nextLine().trim();
+        String patientId =InputHandler.getStringInput("Please enter Patient ID to view history: ").trim();
         System.out.println("\n===== Patient History for ID: " + patientId + " =====");
         boolean found = false;
         for (MedicalRecord record : medicalRecordList) {
@@ -216,8 +186,7 @@ public class MedicalRecordService implements Manageable, Searchable {
     @Override
     public void remove() {
         System.out.println("\n===== Remove Medical Record =====");
-        System.out.println("Please Enter Medical To Remove  ");
-        String recordIdToRemove = scanner.nextLine();
+        String recordIdToRemove = InputHandler.getStringInput("Please Enter Medical To Remove:  ").trim();
         MedicalRecord recordToRemove = null;
         for (MedicalRecord rec : medicalRecordList) {
             if (rec.getRecordId().equalsIgnoreCase(recordIdToRemove)) {
