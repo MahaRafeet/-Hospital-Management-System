@@ -158,7 +158,7 @@ public class Appointment implements Displayable {
     }
 
     public void setStatus(String status) {
-        String[] allowedStatuses = {"Completed", "Scheduled", "Canceled"};
+        String[] allowedStatuses = {"Completed", "Scheduled", "Cancelled"};
         boolean valid = false;
         while (!valid) {
             if (!ValidationUtils.isValidString(status)) {
