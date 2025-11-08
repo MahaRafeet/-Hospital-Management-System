@@ -17,81 +17,71 @@ public class DoctorService implements Manageable, Searchable {
     public static Scanner scanner = new Scanner(System.in);
 
     public static Doctor addDoctor(Doctor doctor) {
-        System.out.println("\n===== Add New Doctor =====");
-        System.out.print("Enter first name: ");
-        doctor.setFirstName(scanner.nextLine());
-        System.out.print("Enter last name: ");
-        doctor.setLastName(scanner.nextLine());
-        System.out.print("Enter email: ");
-        doctor.setEmail(scanner.nextLine());
-        System.out.print("Enter phone number: ");
-        doctor.setPhoneNumber(scanner.nextLine());
-        System.out.print("Enter specialization: ");
-        doctor.setSpecialization(scanner.nextLine());
-        System.out.print("Enter Doctor Qualification: ");
-        doctor.setQualification(scanner.nextLine());
-        System.out.print("Enter Doctor department Id: ");
+        doctor.setFirstName(InputHandler.getStringInput("Enter first name: "));
+        doctor.setLastName(InputHandler.getStringInput("Enter last name: "));
+        doctor.setEmail(InputHandler.getStringInput("Enter email: "));
+        doctor.setPhoneNumber(InputHandler.getStringInput("Enter phone number: "));
+        doctor.setSpecialization(InputHandler.getStringInput("Enter specialization: "));
+        doctor.setQualification(InputHandler.getStringInput("Enter Doctor Qualification: "));
         doctor.setDepartmentId();
-        System.out.print("Enter available slots (comma separated, e.g., 10AM-11AM,2PM-3PM ) :");
-        String availableSlotsInput = scanner.nextLine();
-        doctor.setAvailableSlots(availableSlotsInput.isEmpty() ? new ArrayList<>() : Arrays.asList(availableSlotsInput.split(",")));
-        double fee = 0.0;
-        while (true) {
-            System.out.print("Enter consultation fee: ");
-            String input = scanner.nextLine().trim();
-            try {
-                fee = Double.parseDouble(input);
-                if (fee < 0) {
-                    System.out.println("Consultation fee cannot be negative. Try again.");
-                } else {
-                    break;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input! Please enter a numeric value (e.g., 50.0).");
-            }
-        }
+        String availableSlotsInput = InputHandler.getStringInput(
+                "Enter available slots (comma separated, e.g., 10AM-11AM,2PM-3PM): "
+        );
+        doctor.setAvailableSlots(
+                availableSlotsInput.isEmpty() ? new ArrayList<>() : Arrays.asList(availableSlotsInput.split(","))
+        );
+
+        double fee = InputHandler.getDoubleInput("Enter consultation fee: "); // replaces manual parsing
         doctor.setConsultationFee(fee);
-        System.out.print("Enter Doctor Experience years: ");
-        int years = scanner.nextInt();
+
+        int years = InputHandler.getIntInput("Enter Doctor Experience years: "); // replaces scanner.nextInt()
         doctor.setExperienceYears(years);
-        scanner.nextLine();
-        System.out.println("Generated Doctor ID: " + doctor.getDoctorId());
-        System.out.println("Doctor information collected.");
         return doctor;
+
     }
 
     public static Surgeon addSurgeon(Surgeon surgeon) {
+        // Collect base doctor info
         addDoctor(surgeon);
-        System.out.println("\n===== Add New Surgeon =====");
-        System.out.print("Please enter number of Surgeries Performed: ");
-        surgeon.setSurgeriesPerformed(Integer.parseInt(scanner.nextLine()));
-        System.out.println("Please enter surgery types (comma separated): ");
-        String surgeryTypesInput = scanner.nextLine();
-        surgeon.setSurgeryTypes(surgeryTypesInput.isEmpty() ? new ArrayList<>() : Arrays.asList(surgeryTypesInput.split(",")));
-        System.out.println("Does the surgeon have Operation Theatre access? (yes/no):)");
-        String accessInput = scanner.nextLine();
-        surgeon.setOperationTheatreAccess(accessInput.equalsIgnoreCase("yes"));
-        System.out.println("Surgeon information collected.");
-        return surgeon;
 
+        System.out.println("\n===== Add New Surgeon =====");
+
+        // Number of surgeries performed (validated integer input)
+        int surgeriesPerformed = InputHandler.getIntInput("Please enter number of Surgeries Performed: ");
+        surgeon.setSurgeriesPerformed(surgeriesPerformed);
+
+        // Surgery types (comma separated)
+        String surgeryTypesInput = InputHandler.getStringInput("Please enter surgery types (comma separated): ");
+        surgeon.setSurgeryTypes(
+                surgeryTypesInput.isEmpty() ? new ArrayList<>() : Arrays.asList(surgeryTypesInput.split("\\s*,\\s*"))
+        );
+
+        // Operation theatre access (yes/no)
+        String accessInput = InputHandler.getStringInput("Does the surgeon have Operation Theatre access? (yes/no): ");
+        surgeon.setOperationTheatreAccess(accessInput.equalsIgnoreCase("yes"));
+
+        System.out.println("✅ Surgeon information collected successfully.");
+        return surgeon;
     }
+
 
     public static Doctor addConsultant(Consultant consultant) {
         addDoctor(consultant); // collect all shared doctor info first
 
         System.out.println("\n===== Add New Consultant =====");
 
-        System.out.print("Enter consultation types (comma separated): ");
-        String typesInput = scanner.nextLine();
-        consultant.setConsultationTypes( typesInput.isEmpty() ? new ArrayList<>() : Arrays.asList(typesInput.split(",")) );
+        String typesInput = InputHandler.getStringInput("Enter consultation types (comma separated): ");
+        consultant.setConsultationTypes(
+                typesInput.isEmpty() ? new ArrayList<>() : Arrays.asList(typesInput.split(","))
+        );
 
-        System.out.print("Is online consultation available? (yes/no): ");
-        String onlineInput = scanner.nextLine();
-        consultant.setOnlineConsultationAvailable(onlineInput.equalsIgnoreCase("yes"));
-        System.out.println(" Enter consultation duration (minutes): ");
-        int duration = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        consultant.setOnlineConsultationAvailable(
+                InputHandler.getStringInput("Is online consultation available? (yes/no): ").equalsIgnoreCase("yes")
+        );
+
+        int duration = InputHandler.getIntInput("Enter consultation duration (minutes): ");
         consultant.setConsultationDuration(duration);
+
 
         System.out.println("✅ Consultant information collected successfully.");
         return consultant;
