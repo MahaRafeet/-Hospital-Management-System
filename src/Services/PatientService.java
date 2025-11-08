@@ -7,6 +7,7 @@ import Interfaces.Searchable;
 import java.time.LocalDate;
 import java.util.*;
 
+import Utils.InputHandler;
 import Utils.ValidationUtils;
 
 import java.util.stream.Collectors;
@@ -18,107 +19,56 @@ public class PatientService implements Searchable, Manageable {
     // Add Patient with full details
     public static void addPatient(Patient patient) {
         System.out.println("\n===== Add New Patient =====");
-        System.out.print("Enter patient first name: ");
-        patient.setFirstName(scanner.nextLine());
-        System.out.print("Enter patient last name: ");
-        patient.setLastName(scanner.nextLine());
-        System.out.print("Enter patient address: ");
-        patient.setAddress(scanner.nextLine());
-
-        String dobInput;
-        LocalDate dob = null;
-        do {
-            System.out.print("Enter date of birth (yyyy-MM-dd): ");
-            dobInput = scanner.nextLine();
-            if (ValidationUtils.isValidDate(dobInput)) {
-                dob = LocalDate.parse(dobInput);
-                break;
-            } else {
-                System.out.println("Invalid date format. Try again.");
-            }
-        } while (true);
-        patient.setDateOfBirth(dob);
-
-        System.out.print("Enter gender: ");
+        patient.setFirstName(InputHandler.getStringInput("Enter patient first name: "));
+        patient.setLastName(InputHandler.getStringInput("Enter patient last name: "));
+        patient.setAddress(InputHandler.getStringInput("Enter patient address: "));
+        patient.setDateOfBirth(InputHandler.getDateInput("Enter date of birth (yyyy-MM-dd): "));
         patient.setGender();
-        System.out.print("Enter email: ");
-        patient.setEmail(scanner.nextLine());
-        System.out.print("Enter phone number: ");
-        patient.setPhoneNumber(scanner.nextLine());
-        System.out.print("Enter blood group: ");
+        patient.setEmail(InputHandler.getStringInput("Enter email: "));
+        patient.setPhoneNumber(InputHandler.getStringInput("Enter phone number: "));
         patient.setBloodGroup();
-        System.out.print("Enter allergies (comma separated): ");
-        String allergiesInput = scanner.nextLine();
+
+        String allergiesInput = InputHandler.getStringInput("Enter allergies (comma separated): ");
         patient.setAllergies(allergiesInput.isEmpty() ? new ArrayList<>() :
                 Arrays.stream(allergiesInput.split(",")).map(String::trim).collect(Collectors.toList()));
 
-        System.out.print("Enter emergency contact: ");
-        patient.setEmergencyContact(scanner.nextLine());
+        patient.setEmergencyContact(InputHandler.getStringInput("Enter emergency contact: "));
+        patient.setRegistrationDate(InputHandler.getDateInput("Enter registration date (yyyy-MM-dd): "));
+        patient.setInsuranceId(InputHandler.getStringInput("Enter insurance ID: "));
 
-        String regInput;
-        LocalDate registrationDate = null;
-        do {
-            System.out.print("Enter registration date (yyyy-MM-dd): ");
-            regInput = scanner.nextLine();
-            if (ValidationUtils.isValidDate(regInput)) {
-                registrationDate = LocalDate.parse(regInput);
-                break;
-            } else {
-                System.out.println("Invalid date format. Try again.");
-            }
-        } while (true);
-        patient.setRegistrationDate(registrationDate);
-
-        System.out.print("Enter insurance ID: ");
-        patient.setInsuranceId(scanner.nextLine());
         System.out.println("Generated Patient ID: " + patient.getPatientId());
-
         patientList.add(patient);
         System.out.println("Patient added successfully!");
     }
 
+
     //  Add InPatient
     public static void addPatient(InPatient inPatient) {
-        // First,collect common patient fields
+        // First, collect common patient fields
         addPatient((Patient) inPatient);
 
-        // Now collect inpatient-specific fields
-        System.out.print("Enter room number: ");
-        inPatient.setRoomNumber(scanner.nextLine());
+        // InPatient-specific fields
+        inPatient.setRoomNumber(InputHandler.getStringInput("Enter room number: "));
+        inPatient.setBedNumber(InputHandler.getStringInput("Enter bed number: "));
 
-        System.out.print("Enter bed number: ");
-        inPatient.setBedNumber(scanner.nextLine());
+        // Admission date
+        inPatient.setAdmissionDate(InputHandler.getDateInput("Enter admission date (yyyy-MM-dd): "));
 
-        LocalDate admissionDate = null;
-        do {
-            System.out.print("Enter admission date (yyyy-MM-dd): ");
-            String input = scanner.nextLine();
-            if (ValidationUtils.isValidDate(input)) {
-                admissionDate = LocalDate.parse(input);
-                break;
-            } else {
-                System.out.println("Invalid date format. Try again.");
-            }
-        } while (true);
-        inPatient.setAdmissionDate(admissionDate);
-
-
-        //  Discharge date (can be empty at registration)
-        System.out.print("Enter discharge date (yyyy-MM-dd) or leave empty if not discharged: ");
-        String dischargeInput = scanner.nextLine();
-        if (!dischargeInput.isEmpty() && ValidationUtils.isValidDate(dischargeInput)) {
-            inPatient.setDischargeDate(LocalDate.parse(dischargeInput));
-        }
+        // Discharge date
+        LocalDate dischargeDate = InputHandler.getOptionalDateInput(
+                "Enter discharge date (yyyy-MM-dd) or leave empty if not discharged: "
+        );
 
         // Daily charges
-        System.out.print("Enter daily charges: ");
-        inPatient.setDailyCharges(Double.parseDouble(scanner.nextLine()));
+        inPatient.setDailyCharges(InputHandler.getDoubleInput("Enter daily charges: "));
 
-        // Total charges can be calculated automatically
-        inPatient.setTotalCharges(inPatient.getDailyCharges()); // initialize to daily charges
+        // Total charges
+        inPatient.setTotalCharges(inPatient.getDailyCharges()); // initialize
         inPatient.setPaid(false);
+
         System.out.println("InPatient added successfully!");
     }
+
 
     public static void addOutPatient(OutPatient outPatient) {
         // Collect basic patient info

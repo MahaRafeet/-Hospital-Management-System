@@ -77,6 +77,16 @@ public class InputHandler {
             }
         }
     }
+    public static LocalDate getOptionalDateInput(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+            if (input.isEmpty()) return null; // user skipped
+            if (ValidationUtils.isValidDate(input)) return LocalDate.parse(input);
+            System.out.println("Invalid date format. Try again.");
+        }
+    }
+
 
     /* ===========================
        Yes/No Confirmation

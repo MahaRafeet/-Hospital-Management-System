@@ -24,7 +24,7 @@ public class NurseService implements Searchable, Manageable {
         nurse.setFirstName(InputHandler.getStringInput("Enter first name: "));
         nurse.setLastName(InputHandler.getStringInput("Enter last name: "));
         nurse.setGender();
-        nurse.setDateOfBirth(InputHandler.getDateInput("Enter date of birth (yyyy-mm-dd): "));
+        nurse.setDateOfBirth(InputHandler.getDateInput("Enter date of birth: "));
         nurse.setAddress(InputHandler.getStringInput("Enter address: "));
         nurse.setEmail(InputHandler.getStringInput("Enter email: "));
         nurse.setPhoneNumber(InputHandler.getStringInput("Enter phone number: "));
