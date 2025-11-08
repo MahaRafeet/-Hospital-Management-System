@@ -91,26 +91,22 @@ public class DoctorService implements Manageable, Searchable {
         System.out.println("\n===== Add New General Practitioner =====");
 
         // Step 1: Collect base doctor info
-        addDoctor(gp); // ✅ Reuse existing doctor input logic
+        addDoctor(gp);
 
-        // Step 2: Collect GP-specific information
-        System.out.print("Is walk-in available? (yes/no): ");
-        String walkinInput = scanner.nextLine().trim();
+        // Step 2: Collect GP-specific information using InputHandler
+        String walkinInput = InputHandler.getStringInput("Is walk-in available? (yes/no): ").trim();
         gp.setWalkinAvailable(walkinInput.equalsIgnoreCase("yes"));
 
-        System.out.print("Is home visit available? (yes/no): ");
-        String homeVisitInput = scanner.nextLine().trim();
+        String homeVisitInput = InputHandler.getStringInput("Is home visit available? (yes/no): ").trim();
         gp.setHomeVisitAvailable(homeVisitInput.equalsIgnoreCase("yes"));
 
-        System.out.print("Is the doctor vaccination certified? (yes/no): ");
-        String vaccinationInput = scanner.nextLine().trim();
+        String vaccinationInput = InputHandler.getStringInput("Is the doctor vaccination certified? (yes/no): ").trim();
         gp.setVaccinationCertified(vaccinationInput.equalsIgnoreCase("yes"));
 
-        // Step 3: Confirmation
         System.out.println("✅ General Practitioner information collected successfully!");
-
         return gp;
     }
+
 
 
     public void save(Doctor doctor) {
@@ -125,8 +121,7 @@ public class DoctorService implements Manageable, Searchable {
 
     public Doctor editDoctor() {
         System.out.println("\n===== Edit Doctor =====");
-        System.out.print("Enter the doctor ID to edit: ");
-        String doctorId = scanner.nextLine();
+        String doctorId =InputHandler.getStringInput("Enter the doctor ID to edit:").trim();
 
         Doctor doctorToEdit = null;
         for (Doctor doc : doctorList) {
@@ -150,34 +145,28 @@ public class DoctorService implements Manageable, Searchable {
         System.out.println("6 - Availability");
         System.out.println("0 - Cancel");
 
-        String choice = scanner.nextLine();
-        if (choice.equals("1")) {
-            System.out.print("Enter new first name: ");
-            doctorToEdit.setFirstName(scanner.nextLine());
-        } else if (choice.equals("2")) {
-            System.out.print("Enter new last name: ");
-            doctorToEdit.setLastName(scanner.nextLine());
-        } else if (choice.equals("3")) {
-            System.out.print("Enter new email: ");
-            doctorToEdit.setEmail(scanner.nextLine());
-        } else if (choice.equals("4")) {
-            System.out.print("Enter new phone number: ");
-            doctorToEdit.setPhoneNumber(scanner.nextLine());
-        } else if (choice.equals("5")) {
-            System.out.print("Enter new specialization: ");
-            doctorToEdit.setSpecialization(scanner.nextLine());
-        } else if (choice.equals("6")) {
-            System.out.print("Enter The Doctor available slots (comma separated ):");
-            String availableSlotsInput = scanner.nextLine();
-            doctorToEdit.setAvailableSlots(availableSlotsInput.isEmpty() ? new ArrayList<>() : Arrays.asList(availableSlotsInput.split(",")));
+        String choice = InputHandler.getStringInput("Your choice: ").trim();
 
-        } else if (choice.equals("0")) {
-            System.out.println("Edit cancelled.");
-            return doctorToEdit;
-        } else {
-            System.out.println("Invalid choice.");
-            return doctorToEdit;
+        switch (choice) {
+            case "1" -> doctorToEdit.setFirstName(InputHandler.getStringInput("Enter new first name: "));
+            case "2" -> doctorToEdit.setLastName(InputHandler.getStringInput("Enter new last name: "));
+            case "3" -> doctorToEdit.setEmail(InputHandler.getStringInput("Enter new email: "));
+            case "4" -> doctorToEdit.setPhoneNumber(InputHandler.getStringInput("Enter new phone number: "));
+            case "5" -> doctorToEdit.setSpecialization(InputHandler.getStringInput("Enter new specialization: "));
+            case "6" -> {
+                String slots = InputHandler.getStringInput("Enter available slots (comma separated): ");
+                doctorToEdit.setAvailableSlots(slots.isEmpty() ? new ArrayList<>() : Arrays.asList(slots.split("\\s*,\\s*")));
+            }
+            case "0" -> {
+                System.out.println("Edit cancelled.");
+                return doctorToEdit;
+            }
+            default -> {
+                System.out.println("Invalid choice.");
+                return doctorToEdit;
+            }
         }
+
 
         System.out.println("Doctor updated successfully.");
         return doctorToEdit;
@@ -271,8 +260,7 @@ public class DoctorService implements Manageable, Searchable {
 
 
     public static void displayDoctors() {
-        System.out.println("Please enter specialization to filter doctors (or press Enter to skip):");
-        String specialization = InputHandler.getStringInput("Specialization (or press Enter to skip): ").trim();
+        String specialization = InputHandler.getStringInput("Enter specialization to filter doctors :").trim();
 
         System.out.println("\n===== Doctors with Specialization: " + specialization + " =====");
         boolean found = false;
@@ -363,8 +351,7 @@ public class DoctorService implements Manageable, Searchable {
 
     @Override
     public void remove() {
-        System.out.println("Please enter the Doctor ID to remove:");
-        String doctorIdToRemove = scanner.nextLine();
+        String doctorIdToRemove =InputHandler.getStringInput("Please enter the Doctor ID to remove:").trim();
         Doctor doctorToRemove = null;
         for (Doctor doc : doctorList) {
             if (doc.getDoctorId().equals(doctorIdToRemove)) {
