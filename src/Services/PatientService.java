@@ -374,6 +374,112 @@ public class PatientService implements Searchable, Manageable {
                 );
     }
 
+    public static void addSamplePatients() {
+        for (int i = 0; i < 3; i++) {
+            Patient patient = new Patient();
+            patient.getPatientId(); // initialize ID
+            patient.setFirstName("PatientFirst" + i);
+            patient.setLastName("PatientLast" + i);
+            patient.setEmail("patient" + i + "@example.com");
+            patient.setPhoneNumber("9000000" + i);
+            patient.setDateOfBirth(LocalDate.of(1990, 1, i + 1));
+            patient.setGender(i % 2 == 0 ? "Male" : "Female");
+            patient.setAddress("Street " + (i + 1));
+            patient.setBloodGroup("O+");
+            patient.setAllergies(Arrays.asList("None"));
+            patient.setEmergencyContact("98888888" + i);
+            patient.setRegistrationDate(LocalDate.now().minusMonths(i));
+            patient.setInsuranceId("INS-" + (1000 + i));
 
-}
+            patientList.add(patient);
+        }
+
+        // ========== 3 InPatients ==========
+        for (int i = 0; i < 3; i++) {
+            InPatient inPatient = new InPatient();
+            inPatient.getPatientId();
+            inPatient.setFirstName("InPatientFirst" + i);
+            inPatient.setLastName("InPatientLast" + i);
+            inPatient.setEmail("inpatient" + i + "@example.com");
+            inPatient.setPhoneNumber("9100000" + i);
+            inPatient.setDateOfBirth(LocalDate.of(1985, 2, i + 1));
+            inPatient.setGender(i % 2 == 0 ? "Male" : "Female");
+            inPatient.setAddress("Hospital Street " + (i + 1));
+            inPatient.setBloodGroup("A+");
+            inPatient.setAllergies(Arrays.asList("Peanuts"));
+            inPatient.setEmergencyContact("97777777" + i);
+            inPatient.setRegistrationDate(LocalDate.now().minusMonths(i));
+            inPatient.setInsuranceId("INS-" + (2000 + i));
+
+            inPatient.setRoomNumber("R" + (i + 1));
+            inPatient.setBedNumber("B" + (i + 1));
+            inPatient.setAdmissionDate(LocalDate.now().minusDays(i));
+            inPatient.setDischargeDate(null);
+            inPatient.setDailyCharges(100.0 + i * 50);
+            inPatient.setTotalCharges(inPatient.getDailyCharges());
+            inPatient.setPaid(false);
+            inPatient.setAdmittingDoctorId("DOC-" + (300 + i));
+
+            patientList.add(inPatient);
+        }
+
+        // ========== 2 OutPatients ==========
+        for (int i = 0; i < 2; i++) {
+            OutPatient outPatient = new OutPatient();
+            outPatient.getPatientId();
+            outPatient.setFirstName("OutPatientFirst" + i);
+            outPatient.setLastName("OutPatientLast" + i);
+            outPatient.setEmail("outpatient" + i + "@example.com");
+            outPatient.setPhoneNumber("9200000" + i);
+            outPatient.setDateOfBirth(LocalDate.of(1992, 3, i + 1));
+            outPatient.setGender(i % 2 == 0 ? "Male" : "Female");
+            outPatient.setAddress("Clinic Street " + (i + 1));
+            outPatient.setBloodGroup("B+");
+            outPatient.setAllergies(Arrays.asList("None"));
+            outPatient.setEmergencyContact("96666666" + i);
+            outPatient.setRegistrationDate(LocalDate.now().minusMonths(i));
+            outPatient.setInsuranceId("INS-" + (3000 + i));
+
+            outPatient.setVisitCount(i + 1);
+            outPatient.setLastVisitDate(LocalDate.now().minusDays(i * 10));
+            outPatient.setPreferredDoctorId("DOC-" + (400 + i));
+
+            patientList.add(outPatient);
+        }
+
+        // ========== 2 Emergency Patients ==========
+        for (int i = 0; i < 2; i++) {
+            EmergencyPatient emergencyPatient = new EmergencyPatient();
+            emergencyPatient.getPatientId();
+            emergencyPatient.setFirstName("ERPatientFirst" + i);
+            emergencyPatient.setLastName("ERPatientLast" + i);
+            emergencyPatient.setEmail("erpatient" + i + "@example.com");
+            emergencyPatient.setPhoneNumber("9300000" + i);
+            emergencyPatient.setDateOfBirth(LocalDate.of(1988, 4, i + 1));
+            emergencyPatient.setGender(i % 2 == 0 ? "Male" : "Female");
+            emergencyPatient.setAddress("ER Street " + (i + 1));
+            emergencyPatient.setBloodGroup("AB+");
+            emergencyPatient.setAllergies(Arrays.asList("Dust"));
+            emergencyPatient.setEmergencyContact("95555555" + i);
+            emergencyPatient.setRegistrationDate(LocalDate.now().minusMonths(i));
+            emergencyPatient.setInsuranceId("INS-" + (4000 + i));
+
+            emergencyPatient.setAdmissionDate(LocalDate.now());
+            emergencyPatient.setDailyCharges(200.0 + i * 50);
+            emergencyPatient.setTotalCharges(emergencyPatient.getDailyCharges());
+            emergencyPatient.setEmergencyType(i % 2 == 0 ? "Accident" : "Heart Attack");
+            emergencyPatient.setArrivalMode(i % 2 == 0 ? "Ambulance" : "Walk-in");
+            emergencyPatient.setTriageLevel(3 + i);
+            emergencyPatient.setAdmittedViaER(i % 2 == 0);
+
+            patientList.add(emergencyPatient);
+        }
+
+        System.out.println("Sample patients added successfully! Total patients: " + patientList.size());
+    }
+
+    }
+
+
+
 

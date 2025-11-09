@@ -128,7 +128,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
         return doctorAppointments;
     }
 
-    public static List<Appointment> getAppointmentsByDate() {
+    public static List<Appointment> getAppointmentsByDate(){
         String inputDate = InputHandler.getStringInput("Enter Appointment Date (yyyy-mm-dd): ");
         LocalDate appointmentDate = LocalDate.parse(inputDate);
         List<Appointment> appointmentsOnDate = new ArrayList<>();
@@ -311,7 +311,6 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
         appointment.setReason(reason);
         System.out.println("Appointment rescheduled successfully to " + newDate + " at " + newTime);
     }
-
     public void displayAppointments(LocalDate date) {
         System.out.println("Appointments on " + date + ":");
         for (Appointment appointment : appointmentList) {
@@ -320,7 +319,6 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
             }
         }
     }
-
     public void displayAppointments(String doctorId, LocalDate startDate, LocalDate endDate) {
         System.out.println("Appointments for Doctor ID " + doctorId + " from " + startDate + " to " + endDate + ":");
         for (Appointment appointment : appointmentList) {

@@ -1,17 +1,26 @@
+package SystemMain;
+
 import Entities.*;
 import Services.*;
 import Utils.InputHandler;
-
 import java.util.Scanner;
 
 public class Main {
+
     public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        addSampleDataForAll();
 
-        Integer userChoice = 0;
+        showMainMenu();
+    }
+
+    // ================= MAIN MENU =================
+    public static void showMainMenu() {
+        int userChoice = 0;
+
         while (userChoice != 8) {
-            System.out.println("*******Hospital Management System MENU*******");
+            System.out.println("\n******* Hospital Management System MENU *******");
             System.out.println("1- Patient Management");
             System.out.println("2- Doctor Management");
             System.out.println("3- Nurse Management");
@@ -20,8 +29,9 @@ public class Main {
             System.out.println("6- Department Management");
             System.out.println("7- Reports and Statistics");
             System.out.println("8- Exit the Program");
-            System.out.println("**********************************************");
-            userChoice = InputHandler.getIntInput("Please Enter your choice:", 1, 8);
+            System.out.println("***********************************************");
+
+            userChoice = InputHandler.getIntInput("Please Enter your choice: ", 1, 8);
 
             switch (userChoice) {
                 case 1 -> patientMenu();
@@ -35,8 +45,6 @@ public class Main {
                 default -> System.out.println("Invalid choice! Try again.");
             }
         }
-
-        scanner.close();
     }
 
     // ================= PATIENT MANAGEMENT =================
@@ -418,5 +426,13 @@ public class Main {
                 default -> System.out.println("Invalid choice!");
             }
         }
+    }
+
+
+    public static void addSampleDataForAll() {
+        PatientService.addSamplePatients();
+
+
+
     }
 }
