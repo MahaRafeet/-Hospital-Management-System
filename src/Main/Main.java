@@ -248,9 +248,7 @@ public class Main {
             System.out.println("8- Complete Appointment");
             System.out.println("9- View Upcoming Appointments");
             System.out.println("10- Go Back to Main Menu");
-            System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine();
+            choice = InputHandler.getIntInput("Enter your choice: " ,1,10);
 
             switch (choice) {
                 case 1 -> {
@@ -294,9 +292,7 @@ public class Main {
             System.out.println("6- Delete Medical Record");
             System.out.println("7- Generate Patient History Report");
             System.out.println("8- Go Back to Main Menu");
-            System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine();
+            choice = InputHandler.getIntInput("Enter your choice: ",1,8);
 
             switch (choice) {
                 case 1 -> {
