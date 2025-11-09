@@ -194,9 +194,8 @@ public class Main {
             System.out.println("6- Update Nurse Information");
             System.out.println("7- Remove Nurse");
             System.out.println("8- Go Back to Main Menu");
-            System.out.print("Enter your choice: ");
-            nurseChoice = scanner.nextInt();
-            scanner.nextLine();
+            nurseChoice =InputHandler.getIntInput("Enter your choice: ",1,8);
+
 
             switch (nurseChoice) {
                 case 1 -> {
