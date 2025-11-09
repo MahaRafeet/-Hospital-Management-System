@@ -1,5 +1,6 @@
 import Entities.*;
 import Services.*;
+import Utils.InputHandler;
 
 import java.util.Scanner;
 
@@ -20,9 +21,7 @@ public class Main {
             System.out.println("7- Reports and Statistics");
             System.out.println("8- Exit the Program");
             System.out.println("**********************************************");
-            System.out.print("Please Enter your choice: ");
-            userChoice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            userChoice = InputHandler.getIntInput("Please Enter your choice:",1,8);
 
             switch (userChoice) {
                 case 1 -> patientMenu();
