@@ -143,12 +143,27 @@ public class Appointment implements Displayable {
         return appointmentTime;
     }
 
-    public void setAppointmentTime(String appointmentTime) {
-        if (!ValidationUtils.isValidString(appointmentTime)) {
-            System.out.println("Appointment time cannot be null or empty.");
-            return;
+    public void setAppointmentTime() {
+        String inputTime;
+        boolean valid = false;
+        while (!valid) {
+            inputTime = InputHandler.getStringInput("Enter Appointment Time (e.g., 10:30 AM): ");
+
+            if (!ValidationUtils.isValidString(inputTime)) {
+                System.out.println("Appointment time cannot be null or empty. Please try again.");
+                continue;
+            }
+
+            // Optional: You can add format checking (e.g., must contain ':' or AM/PM)
+            if (!inputTime.matches("^(0?[1-9]|1[0-2]):[0-5][0-9]\\s?(AM|PM|am|pm)$")) {
+                System.out.println("Invalid time format. Use format like '10:30 AM'.");
+                continue;
+            }
+
+            this.appointmentTime = inputTime;
+            valid = true;
+            System.out.println("✅ Appointment time set successfully.");
         }
-        this.appointmentTime = appointmentTime;
     }
 
     public String getStatus() {

@@ -26,8 +26,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
         appointment.setPatientId();
         appointment.setDoctorId();
         appointment.setAppointmentDate();
-        String time = InputHandler.getStringInput("Enter Appointment Time (HH:mm): ");
-        appointment.setAppointmentTime(time);
+        appointment.setAppointmentTime();
         String reason = InputHandler.getStringInput("Enter Reason for Visit: ");
         appointment.setReason(reason);
         String status = InputHandler.getStringInput("Enter Status (Scheduled, Completed, Canceled): ");
@@ -61,8 +60,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
                 }
                 case 2 -> {
                     System.out.println("The old appointment time was : " + appointment.getAppointmentTime());
-                    String newTime = InputHandler.getStringInput("Enter new appointment time (HH:mm): ");
-                    appointment.setAppointmentTime(newTime);
+                    appointment.setAppointmentTime();
                     System.out.println("The appointment time updated successfully");
                 }
                 case 3 -> {
@@ -178,8 +176,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
         System.out.print("Enter the new Date (yyyy-MM-dd): ");
         foundAppointment.setAppointmentDate(); // this uses your Appointment’s own setter (with validation & retry loop)
 
-        System.out.print("Enter the new time (HH:mm): ");
-        foundAppointment.setAppointmentTime(scanner.nextLine());
+        foundAppointment.setAppointmentTime();
 
         System.out.println("✅ Appointment rescheduled successfully!");
         return foundAppointment;
@@ -219,7 +216,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
         appointment.setPatientId();
         appointment.setDoctorId();
         appointment.setAppointmentDate();
-        appointment.setAppointmentTime(time);
+        appointment.setAppointmentTime();
         appointment.setStatus("Scheduled");
         appointmentList.add(appointment);
         System.out.println("Appointment created successfully with ID: " + appointment.getAppointmentId());
@@ -272,7 +269,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
         for (Appointment appointment : appointmentList) {
             if (appointment.getAppointmentId().equals(appointmentId)) {
                 appointment.setAppointmentDate();
-                appointment.setAppointmentTime(newTime);
+                appointment.setAppointmentTime();
                 System.out.println("Appointment rescheduled successfully to " + newDate + " at " + newTime);
                 return;
             }
@@ -310,7 +307,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
 
     public void rescheduleAppointment(Appointment appointment, LocalDate newDate, String newTime, String reason) {
         appointment.setAppointmentDate();
-        appointment.setAppointmentTime(newTime);
+        appointment.setAppointmentTime();
         appointment.setReason(reason);
         System.out.println("Appointment rescheduled successfully to " + newDate + " at " + newTime);
     }
