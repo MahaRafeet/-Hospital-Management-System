@@ -21,7 +21,7 @@ public class Main {
             System.out.println("7- Reports and Statistics");
             System.out.println("8- Exit the Program");
             System.out.println("**********************************************");
-            userChoice = InputHandler.getIntInput("Please Enter your choice:",1,8);
+            userChoice = InputHandler.getIntInput("Please Enter your choice:", 1, 8);
 
             switch (userChoice) {
                 case 1 -> patientMenu();
@@ -54,7 +54,7 @@ public class Main {
             System.out.println("8- Remove Patient");
             System.out.println("9- View Patient Medical History");
             System.out.println("10- Go Back to Main Menu");
-            patientChoice = InputHandler.getIntInput("Please Enter your choice:",1,10);
+            patientChoice = InputHandler.getIntInput("Please Enter your choice:", 1, 10);
 
             switch (patientChoice) {
                 case 1 -> {
@@ -63,21 +63,21 @@ public class Main {
 
                 }
                 case 2 -> {
-                    InPatient inPatient=new InPatient();
+                    InPatient inPatient = new InPatient();
                     PatientService.addPatient(inPatient);
                 }
 
-                    case 3 ->{
-                    OutPatient outPatient=new OutPatient();
+                case 3 -> {
+                    OutPatient outPatient = new OutPatient();
                     PatientService.addOutPatient(outPatient);
                 }
 
                 case 4 -> {
-                    EmergencyPatient emergencyPatient=new EmergencyPatient();
+                    EmergencyPatient emergencyPatient = new EmergencyPatient();
                     PatientService.addEmergencyPatient(emergencyPatient);
                 }
                 case 5 -> {
-                    PatientService service=new PatientService();
+                    PatientService service = new PatientService();
                     service.getAll();
                 }
                 case 6 -> {
@@ -87,11 +87,11 @@ public class Main {
 
 
                 case 7 -> {
-                    PatientService service=new PatientService();
+                    PatientService service = new PatientService();
                     service.editPatient();
                 }
                 case 8 -> {
-                    PatientService service=new PatientService();
+                    PatientService service = new PatientService();
                     service.remove();
                 }
 
@@ -122,37 +122,37 @@ public class Main {
             System.out.println("10- Remove Doctor");
             System.out.println("11- Go Back to Main Menu");
             System.out.print("Enter your choice: ");
-            doctorChoice = InputHandler.getIntInput("Please Enter your choice:" ,1,11);
+            doctorChoice = InputHandler.getIntInput("Please Enter your choice:", 1, 11);
 
             switch (doctorChoice) {
                 case 1 -> {
-                    DoctorService service=new DoctorService();
+                    DoctorService service = new DoctorService();
                     Doctor newDoctor = new Doctor();
                     DoctorService.addDoctor(newDoctor);
                     service.save(newDoctor);
 
                 }
                 case 2 -> {
-                    DoctorService service=new DoctorService();
+                    DoctorService service = new DoctorService();
                     Surgeon newSurgeon = new Surgeon() {
                     };
                     DoctorService.addSurgeon(newSurgeon);
                     service.save(newSurgeon);
                 }
                 case 3 -> {
-                    DoctorService service=new DoctorService();
+                    DoctorService service = new DoctorService();
                     Consultant newConsultant = new Consultant();
                     DoctorService.addConsultant(newConsultant);
                     service.save(newConsultant);
                 }
                 case 4 -> {
-                    DoctorService service=new DoctorService();
+                    DoctorService service = new DoctorService();
                     GeneralPractitioner newGP = new GeneralPractitioner();
                     DoctorService.addGeneralPractitioner(newGP);
                     service.save(newGP);
                 }
-                case 5 ->{
-                    DoctorService service=new DoctorService();
+                case 5 -> {
+                    DoctorService service = new DoctorService();
                     service.getAll();
                 }
                 case 6 -> {
@@ -168,11 +168,11 @@ public class Main {
                     service.assignPatient();
                 }
                 case 9 -> {
-                    DoctorService service=new DoctorService();
+                    DoctorService service = new DoctorService();
                     service.editDoctor();
                 }
                 case 10 -> {
-                    DoctorService service=new DoctorService();
+                    DoctorService service = new DoctorService();
                     service.remove();
                 }
                 case 11 -> System.out.println("Returning to Main Menu...");
@@ -194,7 +194,7 @@ public class Main {
             System.out.println("6- Update Nurse Information");
             System.out.println("7- Remove Nurse");
             System.out.println("8- Go Back to Main Menu");
-            nurseChoice =InputHandler.getIntInput("Enter your choice: ",1,8);
+            nurseChoice = InputHandler.getIntInput("Enter your choice: ", 1, 8);
 
 
             switch (nurseChoice) {
@@ -204,14 +204,14 @@ public class Main {
                     service.save(newNurse);
                 }
                 case 2 -> {
-                    NurseService service=new NurseService();
+                    NurseService service = new NurseService();
                     service.getAll();
                 }
                 case 3 -> {
                     NurseService service = new NurseService();
                     service.getNursesByDepartment();
                 }
-                case 4 ->{
+                case 4 -> {
                     NurseService service = new NurseService();
                     service.getNursesByShift();
                 }
@@ -220,11 +220,11 @@ public class Main {
                     service.assignNurseToPatient();
                 }
                 case 6 -> {
-                    NurseService service=new NurseService();
+                    NurseService service = new NurseService();
                     service.editNurse();
                 }
                 case 7 -> {
-                    NurseService service=new NurseService();
+                    NurseService service = new NurseService();
                     service.remove();
                 }
                 case 8 -> System.out.println("Returning to Main Menu...");
@@ -248,16 +248,16 @@ public class Main {
             System.out.println("8- Complete Appointment");
             System.out.println("9- View Upcoming Appointments");
             System.out.println("10- Go Back to Main Menu");
-            choice = InputHandler.getIntInput("Enter your choice: " ,1,10);
+            choice = InputHandler.getIntInput("Enter your choice: ", 1, 10);
 
             switch (choice) {
                 case 1 -> {
-                    AppointmentService service=new AppointmentService();
+                    AppointmentService service = new AppointmentService();
                     service.scheduleAppointment();
 
                 }
                 case 2 -> {
-                    AppointmentService service=new AppointmentService();
+                    AppointmentService service = new AppointmentService();
                     service.getAll();
                 }
                 case 3 -> AppointmentService.getAppointmentsByPatientIdInteractive();
@@ -265,14 +265,14 @@ public class Main {
                 case 5 -> AppointmentService.getAppointmentsByDate();
                 case 6 -> AppointmentService.rescheduleAppointment();
                 case 7 -> {
-                    AppointmentService service=new AppointmentService();
+                    AppointmentService service = new AppointmentService();
                     service.cancelAppointment();
                 }
                 case 8 -> {
-                    AppointmentService service=new AppointmentService();
+                    AppointmentService service = new AppointmentService();
                     service.completeAppointment();
                 }
-                case 9 ->  AppointmentService.viewUpcomingAppointments();
+                case 9 -> AppointmentService.viewUpcomingAppointments();
                 case 10 -> System.out.println("Returning to Main Menu...");
                 default -> System.out.println("Invalid choice!");
             }
@@ -292,7 +292,7 @@ public class Main {
             System.out.println("6- Delete Medical Record");
             System.out.println("7- Generate Patient History Report");
             System.out.println("8- Go Back to Main Menu");
-            choice = InputHandler.getIntInput("Enter your choice: ",1,8);
+            choice = InputHandler.getIntInput("Enter your choice: ", 1, 8);
 
             switch (choice) {
                 case 1 -> {
@@ -302,22 +302,22 @@ public class Main {
                     service.saveNewRecord(newRecord);
                 }
                 case 2 -> {
-                    MedicalRecordService service=new MedicalRecordService();
+                    MedicalRecordService service = new MedicalRecordService();
                     service.getAll();
                 }
                 case 3 -> MedicalRecordService.getRecordsByPatientIdInteractive();
                 case 4 -> MedicalRecordService.getRecordsByDoctorId();
                 case 5 -> {
-                            MedicalRecord medicalRecord=new MedicalRecord();
-                            MedicalRecordService service=new MedicalRecordService();
-                            service.editMedicalRecord(medicalRecord);
+                    MedicalRecord medicalRecord = new MedicalRecord();
+                    MedicalRecordService service = new MedicalRecordService();
+                    service.editMedicalRecord(medicalRecord);
                 }
                 case 6 -> {
-                    MedicalRecordService service=new MedicalRecordService();
+                    MedicalRecordService service = new MedicalRecordService();
                     service.remove();
                 }
                 case 7 -> {
-                    MedicalRecordService service=new MedicalRecordService();
+                    MedicalRecordService service = new MedicalRecordService();
                     service.displayPatientHistory();
                 }
                 case 8 -> System.out.println("Returning to Main Menu...");
@@ -339,9 +339,7 @@ public class Main {
             System.out.println("6- Update Department Information");
             System.out.println("7- View Department Statistics");
             System.out.println("8- Go Back to Main Menu");
-            System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine();
+            choice = InputHandler.getIntInput("Enter your choice: ", 1, 8);
 
             switch (choice) {
                 case 1 -> {
@@ -349,11 +347,10 @@ public class Main {
                     DepartmentService service = new DepartmentService();
                     service.addDepartment();
                 }
-                case 2 ->
-                        {
-                            DepartmentService service=new DepartmentService();
-                            service.getAll();
-                        }
+                case 2 -> {
+                    DepartmentService service = new DepartmentService();
+                    service.getAll();
+                }
                 case 3 -> {
                     System.out.print("Enter Department ID to view details:");
                     String deptId = scanner.nextLine();
@@ -364,12 +361,12 @@ public class Main {
                     DepartmentService service = new DepartmentService();
                     service.assignDoctorToDepartment();
                 }
-                case 5 ->  {
+                case 5 -> {
                     DepartmentService service = new DepartmentService();
                     service.assignNurseToDepartment();
                 }
                 case 6 -> {
-                    DepartmentService service=new DepartmentService();
+                    DepartmentService service = new DepartmentService();
                     service.editDepartment();
                 }
                 case 7 -> {
@@ -393,9 +390,8 @@ public class Main {
             System.out.println("4- Patient Statistics");
             System.out.println("5- Emergency Cases Report");
             System.out.println("6- Go Back to Main Menu");
-            System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine();
+            choice = InputHandler.getIntInput("Enter your choice: ", 1, 6);
+
 
             switch (choice) {
                 case 1 -> {
