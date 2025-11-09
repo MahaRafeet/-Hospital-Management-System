@@ -13,7 +13,7 @@ public class Person implements Displayable {
     private String lastName;
     private String address;
     private LocalDate dateOfBirth;
-    private String gender;
+    String gender;
     private String phoneNumber;
     private String email;
 

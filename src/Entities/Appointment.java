@@ -138,6 +138,9 @@ public class Appointment implements Displayable {
         }
     }
 
+    public void setAppointmentDate(LocalDate appointmentDate) {
+        this.appointmentDate = appointmentDate;
+    }
 
     public String getAppointmentTime() {
         return appointmentTime;
@@ -164,6 +167,10 @@ public class Appointment implements Displayable {
             valid = true;
             System.out.println("✅ Appointment time set successfully.");
         }
+    }
+
+    public void setAppointmentTime(String appointmentTime) {
+        this.appointmentTime = appointmentTime;
     }
 
     public String getStatus() {
@@ -196,17 +203,16 @@ public class Appointment implements Displayable {
         this.status = status.trim();
         System.out.println("✅ Status set successfully to: " + this.status);
     }
+    public void setNewStatus(String status){
+        this.status=status;
+    }
 
     public String getReason() {
         return reason;
     }
 
     public void setReason(String reason) {
-        if (ValidationUtils.isNull(reason)) {
-            System.out.println("Reason cannot be null.");
-            return;
-        }
-        this.reason = reason;
+
     }
 
     public String getNotes() {
@@ -274,5 +280,11 @@ public class Appointment implements Displayable {
                 "\nReason: " + reason +
                 "\nStatus: " + status +
                 "\nNotes: " + notes;
+    }
+
+    public void setPatientId(String patientId) {
+    }
+
+    public void setDoctorId(String doctorId) {
     }
 }

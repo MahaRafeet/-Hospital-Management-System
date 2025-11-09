@@ -231,9 +231,11 @@ public class Patient extends Person implements Displayable {
         setAddress(address);
     }
 
-    public void setGender(String s) {
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-    public void setBloodGroup(String s) {
+    public void setBloodGroup(String bloodGroup) {
+        this.bloodGroup = bloodGroup;
     }
 }

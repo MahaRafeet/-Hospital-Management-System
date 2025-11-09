@@ -410,11 +410,10 @@ public class PatientService implements Searchable, Manageable {
             inPatient.setEmergencyContact("97777777" + i);
             inPatient.setRegistrationDate(LocalDate.now().minusMonths(i));
             inPatient.setInsuranceId("INS-" + (2000 + i));
-
             inPatient.setRoomNumber("R" + (i + 1));
             inPatient.setBedNumber("B" + (i + 1));
             inPatient.setAdmissionDate(LocalDate.now().minusDays(i));
-            inPatient.setDischargeDate(null);
+            inPatient.setDischargeDate(LocalDate.now().plusDays(3), inPatient.getAdmissionDate());
             inPatient.setDailyCharges(100.0 + i * 50);
             inPatient.setTotalCharges(inPatient.getDailyCharges());
             inPatient.setPaid(false);
@@ -463,14 +462,17 @@ public class PatientService implements Searchable, Manageable {
             emergencyPatient.setEmergencyContact("95555555" + i);
             emergencyPatient.setRegistrationDate(LocalDate.now().minusMonths(i));
             emergencyPatient.setInsuranceId("INS-" + (4000 + i));
-
+            emergencyPatient.setRoomNumber("R" + (i + 1));
+            emergencyPatient.setBedNumber("B" + (i + 1));
             emergencyPatient.setAdmissionDate(LocalDate.now());
+            emergencyPatient.setDischargeDate(LocalDate.now().plusDays(3), emergencyPatient.getAdmissionDate());
             emergencyPatient.setDailyCharges(200.0 + i * 50);
             emergencyPatient.setTotalCharges(emergencyPatient.getDailyCharges());
             emergencyPatient.setEmergencyType(i % 2 == 0 ? "Accident" : "Heart Attack");
             emergencyPatient.setArrivalMode(i % 2 == 0 ? "Ambulance" : "Walk-in");
             emergencyPatient.setTriageLevel(3 + i);
             emergencyPatient.setAdmittedViaER(i % 2 == 0);
+            emergencyPatient.setAdmittingDoctorId("DOC-" + (300 + i));
 
             patientList.add(emergencyPatient);
         }

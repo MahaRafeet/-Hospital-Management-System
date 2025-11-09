@@ -431,6 +431,8 @@ public class Main {
 
     public static void addSampleDataForAll() {
         PatientService.addSamplePatients();
+       // AppointmentService.addSampleAppointments();
+        DoctorService.addSampleDoctors();
 
 
 

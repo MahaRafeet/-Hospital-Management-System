@@ -6,6 +6,7 @@ import Interfaces.Searchable;
 import Utils.InputHandler;
 import Utils.ValidationUtils;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -418,6 +419,58 @@ public class DoctorService implements Manageable, Searchable {
         System.out.println("Doctor ID not found.");
 
     }
+    public static void addSampleDoctors() {
+        String[] firstNames = {"John", "Alice", "Robert", "Emma", "Liam", "Olivia", "Michael", "Sophia"};
+        String[] lastNames = {"Doe", "Smith", "Brown", "Johnson", "Williams", "Davis", "Miller", "Martinez"};
+        String[] specializations = {"Cardiology", "Orthopedics", "Neurology", "Pediatrics", "General Medicine", "General Medicine", "General Surgery", "OB/GYN"};
+        String[] qualifications = {"MD, Surgery", "MS, Orthopedics", "MD, Neurology", "MD, Pediatrics", "MBBS", "MBBS", "MS, Surgery", "MD, OB/GYN"};
+        String[] departments = {"DEP-001", "DEP-003", "DEP-002", "DEP-004", "DEP-008", "DEP-008", "DEP-008", "DEP-005"};
+
+        for (int i = 0; i < 8; i++) {
+            Doctor doctor;
+
+            // Decide type: 0-2 Surgeons, 3-5 Consultants, 6-7 GPs
+            if (i <= 2) {
+                Surgeon surgeon = new Surgeon();
+                surgeon.setSurgeriesPerformed(10 + i * 10);
+                surgeon.setSurgeryTypes(Arrays.asList("SurgeryType" + (i+1)));
+                surgeon.setOperationTheatreAccess(true);
+                doctor = surgeon;
+            } else if (i <= 5) {
+                Consultant consultant = new Consultant();
+                consultant.setConsultationTypes(Arrays.asList("In-person", "Teleconsultation"));
+                consultant.setOnlineConsultationAvailable(i % 2 == 0);
+                consultant.setConsultationDuration(30 + i*5);
+                doctor = consultant;
+            } else {
+                GeneralPractitioner gp = new GeneralPractitioner();
+                gp.setWalkinAvailable(true);
+                gp.setHomeVisitAvailable(i % 2 == 0);
+                gp.setVaccinationCertified(true);
+                doctor = gp;
+            }
+
+            // Common properties
+            doctor.setFirstName(firstNames[i]);
+            doctor.setLastName(lastNames[i]);
+            doctor.setDateOfBirth(LocalDate.of(1980 + i, (i % 12) + 1, (i % 28) + 1));
+            doctor.setGender(i % 2 == 0 ? "Male" : "Female");
+            doctor.setEmail(firstNames[i].toLowerCase() + "." + lastNames[i].toLowerCase() + "@example.com");
+            doctor.setAddress("123 Doctor Street, City " + (i + 1));
+            doctor.setPhoneNumber("7000000" + (i + 1));
+            doctor.setSpecialization(specializations[i]);
+            doctor.setQualification(qualifications[i]);
+            doctor.setDepartmentId(departments[i % departments.length]);
+            doctor.setAvailableSlots(Arrays.asList("9AM-10AM", "2PM-3PM"));
+            doctor.setConsultationFee(100.0 + i * 20);
+            doctor.setExperienceYears(5 + i);
+
+            doctorList.add(doctor);
+        }
+
+        System.out.println("✅ Sample doctors added successfully! Total doctors: " + doctorList.size());
+    }
+
 }
 
 

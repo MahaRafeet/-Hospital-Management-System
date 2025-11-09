@@ -172,26 +172,57 @@ public class Doctor extends Person implements Displayable {
 
     @Override
     public void displayInfo() {
-        super.displayInfo();
-        System.out.println("Doctor ID         : " + doctorId);
-        System.out.println("Specialization    : " + specialization);
-        System.out.println("Qualification     : " + qualification);
-        System.out.println("Experience Years  : " + experienceYears);
-        System.out.println("Department ID     : " + departmentId);
-        System.out.println("Consultation Fee  : $" + consultationFee);
-        System.out.println("Available Slots   :");
-        if (availableSlots != null && !availableSlots.isEmpty()) {
-            System.out.println(availableSlots);
+        System.out.println("Doctor ID       : " + getDoctorId());
+        System.out.println("Name            : " + getFirstName() + " " + getLastName());
+        System.out.println("Date of Birth   : " + getDateOfBirth());
+        System.out.println("Gender          : " + getGender());
+        System.out.println("Phone Number    : " + getPhoneNumber());
+        System.out.println("Email           : " + getEmail());
+        System.out.println("Address         : " + getAddress());
+        System.out.println("Specialization  : " + getSpecialization());
+        System.out.println("Qualification   : " + getQualification());
+        System.out.println("Experience Years: " + getExperienceYears());
+        System.out.println("Department ID   : " + getDepartmentId());
+        System.out.println("Consultation Fee: $" + getConsultationFee());
+
+        // Available slots nicely
+        if (getAvailableSlots() != null && !getAvailableSlots().isEmpty()) {
+            System.out.println("Available Slots : " + String.join(", ", getAvailableSlots()));
         } else {
-            System.out.println("  None");
+            System.out.println("Available Slots : None");
         }
-        System.out.println("Assigned Patients :");
-        if (assignedPatients != null && !assignedPatients.isEmpty()) {
-            System.out.println(assignedPatients);
+
+        // Assigned patients
+        if (getAssignedPatients() != null && !getAssignedPatients().isEmpty()) {
+            System.out.println("Assigned Patients: " + String.join(", ", getAssignedPatients()));
         } else {
-            System.out.println("  None");
+            System.out.println("Assigned Patients: None");
         }
+
+        // Surgeon-specific
+        if (this instanceof Surgeon surgeon) {
+            System.out.println("Surgeries Performed     : " + surgeon.getSurgeriesPerformed());
+            System.out.println("Surgery Types           : " + String.join(", ", surgeon.getSurgeryTypes()));
+            System.out.println("Operation Theatre Access: " + (surgeon.isOperationTheatreAccess() ? "Yes" : "No"));
+        }
+
+        // Consultant-specific
+        if (this instanceof Consultant consultant) {
+            System.out.println("Consultation Types      : " + String.join(", ", consultant.getConsultationTypes()));
+            System.out.println("Online Consultation     : " + (consultant.isOnlineConsultationAvailable() ? "Yes" : "No"));
+            System.out.println("Consultation Duration   : " + consultant.getConsultationDuration() + " min");
+        }
+
+        // GP-specific
+        if (this instanceof GeneralPractitioner gp) {
+            System.out.println("Walk-in Available       : " + (gp.isWalkinAvailable() ? "Yes" : "No"));
+            System.out.println("Home Visit Available    : " + (gp.isHomeVisitAvailable() ? "Yes" : "No"));
+            System.out.println("Vaccination Certified   : " + (gp.isVaccinationCertified() ? "Yes" : "No"));
+        }
+
+        System.out.println("------------------------------");
     }
+
 
     @Override
     public void displaySummery() {
@@ -228,5 +259,13 @@ public class Doctor extends Person implements Displayable {
             return;
         }
         this.availableSlots.addAll(slots);
+    }
+
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
+
+    }
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

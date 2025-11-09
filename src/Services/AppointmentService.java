@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 import Entities.Appointment;
+import Entities.Doctor;
 import Entities.Patient;
 import Interfaces.Appointable;
 import Interfaces.Manageable;
@@ -428,4 +429,44 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
         }
 
     }
+    public static void addSampleAppointments() {
+        String[] reasons = {
+                "General Checkup", "Follow-up Visit", "Lab Results", "Flu Symptoms",
+                "Injury Treatment", "Routine Exam", "Medication Review",
+                "Post-surgery Check", "Vaccination", "Consultation"
+        };
+
+        String[] statuses = {"Scheduled", "Completed", "Canceled"};
+
+        for (int i = 0; i < 15; i++) {
+            Appointment appointment = new Appointment();
+
+            // 🔹 Pick random patient & doctor from existing lists
+            Patient patient = PatientService.patientList.get(i % PatientService.patientList.size());
+            Doctor doctor = DoctorService.doctorList.get(i % DoctorService.doctorList.size());
+
+            // Assign their IDs to the appointment
+            appointment.setPatientId(patient.getPatientId());
+            appointment.setDoctorId(doctor.getDoctorId());
+
+            // 🔹 Appointment date: some past, some future
+            LocalDate date = LocalDate.now().minusDays(5).plusDays(i);
+            appointment.setAppointmentDate(date);
+
+            // 🔹 Appointment time: cycle from 9:00 to 16:00
+            String time = (9 + (i % 8)) + ":00";
+            appointment.setAppointmentTime(time);
+
+            // 🔹 Random reason & status
+            appointment.setReason(reasons[i % reasons.length]);
+            appointment.setNewStatus(statuses[i % statuses.length]);
+            appointment.setNotes("Auto-generated sample appointment for patient " + patient.getPatientId());
+
+            // 🔹 Add to the global list
+            appointmentList.add(appointment);
+        }
+
+        System.out.println("Sample appointments added successfully! Total: " + appointmentList.size());
+    }
+
 }

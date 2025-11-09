@@ -84,15 +84,21 @@ public class InPatient extends Patient implements Displayable, Billable {
         return dischargeDate;
     }
 
-    public void setDischargeDate(LocalDate dischargeDate) {
+    public void setDischargeDate(LocalDate dischargeDate, LocalDate admissionDate) {
         if (dischargeDate == null) {
-            System.out.println("Discharge Date can not be null");
+            System.out.println(" Discharge date cannot be null");
+            return;
         }
-        if (ValidationUtils.isFutureDate(dischargeDate)) {
-            System.out.println("Discharge date can not be in the future");
+
+        if (dischargeDate.isBefore(admissionDate)) {
+            System.out.println("Discharge date cannot be before admission date");
+            return;
         }
+
         this.dischargeDate = dischargeDate;
     }
+
+
 
     public String getRoomNumber() {
         return roomNumber;
