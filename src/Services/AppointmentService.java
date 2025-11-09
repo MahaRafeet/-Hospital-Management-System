@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 import Entities.Appointment;
+import Entities.Patient;
 import Interfaces.Appointable;
 import Interfaces.Manageable;
 import Interfaces.Searchable;
@@ -21,6 +22,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
     public static Appointment addAppointment() {
         Appointment appointment = new Appointment();
         System.out.println("\n===== Add New Appointment =====");
+
         appointment.setPatientId();
         appointment.setDoctorId();
         appointment.setAppointmentDate();

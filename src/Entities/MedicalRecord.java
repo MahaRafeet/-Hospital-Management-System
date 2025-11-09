@@ -53,7 +53,7 @@ public class MedicalRecord implements Displayable {
             patientId = scanner.nextLine().trim();
 
             if (!ValidationUtils.isValidString(patientId)) {
-                System.out.println("⚠️ Invalid patient ID. It cannot be null or empty. Please try again.");
+                System.out.println(" Invalid patient ID. It cannot be null or empty. Please try again.");
                 continue;
             }
 
@@ -90,7 +90,7 @@ public class MedicalRecord implements Displayable {
             doctorId = scanner.nextLine().trim();
 
             if (!ValidationUtils.isValidString(doctorId)) {
-                System.out.println("⚠️ Invalid doctor ID. It cannot be null or empty. Please try again.");
+                System.out.println("Invalid doctor ID. It cannot be null or empty. Please try again.");
                 continue;
             }
 
@@ -105,9 +105,9 @@ public class MedicalRecord implements Displayable {
             if (found) {
                 this.doctorId = doctorId;
                 valid = true;
-                System.out.println("✅ Doctor ID verified successfully.");
+                System.out.println(" Doctor ID verified successfully.");
             } else {
-                System.out.println("⚠️ Doctor ID not found in the system. Please try again.");
+                System.out.println("Doctor ID not found in the system. Please try again.");
             }
         }
     }
@@ -147,7 +147,7 @@ public class MedicalRecord implements Displayable {
 
     public void setPrescription(String prescription) {
         if (ValidationUtils.isNull(prescription)) {
-            System.out.println("⚠ Prescription is empty (no medicine prescribed).");
+            System.out.println("Prescription is empty (no medicine prescribed).");
             return;
         }
         this.prescription = prescription.trim();
@@ -155,6 +155,7 @@ public class MedicalRecord implements Displayable {
     }
 
     public String getTestResults() {
+
         return testResults;
     }
 
@@ -171,7 +172,11 @@ public class MedicalRecord implements Displayable {
     }
 
     public void setNotes(String notes) {
-        this.notes = notes;
+        if (ValidationUtils.isNull(notes)) {
+            System.out.println("Test Note not provided.");
+            return;
+        }
+        this.notes = notes.trim();
     }
 
     @Override

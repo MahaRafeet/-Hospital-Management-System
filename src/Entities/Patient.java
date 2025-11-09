@@ -212,6 +212,7 @@ public class Patient extends Person implements Displayable {
     @Override
     public void displaySummery() {
         System.out.println("Patient ID :" + patientId);
+        System.out.println("Patient name : " + getFirstName()+ " "+ getLastName());
         System.out.println("Blood Group : " + bloodGroup);
     }
 

@@ -21,6 +21,11 @@ public class InputHandler {
             }
         }
     }
+    public static String getOptionalStringInput(String message) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print(message);
+        return scanner.nextLine().trim(); // no validation, user can leave empty
+    }
 
     /* ===========================
        Integer Input

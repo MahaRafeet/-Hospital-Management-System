@@ -32,7 +32,7 @@ public class NurseService implements Searchable, Manageable {
         nurse.setDepartmentId();
         nurse.setShift(InputHandler.getStringInput("Enter Nurse shift: "));
 
-        String assignedPatientInput = InputHandler.getStringInput(
+        String assignedPatientInput = InputHandler.getOptionalStringInput(
                 "Enter assigned Patients (comma separated, or leave empty): "
         );
         nurse.setAssignedPatients(
