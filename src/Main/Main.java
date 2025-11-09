@@ -54,9 +54,7 @@ public class Main {
             System.out.println("8- Remove Patient");
             System.out.println("9- View Patient Medical History");
             System.out.println("10- Go Back to Main Menu");
-            System.out.print("Enter your choice: ");
-            patientChoice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            patientChoice = InputHandler.getIntInput("Please Enter your choice:",1,10);
 
             switch (patientChoice) {
                 case 1 -> {
@@ -124,8 +122,7 @@ public class Main {
             System.out.println("10- Remove Doctor");
             System.out.println("11- Go Back to Main Menu");
             System.out.print("Enter your choice: ");
-            doctorChoice = scanner.nextInt();
-            scanner.nextLine();
+            doctorChoice = InputHandler.getIntInput("Please Enter your choice:" ,1,11);
 
             switch (doctorChoice) {
                 case 1 -> {
