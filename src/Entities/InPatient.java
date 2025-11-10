@@ -2,6 +2,7 @@ package Entities;
 
 import Interfaces.Billable;
 import Interfaces.Displayable;
+import Utils.InputHandler;
 import Utils.ValidationUtils;
 
 import java.time.LocalDate;
@@ -59,10 +60,9 @@ public class InPatient extends Patient implements Displayable, Billable {
         return isPaid;
     }
 
-    public void setPaid(boolean paid) {
-        isPaid = paid;
+    public void setPaid() {
+        this.isPaid = true;
     }
-
     public LocalDate getAdmissionDate() {
         return admissionDate;
     }
@@ -204,15 +204,27 @@ public class InPatient extends Patient implements Displayable, Billable {
     }
 
     @Override
-    public void processPayment(double amount) {
-        System.out.println("Processing payment of amount: " + amount + " OMR");
+    public void processPayment() {
+        if (totalCharges == 0) {
+            System.out.println(" Please calculate charges first.");
+            return;
+        }
+
+        double amount = InputHandler.getDoubleInput("Enter payment amount (OMR): ");
+
+        System.out.println("\nProcessing payment of: " + amount + " OMR");
+
         if (amount >= totalCharges) {
             isPaid = true;
             double change = amount - totalCharges;
             System.out.println("Payment successful! Change: " + change + " OMR");
+            setPaid(); // mark as paid
+            generateBill(); // show final bill
         } else {
             double remaining = totalCharges - amount;
             System.out.println("Partial payment received. Remaining balance: " + remaining + " OMR");
+            isPaid = false;
+            generateBill(); // show partial bill
         }
     }
 }

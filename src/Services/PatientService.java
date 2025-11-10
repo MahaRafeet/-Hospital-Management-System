@@ -64,8 +64,7 @@ public class PatientService implements Searchable, Manageable {
 
         // Total charges
         inPatient.calculateCharges(); // initialize
-        inPatient.setPaid();
-
+        inPatient.processPayment();
         System.out.println("InPatient added successfully!");
     }
 
@@ -169,7 +168,7 @@ public class PatientService implements Searchable, Manageable {
                 .findFirst();
 
         if (patientOpt.isEmpty()) {
-            System.out.println("❌ The patient ID does not exist.");
+            System.out.println("The patient ID does not exist.");
             return null;
         }
 
@@ -397,7 +396,6 @@ public class PatientService implements Searchable, Manageable {
         // ========== 3 InPatients ==========
         for (int i = 0; i < 3; i++) {
             InPatient inPatient = new InPatient();
-            inPatient.getPatientId();
             inPatient.setFirstName("InPatientFirst" + i);
             inPatient.setLastName("InPatientLast" + i);
             inPatient.setEmail("inpatient" + i + "@example.com");
@@ -415,8 +413,9 @@ public class PatientService implements Searchable, Manageable {
             inPatient.setAdmissionDate(LocalDate.now().minusDays(i));
             inPatient.setDischargeDate(LocalDate.now().plusDays(3), inPatient.getAdmissionDate());
             inPatient.setDailyCharges(100.0 + i * 50);
-            inPatient.setTotalCharges(inPatient.getDailyCharges());
-            inPatient.setPaid(false);
+            inPatient.calculateCharges(); // calculate totalCharges properly
+            inPatient.setPaid();      // Mark as paid automatically
+            inPatient.processPayment();
             inPatient.setAdmittingDoctorId("DOC-" + (300 + i));
 
             patientList.add(inPatient);
@@ -438,7 +437,6 @@ public class PatientService implements Searchable, Manageable {
             outPatient.setEmergencyContact("96666666" + i);
             outPatient.setRegistrationDate(LocalDate.now().minusMonths(i));
             outPatient.setInsuranceId("INS-" + (3000 + i));
-
             outPatient.setVisitCount(i + 1);
             outPatient.setLastVisitDate(LocalDate.now().minusDays(i * 10));
             outPatient.setPreferredDoctorId("DOC-" + (400 + i));
