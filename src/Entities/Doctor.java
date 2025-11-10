@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static Services.DoctorService.doctorList;
+
 public class Doctor extends Person implements Displayable {
     private String doctorId;
     private String specialization;
@@ -172,100 +174,86 @@ public class Doctor extends Person implements Displayable {
 
     @Override
     public void displayInfo() {
-        System.out.println("Doctor ID       : " + getDoctorId());
-        System.out.println("Name            : " + getFirstName() + " " + getLastName());
-        System.out.println("Date of Birth   : " + getDateOfBirth());
-        System.out.println("Gender          : " + getGender());
-        System.out.println("Phone Number    : " + getPhoneNumber());
-        System.out.println("Email           : " + getEmail());
-        System.out.println("Address         : " + getAddress());
-        System.out.println("Specialization  : " + getSpecialization());
-        System.out.println("Qualification   : " + getQualification());
-        System.out.println("Experience Years: " + getExperienceYears());
-        System.out.println("Department ID   : " + getDepartmentId());
-        System.out.println("Consultation Fee: $" + getConsultationFee());
+        StringBuilder sb = new StringBuilder();
 
-        // Available slots nicely
+        sb.append("===== Doctor Info =====\n");
+        sb.append(String.format("Doctor ID       : %s\n", getDoctorId()));
+        sb.append(String.format("Name            : %s %s\n", getFirstName(), getLastName()));
+        sb.append(String.format("Date of Birth   : %s\n", getDateOfBirth()));
+        sb.append(String.format("Gender          : %s\n", getGender()));
+        sb.append(String.format("Phone Number    : %s\n", getPhoneNumber()));
+        sb.append(String.format("Email           : %s\n", getEmail()));
+        sb.append(String.format("Address         : %s\n", getAddress()));
+        sb.append(String.format("Specialization  : %s\n", getSpecialization()));
+        sb.append(String.format("Qualification   : %s\n", getQualification()));
+        sb.append(String.format("Experience Years: %d\n", getExperienceYears()));
+        sb.append(String.format("Department ID   : %s\n", getDepartmentId()));
+        sb.append(String.format("Consultation Fee: $%.2f\n", getConsultationFee()));
+
+        sb.append("Available Slots : ");
         if (getAvailableSlots() != null && !getAvailableSlots().isEmpty()) {
-            System.out.println("Available Slots : " + String.join(", ", getAvailableSlots()));
+            sb.append(String.join(", ", getAvailableSlots()));
         } else {
-            System.out.println("Available Slots : None");
+            sb.append("None");
         }
+        sb.append("\n");
 
-        // Assigned patients
+        sb.append("Assigned Patients: ");
         if (getAssignedPatients() != null && !getAssignedPatients().isEmpty()) {
-            System.out.println("Assigned Patients: " + String.join(", ", getAssignedPatients()));
+            sb.append(String.join(", ", getAssignedPatients()));
         } else {
-            System.out.println("Assigned Patients: None");
+            sb.append("None");
         }
-
-        // Surgeon-specific
-        if (this instanceof Surgeon surgeon) {
-            System.out.println("Surgeries Performed     : " + surgeon.getSurgeriesPerformed());
-            System.out.println("Surgery Types           : " + String.join(", ", surgeon.getSurgeryTypes()));
-            System.out.println("Operation Theatre Access: " + (surgeon.isOperationTheatreAccess() ? "Yes" : "No"));
-        }
-
-        // Consultant-specific
-        if (this instanceof Consultant consultant) {
-            System.out.println("Consultation Types      : " + String.join(", ", consultant.getConsultationTypes()));
-            System.out.println("Online Consultation     : " + (consultant.isOnlineConsultationAvailable() ? "Yes" : "No"));
-            System.out.println("Consultation Duration   : " + consultant.getConsultationDuration() + " min");
-        }
-
-        // GP-specific
-        if (this instanceof GeneralPractitioner gp) {
-            System.out.println("Walk-in Available       : " + (gp.isWalkinAvailable() ? "Yes" : "No"));
-            System.out.println("Home Visit Available    : " + (gp.isHomeVisitAvailable() ? "Yes" : "No"));
-            System.out.println("Vaccination Certified   : " + (gp.isVaccinationCertified() ? "Yes" : "No"));
-        }
-
-        System.out.println("------------------------------");
+        sb.append("\n");
+        sb.append("------------------------------\n");
+        System.out.print(sb.toString());
     }
+
+
 
 
     @Override
-    public void displaySummery() {
-        System.out.println("Doctor ID       : " + doctorId);
-        System.out.println("Specialization  : " + specialization);
-        System.out.println("Qualification   : " + qualification);
-        System.out.println("Experience Years: " + experienceYears);
-    }
+public void displaySummery() {
+    System.out.println("Doctor ID       : " + doctorId);
+    System.out.println("Specialization  : " + specialization);
+    System.out.println("Qualification   : " + qualification);
+    System.out.println("Experience Years: " + experienceYears);
+}
 
-    public void updateFee(double fee) {
-        if (!ValidationUtils.isPositive(fee)) {
-            System.out.println("Consultation fee cannot be negative.");
-            return;
-        }
-        this.consultationFee = fee;
+public void updateFee(double fee) {
+    if (!ValidationUtils.isPositive(fee)) {
+        System.out.println("Consultation fee cannot be negative.");
+        return;
     }
+    this.consultationFee = fee;
+}
 
-    public void updateFee(double fee, String reason) {
-        this.consultationFee = fee;
-        System.out.println("Consultation fee updated to $" + fee + " due to " + reason);
-    }
+public void updateFee(double fee, String reason) {
+    this.consultationFee = fee;
+    System.out.println("Consultation fee updated to $" + fee + " due to " + reason);
+}
 
-    public void addAvailability(String slot) {
-        if (!ValidationUtils.isValidString(slot)) {
-            System.out.println("Slot cannot be null or empty");
-            return;
-        }
-        this.availableSlots.add(slot);
+public void addAvailability(String slot) {
+    if (!ValidationUtils.isValidString(slot)) {
+        System.out.println("Slot cannot be null or empty");
+        return;
     }
+    this.availableSlots.add(slot);
+}
 
-    public void addAvailability(List<String> slots) {
-        if (ValidationUtils.isNull(slots) || slots.isEmpty()) {
-            System.out.println("Slots list cannot be null or empty");
-            return;
-        }
-        this.availableSlots.addAll(slots);
+public void addAvailability(List<String> slots) {
+    if (ValidationUtils.isNull(slots) || slots.isEmpty()) {
+        System.out.println("Slots list cannot be null or empty");
+        return;
     }
+    this.availableSlots.addAll(slots);
+}
 
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
+public void setDepartmentId(String departmentId) {
+    this.departmentId = departmentId;
 
-    }
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+}
+public void setGender(String gender) {
+    this.gender = gender;
+}
 }

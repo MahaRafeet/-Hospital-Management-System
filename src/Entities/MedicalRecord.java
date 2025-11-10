@@ -74,6 +74,13 @@ public class MedicalRecord implements Displayable {
             }
         }
     }
+    public void setPatientId(String patientId ){
+        this.patientId=patientId;
+    }
+    public void setDoctorRecId(String doctorRecId ){
+        this.patientId=doctorRecId;
+    }
+
 
 
     public String getDoctorId() {

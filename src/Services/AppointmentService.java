@@ -441,32 +441,39 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
         for (int i = 0; i < 15; i++) {
             Appointment appointment = new Appointment();
 
-            // 🔹 Pick random patient & doctor from existing lists
-            Patient patient = PatientService.patientList.get(i % PatientService.patientList.size());
-            Doctor doctor = DoctorService.doctorList.get(i % DoctorService.doctorList.size());
+            // 🔹 Pick patient and doctor safely
+            String patientId;
+            String doctorId;
 
-            // Assign their IDs to the appointment
-            appointment.setPatientId(patient.getPatientId());
-            appointment.setDoctorId(doctor.getDoctorId());
+            if (!PatientService.patientList.isEmpty()) {
+                Patient patient = PatientService.patientList.get(i % PatientService.patientList.size());
+                patientId = patient.getPatientId();
+            } else {
+                patientId = "PAT-" + String.format("%04d", i + 1);
+            }
 
-            // 🔹 Appointment date: some past, some future
-            LocalDate date = LocalDate.now().minusDays(5).plusDays(i);
-            appointment.setAppointmentDate(date);
+            if (!DoctorService.doctorList.isEmpty()) {
+                Doctor doctor = DoctorService.doctorList.get(i % DoctorService.doctorList.size());
+                doctorId = doctor.getDoctorId();
+            } else {
+                doctorId = "DOC-" + String.format("%04d", i + 1);
+            }
 
-            // 🔹 Appointment time: cycle from 9:00 to 16:00
-            String time = (9 + (i % 8)) + ":00";
-            appointment.setAppointmentTime(time);
-
-            // 🔹 Random reason & status
+            // 🔹 Assign IDs and other details
+            appointment.setPatientId(patientId);
+            appointment.setDoctorId(doctorId);
+            appointment.setAppointmentDate(LocalDate.now().minusDays(5).plusDays(i));
+            appointment.setAppointmentTime(String.format("%02d:00", 9 + (i % 8)));
             appointment.setReason(reasons[i % reasons.length]);
             appointment.setNewStatus(statuses[i % statuses.length]);
-            appointment.setNotes("Auto-generated sample appointment for patient " + patient.getPatientId());
+            appointment.setNotes("Auto-generated sample appointment for patient " + patientId);
 
-            // 🔹 Add to the global list
             appointmentList.add(appointment);
         }
 
-        System.out.println("Sample appointments added successfully! Total: " + appointmentList.size());
+        System.out.println("✅ Sample appointments added successfully! Total: " + appointmentList.size());
     }
+
+
 
 }

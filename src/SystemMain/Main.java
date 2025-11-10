@@ -427,14 +427,14 @@ public class Main {
             }
         }
     }
-
-
+    
     public static void addSampleDataForAll() {
-        PatientService.addSamplePatients();
-       // AppointmentService.addSampleAppointments();
+        DepartmentService.addSampleDepartments();
         DoctorService.addSampleDoctors();
-
-
+        NurseService.addSampleNurses();
+        PatientService.addSamplePatients();
+        MedicalRecordService.addSampleMedicalRecords();
+        AppointmentService.addSampleAppointments();
 
     }
 }

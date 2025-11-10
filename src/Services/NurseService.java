@@ -294,6 +294,34 @@ public class NurseService implements Searchable, Manageable {
         }
 
     }
+    public static void addSampleNurses() {
+
+        String[] firstNames = {"Sophia", "James", "Olivia", "Ethan", "Ava"};
+        String[] lastNames = {"Johnson", "Brown", "Davis", "Wilson", "Miller"};
+        String[] qualifications = {"RN", "BSN", "Diploma in Nursing", "MSN", "Associate Nursing"};
+        String[] departments = {"DEP-001", "DEP-002", "DEP-004", "DEP-005", "DEP-006","DEP-007","DEP-008"};
+        String[] shifts = {"Morning", "Evening", "Night", "Morning", "Evening"};
+
+        for (int i = 0; i < 5; i++) {
+            Nurse nurse = new Nurse();
+            nurse.setFirstName(firstNames[i]);
+            nurse.setLastName(lastNames[i]);
+            nurse.setGender(i % 2 == 0 ? "Female" : "Male");
+            nurse.setDateOfBirth(LocalDate.of(1990 + i, (i % 12) + 1, (i % 28) + 1));
+            nurse.setAddress("Nurse Street " + (i + 1) + ", City");
+            nurse.setEmail(firstNames[i].toLowerCase() + "." + lastNames[i].toLowerCase() + "@hospital.com");
+            nurse.setPhoneNumber("7200000" + (i + 1));
+            nurse.setQualification(qualifications[i]);
+            nurse.setDepartmentId(departments[i]);
+            nurse.setShift(shifts[i]);
+            nurse.setAssignedPatients(new ArrayList<>(Arrays.asList("PAT-10" + (i + 1), "PAT-20" + (i + 1))));
+
+            nurseList.add(nurse);
+        }
+
+        System.out.println("✅ 5 sample nurses added successfully.");
+    }
+
 }
 
 

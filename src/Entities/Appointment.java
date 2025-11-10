@@ -212,6 +212,7 @@ public class Appointment implements Displayable {
     }
 
     public void setReason(String reason) {
+        this.reason=reason;
 
     }
 
@@ -283,8 +284,10 @@ public class Appointment implements Displayable {
     }
 
     public void setPatientId(String patientId) {
+        this.patientId=patientId;
     }
 
     public void setDoctorId(String doctorId) {
+        this.doctorId=doctorId;
     }
 }

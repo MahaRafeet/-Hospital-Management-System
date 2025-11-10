@@ -157,4 +157,16 @@ public class Nurse extends Person implements Displayable {
         System.out.println("Department ID: " + departmentId);
         System.out.println("Shift: " + shift);
     }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setDepartmentId(String departmentId) {
+        this.departmentId=departmentId;
+    }
 }

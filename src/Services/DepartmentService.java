@@ -321,6 +321,29 @@ public class DepartmentService implements Manageable, Searchable {
         }
 
     }
+    public static void addSampleDepartments() {
+        // Sample data
+        String[] names = {"Cardiology", "Neurology", "Pediatrics"};
+        int[] bedCapacities = {50, 40, 30};
+
+        for (int i = 0; i < names.length; i++) {
+            String id = String.format("DEP-%03d", departmentList.size() + 1);
+            Department dept = new Department(id, names[i]);
+            dept.setDepartmentId(id);
+            dept.setDepartmentName(names[i]);
+            dept.setBedCapacity(bedCapacities[i]);
+            dept.setAvailableBeds(bedCapacities[i]); // Initially all beds available
+
+            // Optional: add fake doctor and nurse IDs
+            dept.setDoctors(new ArrayList<>(List.of("DOC-" + (100 + i))));
+            dept.setNurses(new ArrayList<>(List.of("NUR-" + (200 + i))));
+
+            departmentList.add(dept);
+        }
+
+        System.out.println("✅ Sample departments added successfully! Total: " + departmentList.size());
+    }
+
 }
 
 

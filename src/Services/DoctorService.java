@@ -420,56 +420,95 @@ public class DoctorService implements Manageable, Searchable {
 
     }
     public static void addSampleDoctors() {
+        // Common data
         String[] firstNames = {"John", "Alice", "Robert", "Emma", "Liam", "Olivia", "Michael", "Sophia"};
         String[] lastNames = {"Doe", "Smith", "Brown", "Johnson", "Williams", "Davis", "Miller", "Martinez"};
-        String[] specializations = {"Cardiology", "Orthopedics", "Neurology", "Pediatrics", "General Medicine", "General Medicine", "General Surgery", "OB/GYN"};
-        String[] qualifications = {"MD, Surgery", "MS, Orthopedics", "MD, Neurology", "MD, Pediatrics", "MBBS", "MBBS", "MS, Surgery", "MD, OB/GYN"};
-        String[] departments = {"DEP-001", "DEP-003", "DEP-002", "DEP-004", "DEP-008", "DEP-008", "DEP-008", "DEP-005"};
+        String[] specializations = {"Cardiology", "Orthopedics", "Neurology", "Pediatrics",
+                "General Medicine", "General Medicine", "General Surgery", "OB/GYN"};
+        String[] qualifications = {"MD, Surgery", "MS, Orthopedics", "MD, Neurology", "MD, Pediatrics",
+                "MBBS", "MBBS", "MS, Surgery", "MD, OB/GYN"};
+        String[] departments = {"DEP-001", "DEP-003", "DEP-002", "DEP-004",
+                "DEP-008", "DEP-008", "DEP-008", "DEP-005"};
 
-        for (int i = 0; i < 8; i++) {
-            Doctor doctor;
+        int index = 0;
 
-            // Decide type: 0-2 Surgeons, 3-5 Consultants, 6-7 GPs
-            if (i <= 2) {
-                Surgeon surgeon = new Surgeon();
-                surgeon.setSurgeriesPerformed(10 + i * 10);
-                surgeon.setSurgeryTypes(Arrays.asList("SurgeryType" + (i+1)));
-                surgeon.setOperationTheatreAccess(true);
-                doctor = surgeon;
-            } else if (i <= 5) {
-                Consultant consultant = new Consultant();
-                consultant.setConsultationTypes(Arrays.asList("In-person", "Teleconsultation"));
-                consultant.setOnlineConsultationAvailable(i % 2 == 0);
-                consultant.setConsultationDuration(30 + i*5);
-                doctor = consultant;
-            } else {
-                GeneralPractitioner gp = new GeneralPractitioner();
-                gp.setWalkinAvailable(true);
-                gp.setHomeVisitAvailable(i % 2 == 0);
-                gp.setVaccinationCertified(true);
-                doctor = gp;
-            }
-
+        // 1️⃣ Add Surgeons (first 3)
+        for (int i = 0; i < 3; i++) {
+            Surgeon surgeon = new Surgeon();
+            surgeon.setSurgeriesPerformed(10 + i * 10);
+            surgeon.setSurgeryTypes(Arrays.asList("SurgeryType" + (i + 1)));
+            surgeon.setOperationTheatreAccess(true);
             // Common properties
-            doctor.setFirstName(firstNames[i]);
-            doctor.setLastName(lastNames[i]);
-            doctor.setDateOfBirth(LocalDate.of(1980 + i, (i % 12) + 1, (i % 28) + 1));
-            doctor.setGender(i % 2 == 0 ? "Male" : "Female");
-            doctor.setEmail(firstNames[i].toLowerCase() + "." + lastNames[i].toLowerCase() + "@example.com");
-            doctor.setAddress("123 Doctor Street, City " + (i + 1));
-            doctor.setPhoneNumber("7000000" + (i + 1));
-            doctor.setSpecialization(specializations[i]);
-            doctor.setQualification(qualifications[i]);
-            doctor.setDepartmentId(departments[i % departments.length]);
-            doctor.setAvailableSlots(Arrays.asList("9AM-10AM", "2PM-3PM"));
-            doctor.setConsultationFee(100.0 + i * 20);
-            doctor.setExperienceYears(5 + i);
+            surgeon.setFirstName(firstNames[index]);
+            surgeon.setLastName(lastNames[index]);
+            surgeon.setDateOfBirth(LocalDate.of(1980 + index, (index % 12) + 1, (index % 28) + 1));
+            surgeon.setGender(index % 2 == 0 ? "Male" : "Female");
+            surgeon.setEmail(firstNames[index].toLowerCase() + "." + lastNames[index].toLowerCase() + "@example.com");
+            surgeon.setAddress("123 Doctor Street, City " + (index + 1));
+            surgeon.setPhoneNumber("7000000" + (index + 1));
+            surgeon.setSpecialization(specializations[index]);
+            surgeon.setQualification(qualifications[index]);
+            surgeon.setDepartmentId(departments[index % departments.length]);
+            surgeon.setAvailableSlots(Arrays.asList("9AM-10AM", "2PM-3PM"));
+            surgeon.setConsultationFee(100.0 + index * 20);
+            surgeon.setExperienceYears(5 + index);
 
-            doctorList.add(doctor);
+            doctorList.add(surgeon);
+            index++;
+        }
+        // 2️⃣ Add Consultants (next 3)
+        for (int i = 3; i < 6; i++) {
+            Consultant consultant = new Consultant();
+            consultant.setConsultationTypes(Arrays.asList("In-person", "Teleconsultation"));
+            consultant.setOnlineConsultationAvailable(i % 2 == 0);
+            consultant.setConsultationDuration(30 + i * 5);
+
+            consultant.setFirstName(firstNames[i]);
+            consultant.setLastName(lastNames[i]);
+            consultant.setDateOfBirth(LocalDate.of(1980 + i, (i % 12) + 1, (i % 28) + 1));
+            consultant.setGender(i % 2 == 0 ? "Male" : "Female");
+            consultant.setEmail(firstNames[i].toLowerCase() + "." + lastNames[i].toLowerCase() + "@example.com");
+            consultant.setAddress("123 Doctor Street, City " + (i + 1));
+            consultant.setPhoneNumber("7000000" + (i + 1));
+            consultant.setSpecialization(specializations[i]);
+            consultant.setQualification(qualifications[i]);
+            consultant.setDepartmentId(departments[i]);
+            consultant.setAvailableSlots(Arrays.asList("9AM-10AM", "2PM-3PM"));
+            consultant.setConsultationFee(100.0 + i * 20);
+            consultant.setExperienceYears(5 + i);
+
+            doctorList.add(consultant);
         }
 
-        System.out.println("✅ Sample doctors added successfully! Total doctors: " + doctorList.size());
+        // 3️⃣ Add General Practitioners (remaining)
+        for (int i = 0; i < 2; i++) {
+
+            GeneralPractitioner gp = new GeneralPractitioner();
+            gp.setWalkinAvailable(true);
+            gp.setHomeVisitAvailable(i % 2 == 0);
+            gp.setVaccinationCertified(true);
+
+            // Common properties
+            gp.setFirstName(firstNames[index]);
+            gp.setLastName(lastNames[index]);
+            gp.setDateOfBirth(LocalDate.of(1980 + index, (index % 12) + 1, (index % 28) + 1));
+            gp.setGender(index % 2 == 0 ? "Male" : "Female");
+            gp.setEmail(firstNames[index].toLowerCase() + "." + lastNames[index].toLowerCase() + "@example.com");
+            gp.setAddress("123 Doctor Street, City " + (index + 1));
+            gp.setPhoneNumber("7000000" + (index + 1));
+            gp.setSpecialization(specializations[index]);
+            gp.setQualification(qualifications[index]);
+            gp.setDepartmentId(departments[index % departments.length]);
+            gp.setAvailableSlots(Arrays.asList("9AM-10AM", "2PM-3PM"));
+            gp.setConsultationFee(100.0 + index * 20);
+            gp.setExperienceYears(5 + index);
+
+            doctorList.add(gp);
+            index++;
+        }
     }
+
+
 
 }
 

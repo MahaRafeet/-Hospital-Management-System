@@ -64,6 +64,7 @@ public class Consultant extends Doctor implements Displayable {
 
     @Override
     public void displayInfo() {
+        super.displayInfo();
         System.out.println("Consultation types :" + consultationTypes);
         System.out.println("Is there online consultation Available :" + isOnlineConsultationAvailable());
         System.out.println("Consultation Duration : " + consultationDuration);

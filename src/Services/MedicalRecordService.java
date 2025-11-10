@@ -255,8 +255,58 @@ public class MedicalRecordService implements Manageable, Searchable {
             }
         }
         if (!isFound) {
-            System.out.println("⚠️ Medical Record ID not found.");
+            System.out.println(" Medical Record ID not found.");
         }
 
     }
+    public static void addSampleMedicalRecords() {
+        String[] diagnoses = {
+                "Flu", "Cold", "Back Pain", "Headache", "Hypertension", "Diabetes",
+                "Asthma", "Allergy", "Fracture", "Stomach Ache", "Skin Rash", "Eye Infection"
+        };
+
+        String[] prescriptions = {
+                "Paracetamol", "Ibuprofen", "Antibiotics", "Cough Syrup", "Insulin",
+                "Inhaler", "Antihistamine", "Painkillers", "Bandages", "Probiotics",
+                "Cream", "Eye Drops"
+        };
+
+        String[] testResults = {
+                "Normal", "High BP", "Blood Sugar High", "X-ray Clear", "MRI Required",
+                "Allergy Test Positive", "Normal", "Abnormal", "Fracture Confirmed",
+                "Infection Detected", "Rash Test Positive", "Vision Reduced"
+        };
+
+        String[] notes = {
+                "Follow-up in 1 week", "Patient advised rest", "Monitor daily", "Urgent care needed",
+                "Routine check", "Dietary changes recommended", "Medication adjusted", "Physical therapy",
+                "Surgery suggested", "Observation required", "Referral to specialist", "No additional notes"
+        };
+
+        for (int i = 0; i < 12; i++) {
+            MedicalRecord record = new MedicalRecord();
+
+            // Assign patient and doctor IDs even if the lists are empty
+            String patientId = (PatientService.patientList.isEmpty())
+                    ? "PAI-" + String.format("%05d", i + 1)
+                    : PatientService.patientList.get(i % PatientService.patientList.size()).getPatientId();
+            String doctorId = (DoctorService.doctorList.isEmpty())
+                    ? "DOC-" + String.format("%05d", i + 1)
+                    : DoctorService.doctorList.get(i % DoctorService.doctorList.size()).getDoctorId();
+
+            record.setPatientId(patientId);
+            record.setDoctorRecId(doctorId);
+            record.setVisitDate(LocalDate.now().minusDays(i * 2)); // different dates
+            record.setDiagnosis(diagnoses[i % diagnoses.length]);
+            record.setPrescription(prescriptions[i % prescriptions.length]);
+            record.setTestResults(testResults[i % testResults.length]);
+            record.setNotes(notes[i % notes.length]);
+
+            medicalRecordList.add(record);
+        }
+
+        System.out.println("Sample medical records added successfully! Total records: " + medicalRecordList.size());
+    }
+
+
 }
