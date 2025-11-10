@@ -108,6 +108,9 @@ public class Department implements Displayable {
             break;
         }
     }
+    public void setHeadDoctorId(String headId){
+        this.headDoctorId=headId;
+    }
 
 
     public List<String> getDoctors() {
@@ -146,6 +149,9 @@ public class Department implements Displayable {
         System.out.println("Nurses assigned successfully!");
 
     }
+    public void setDepNurse(List<String> nurses){
+        this.nurses=nurses;
+    }
 
     public int getBedCapacity() {
         return bedCapacity;
@@ -177,7 +183,6 @@ public class Department implements Displayable {
         }
 
         this.availableBeds = availableBeds;
-        System.out.println("✅ Available beds set to: " + availableBeds);
     }
 
     @Override

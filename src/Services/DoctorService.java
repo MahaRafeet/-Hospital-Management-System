@@ -25,21 +25,28 @@ public class DoctorService implements Manageable, Searchable {
         doctor.setSpecialization(InputHandler.getStringInput("Enter specialization: "));
         doctor.setQualification(InputHandler.getStringInput("Enter Doctor Qualification: "));
         doctor.setDepartmentId();
+
         String availableSlotsInput = InputHandler.getStringInput(
-                "Enter available slots (comma separated, e.g., 10AM-11AM,2PM-3PM): "
-        );
-        doctor.setAvailableSlots(
-                availableSlotsInput.isEmpty() ? new ArrayList<>() : Arrays.asList(availableSlotsInput.split(","))
+                "Enter available slots (comma separated, e.g., 10AM-11AM,2PM-3PM) or leave empty to skip: "
         );
 
-        double fee = InputHandler.getDoubleInput("Enter consultation fee: "); // replaces manual parsing
+        if (!availableSlotsInput.isEmpty()) {
+            doctor.setAvailableSlots(
+                    Arrays.asList(availableSlotsInput.split("\\s*,\\s*"))
+            );
+        } else {
+            System.out.println("Skipping available slots setup.");
+        }
+
+        double fee = InputHandler.getDoubleInput("Enter consultation fee: ");
         doctor.setConsultationFee(fee);
 
-        int years = InputHandler.getIntInput("Enter Doctor Experience years: "); // replaces scanner.nextInt()
+        int years = InputHandler.getIntInput("Enter Doctor Experience years: ");
         doctor.setExperienceYears(years);
-        return doctor;
 
+        return doctor;
     }
+
 
     public static Surgeon addSurgeon(Surgeon surgeon) {
         // Collect base doctor info

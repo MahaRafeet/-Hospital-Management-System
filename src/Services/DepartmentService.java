@@ -55,7 +55,8 @@ public class DepartmentService implements Manageable, Searchable {
                 nursesList.isEmpty() ? new ArrayList<>() : Arrays.asList(nursesList.split("\\s*,\\s*"))
         );
         System.out.println("The new Department Information Collected successfully!");
-        departmentList.add(newDept);
+        //departmentList.add(newDept);
+        add(newDept);
         return newDept;
     }
 
@@ -330,18 +331,18 @@ public class DepartmentService implements Manageable, Searchable {
             String id = String.format("DEP-%03d", departmentList.size() + 1);
             Department dept = new Department(id, names[i]);
             dept.setDepartmentId(id);
+            dept.setHeadDoctorId("DOC-" + (100 + i));
             dept.setDepartmentName(names[i]);
             dept.setBedCapacity(bedCapacities[i]);
             dept.setAvailableBeds(bedCapacities[i]); // Initially all beds available
 
             // Optional: add fake doctor and nurse IDs
             dept.setDoctors(new ArrayList<>(List.of("DOC-" + (100 + i))));
-            dept.setNurses(new ArrayList<>(List.of("NUR-" + (200 + i))));
+            dept.setDepNurse(new ArrayList<>(List.of("NUR-" + (200 + i))));
 
             departmentList.add(dept);
         }
 
-        System.out.println("✅ Sample departments added successfully! Total: " + departmentList.size());
     }
 
 }

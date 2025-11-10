@@ -63,8 +63,8 @@ public class PatientService implements Searchable, Manageable {
         inPatient.setDailyCharges(InputHandler.getDoubleInput("Enter daily charges: "));
 
         // Total charges
-        inPatient.setTotalCharges(inPatient.getDailyCharges()); // initialize
-        inPatient.setPaid(false);
+        inPatient.calculateCharges(); // initialize
+        inPatient.setPaid();
 
         System.out.println("InPatient added successfully!");
     }
@@ -476,8 +476,6 @@ public class PatientService implements Searchable, Manageable {
 
             patientList.add(emergencyPatient);
         }
-
-        System.out.println("Sample patients added successfully! Total patients: " + patientList.size());
     }
 
     }

@@ -470,8 +470,6 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
 
             appointmentList.add(appointment);
         }
-
-        System.out.println("✅ Sample appointments added successfully! Total: " + appointmentList.size());
     }
 
 

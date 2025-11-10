@@ -318,8 +318,6 @@ public class NurseService implements Searchable, Manageable {
 
             nurseList.add(nurse);
         }
-
-        System.out.println("✅ 5 sample nurses added successfully.");
     }
 
 }

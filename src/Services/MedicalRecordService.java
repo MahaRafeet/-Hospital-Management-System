@@ -305,7 +305,6 @@ public class MedicalRecordService implements Manageable, Searchable {
             medicalRecordList.add(record);
         }
 
-        System.out.println("Sample medical records added successfully! Total records: " + medicalRecordList.size());
     }
 
 

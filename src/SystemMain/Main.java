@@ -427,7 +427,7 @@ public class Main {
             }
         }
     }
-    
+
     public static void addSampleDataForAll() {
         DepartmentService.addSampleDepartments();
         DoctorService.addSampleDoctors();

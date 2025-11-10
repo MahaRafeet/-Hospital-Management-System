@@ -73,7 +73,7 @@ public class InputHandler {
     ============================ */
     public static LocalDate getDateInput(String prompt) {
         while (true) {
-            System.out.print(prompt + " (YYYY-MM-DD): ");
+            System.out.print(prompt);
             String input = scanner.nextLine().trim();
             if (ValidationUtils.isValidDate(input)) {
                 return LocalDate.parse(input);
