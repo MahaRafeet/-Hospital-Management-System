@@ -17,7 +17,7 @@ public class DoctorService implements Manageable, Searchable {
     public static List<Doctor> doctorList = new ArrayList<>();
     public static Scanner scanner = new Scanner(System.in);
 
-    public static Doctor addDoctor(Doctor doctor) {
+    public static void addDoctor(Doctor doctor) {
         doctor.setFirstName(InputHandler.getStringInput("Enter first name: "));
         doctor.setLastName(InputHandler.getStringInput("Enter last name: "));
         doctor.setEmail(InputHandler.getStringInput("Enter email: "));
@@ -44,11 +44,10 @@ public class DoctorService implements Manageable, Searchable {
         int years = InputHandler.getIntInput("Enter Doctor Experience years: ");
         doctor.setExperienceYears(years);
 
-        return doctor;
     }
 
 
-    public static Surgeon addSurgeon(Surgeon surgeon) {
+    public static void addSurgeon(Surgeon surgeon) {
         // Collect base doctor info
         addDoctor(surgeon);
 
@@ -68,12 +67,11 @@ public class DoctorService implements Manageable, Searchable {
         String accessInput = InputHandler.getStringInput("Does the surgeon have Operation Theatre access? (yes/no): ");
         surgeon.setOperationTheatreAccess(accessInput.equalsIgnoreCase("yes"));
 
-        System.out.println("✅ Surgeon information collected successfully.");
-        return surgeon;
+        System.out.println("Surgeon information collected successfully.");
     }
 
 
-    public static Doctor addConsultant(Consultant consultant) {
+    public static void addConsultant(Consultant consultant) {
         addDoctor(consultant); // collect all shared doctor info first
 
         System.out.println("\n===== Add New Consultant =====");
@@ -91,11 +89,10 @@ public class DoctorService implements Manageable, Searchable {
         consultant.setConsultationDuration(duration);
 
 
-        System.out.println("✅ Consultant information collected successfully.");
-        return consultant;
+        System.out.println("Consultant information collected successfully.");
     }
 
-    public static GeneralPractitioner addGeneralPractitioner(GeneralPractitioner gp) {
+    public static void addGeneralPractitioner(GeneralPractitioner gp) {
         System.out.println("\n===== Add New General Practitioner =====");
 
         // Step 1: Collect base doctor info
@@ -111,10 +108,8 @@ public class DoctorService implements Manageable, Searchable {
         String vaccinationInput = InputHandler.getStringInput("Is the doctor vaccination certified? (yes/no): ").trim();
         gp.setVaccinationCertified(vaccinationInput.equalsIgnoreCase("yes"));
 
-        System.out.println("✅ General Practitioner information collected successfully!");
-        return gp;
+        System.out.println("General Practitioner information collected successfully!");
     }
-
 
 
     public void save(Doctor doctor) {
@@ -127,9 +122,9 @@ public class DoctorService implements Manageable, Searchable {
     }
 
 
-    public Doctor editDoctor() {
+    public void editDoctor() {
         System.out.println("\n===== Edit Doctor =====");
-        String doctorId =InputHandler.getStringInput("Enter the doctor ID to edit:").trim();
+        String doctorId = InputHandler.getStringInput("Enter the doctor ID to edit:").trim();
 
         Doctor doctorToEdit = null;
         for (Doctor doc : doctorList) {
@@ -141,7 +136,7 @@ public class DoctorService implements Manageable, Searchable {
 
         if (doctorToEdit == null) {
             System.out.println("Doctor ID not found.");
-            return null;
+            return;
         }
 
         System.out.println("Select what to update:");
@@ -167,17 +162,16 @@ public class DoctorService implements Manageable, Searchable {
             }
             case "0" -> {
                 System.out.println("Edit cancelled.");
-                return doctorToEdit;
+                return;
             }
             default -> {
                 System.out.println("Invalid choice.");
-                return doctorToEdit;
+                return;
             }
         }
 
 
         System.out.println("Doctor updated successfully.");
-        return doctorToEdit;
     }
 
     public void assignPatient(String doctorId, String patientId) {
@@ -359,7 +353,7 @@ public class DoctorService implements Manageable, Searchable {
 
     @Override
     public void remove() {
-        String doctorIdToRemove =InputHandler.getStringInput("Please enter the Doctor ID to remove:").trim();
+        String doctorIdToRemove = InputHandler.getStringInput("Please enter the Doctor ID to remove:").trim();
         Doctor doctorToRemove = null;
         for (Doctor doc : doctorList) {
             if (doc.getDoctorId().equals(doctorIdToRemove)) {
@@ -426,6 +420,7 @@ public class DoctorService implements Manageable, Searchable {
         System.out.println("Doctor ID not found.");
 
     }
+
     public static void addSampleDoctors() {
         // Common data
         String[] firstNames = {"John", "Alice", "Robert", "Emma", "Liam", "Olivia", "Michael", "Sophia"};
@@ -443,7 +438,7 @@ public class DoctorService implements Manageable, Searchable {
         for (int i = 0; i < 3; i++) {
             Surgeon surgeon = new Surgeon();
             surgeon.setSurgeriesPerformed(10 + i * 10);
-            surgeon.setSurgeryTypes(Arrays.asList("SurgeryType" + (i + 1)));
+            surgeon.setSurgeryTypes(List.of("SurgeryType" + (i + 1)));
             surgeon.setOperationTheatreAccess(true);
             // Common properties
             surgeon.setFirstName(firstNames[index]);
@@ -514,7 +509,6 @@ public class DoctorService implements Manageable, Searchable {
             index++;
         }
     }
-
 
 
 }
