@@ -51,7 +51,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
             System.out.println("4-Status");
             System.out.println("5-Notes");
             System.out.println("6-Exit");
-            Integer choice = InputHandler.getIntInput("Enter your choice: ");
+            int choice = InputHandler.getIntInput("Enter your choice: ");
             switch (choice) {
                 case 1 -> {
                     System.out.println("The old appointment date is : " + appointment.getAppointmentDate());
@@ -106,7 +106,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
         return appointments;
     }
 
-    public static List<Appointment> getAppointmentsByDoctor() {
+    public static void getAppointmentsByDoctor() {
         List<Appointment> doctorAppointments = new ArrayList<>();
         String doctorId = InputHandler.getStringInput("Enter Doctor ID: ");
         boolean isFound = false;
@@ -122,13 +122,12 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
         }
 
         if (!isFound) {
-            System.out.println("⚠️ There are no appointments for this doctor.");
+            System.out.println("There are no appointments for this doctor.");
         }
 
-        return doctorAppointments;
     }
 
-    public static List<Appointment> getAppointmentsByDate(){
+    public static void getAppointmentsByDate() {
         String inputDate = InputHandler.getStringInput("Enter Appointment Date (yyyy-mm-dd): ");
         LocalDate appointmentDate = LocalDate.parse(inputDate);
         List<Appointment> appointmentsOnDate = new ArrayList<>();
@@ -145,13 +144,12 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
         }
 
         if (!isFound) {
-            System.out.println("⚠️ There are no appointments on this date.");
+            System.out.println(" There are no appointments on this date.");
         }
 
-        return appointmentsOnDate;
     }
 
-    public static Appointment rescheduleAppointment() {
+    public static void rescheduleAppointment() {
         String appointmentId = InputHandler.getStringInput("Enter appointment ID to reschedule:").trim();
 
         Appointment foundAppointment = null;
@@ -167,7 +165,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
         // If not found
         if (foundAppointment == null) {
             System.out.println("Appointment ID not found in the system.");
-            return null;
+            return;
         }
 
         // ✅ If found — reschedule
@@ -179,7 +177,6 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
         foundAppointment.setAppointmentTime();
 
         System.out.println("✅ Appointment rescheduled successfully!");
-        return foundAppointment;
     }
 
     public static void viewUpcomingAppointments() {
@@ -311,6 +308,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
         appointment.setReason(reason);
         System.out.println("Appointment rescheduled successfully to " + newDate + " at " + newTime);
     }
+
     public void displayAppointments(LocalDate date) {
         System.out.println("Appointments on " + date + ":");
         for (Appointment appointment : appointmentList) {
@@ -319,6 +317,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
             }
         }
     }
+
     public void displayAppointments(String doctorId, LocalDate startDate, LocalDate endDate) {
         System.out.println("Appointments for Doctor ID " + doctorId + " from " + startDate + " to " + endDate + ":");
         for (Appointment appointment : appointmentList) {
@@ -331,7 +330,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
 
     }
 
-    public static boolean checkIfIdExist(String appointmentId){
+    public static boolean checkIfIdExist(String appointmentId) {
         for (Appointment appointment : appointmentList) {
             if (appointment.getAppointmentId().equals(appointmentId)) {
                 return true;
@@ -428,6 +427,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
         }
 
     }
+
     public static void addSampleAppointments() {
         String[] reasons = {
                 "General Checkup", "Follow-up Visit", "Lab Results", "Flu Symptoms",
@@ -470,7 +470,6 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
             appointmentList.add(appointment);
         }
     }
-
 
 
 }

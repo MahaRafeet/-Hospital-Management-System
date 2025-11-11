@@ -30,7 +30,7 @@ public class DepartmentService implements Manageable, Searchable {
         departmentList.add(new Department("DEP-008", "General Surgery"));
     }
 
-    public Department addDepartment() {
+    public void addDepartment() {
         System.out.println("\n===== Add New Department =====");
         // Auto-generate next ID
         String newId = String.format("DEP-%03d", departmentList.size() + 1);
@@ -57,10 +57,9 @@ public class DepartmentService implements Manageable, Searchable {
         System.out.println("The new Department Information Collected successfully!");
         //departmentList.add(newDept);
         add(newDept);
-        return newDept;
     }
 
-    public Department editDepartment() {
+    public void editDepartment() {
         System.out.println("----------Editing Department------------- ");
         String departmentIdToEdit = InputHandler.getStringInput("Enter the Department ID to edit : ").trim();
         Department departmentToEdit = null;
@@ -72,7 +71,7 @@ public class DepartmentService implements Manageable, Searchable {
         }
         if (departmentToEdit == null) {
             System.out.println("Department not found ");
-            return null;
+            return;
         }
 
         System.out.println("Enter what do you want to edit : ");
@@ -120,8 +119,7 @@ public class DepartmentService implements Manageable, Searchable {
             default -> System.out.println("Invalid choice!");
         }
 
-        System.out.println("✅ Department information updated successfully!");
-        return departmentToEdit;
+        System.out.println("Department information updated successfully!");
 
     }
 
@@ -322,6 +320,7 @@ public class DepartmentService implements Manageable, Searchable {
         }
 
     }
+
     public static void addSampleDepartments() {
         // Sample data
         String[] names = {"Cardiology", "Neurology", "Pediatrics"};

@@ -49,7 +49,7 @@ public class Main {
 
     // ================= PATIENT MANAGEMENT =================
     private static void patientMenu() {
-        Integer patientChoice = 0;
+        int patientChoice = 0;
         while (patientChoice != 10) {
             System.out.println("\n--- Patient Management Menu ---");
             System.out.println("1- Register New Patient");
@@ -328,7 +328,7 @@ public class Main {
 
     // ================= DEPARTMENT MANAGEMENT =================
     private static void departmentMenu() {
-        Integer choice = 0;
+        int choice = 0;
         while (choice != 8) {
             System.out.println("\n--- Department Management Menu ---");
             System.out.println("1- Add Department");
