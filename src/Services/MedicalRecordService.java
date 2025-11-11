@@ -16,7 +16,7 @@ public class MedicalRecordService implements Manageable, Searchable {
     public static List<MedicalRecord> medicalRecordList = new ArrayList<>();
 
     // ========================= ADD =========================
-    public MedicalRecord addMedicalRecord(MedicalRecord medicalRecord) {
+    public void addMedicalRecord(MedicalRecord medicalRecord) {
         System.out.println("\n===== Add New Medical Record =====");
         medicalRecord.setPatientId();
         medicalRecord.setDoctorId();
@@ -27,7 +27,6 @@ public class MedicalRecordService implements Manageable, Searchable {
         medicalRecord.setNotes(InputHandler.getStringInput("Enter Notes: ").trim());
 
         System.out.println("✅ The new Medical Record information collected successfully!");
-        return medicalRecord;
     }
 
     public void saveNewRecord(MedicalRecord medicalRecord) {
@@ -36,7 +35,7 @@ public class MedicalRecordService implements Manageable, Searchable {
     }
 
     // ========================= EDIT =========================
-    public static MedicalRecord editMedicalRecord(MedicalRecord medicalRecord) {
+    public static void editMedicalRecord(MedicalRecord medicalRecord) {
         System.out.println("\n===== Edit Medical Record =====");
         String recordIdToEdit = InputHandler.getStringInput("Enter the Record ID to edit:").trim();
         MedicalRecord recordToEdit = null;
@@ -49,7 +48,7 @@ public class MedicalRecordService implements Manageable, Searchable {
 
         if (recordToEdit == null) {
             System.out.println("⚠️ Record not found!");
-            return null;
+            return;
         }
 
         System.out.println("Choose what you want to edit:");
@@ -95,21 +94,20 @@ public class MedicalRecordService implements Manageable, Searchable {
             }
             case 8 -> {
                 System.out.println("Exiting edit.");
-                return recordToEdit;
+                return;
             }
-            default -> System.out.println("⚠️ Invalid choice!");
+            default -> System.out.println(" Invalid choice!");
         }
 
-        System.out.println("✅ Medical Record updated successfully!");
-        return recordToEdit;
+        System.out.println("Medical Record updated successfully!");
     }
 
 
     // ========================= SEARCH BY PATIENT =========================
 //  version 1: used when you want to ask the user (like from a menu)
-    public static List<MedicalRecord> getRecordsByPatientIdInteractive() {
+    public static void getRecordsByPatientIdInteractive() {
         String patientId = InputHandler.getStringInput("Please enter Patient ID to search records:").trim();
-        return getRecordsByPatientId(patientId);
+        getRecordsByPatientId(patientId);
     }
 
     // ✅ version 2: used internally (like inside displayInfo)
@@ -122,7 +120,7 @@ public class MedicalRecordService implements Manageable, Searchable {
         }
 
         if (records.isEmpty()) {
-            System.out.println("⚠️ No medical records found for patient ID: " + patientId);
+            System.out.println(" No medical records found for patient ID: " + patientId);
         } else {
             System.out.println("\n===== Medical Records for Patient ID: " + patientId + " =====");
             for (MedicalRecord record : records) {

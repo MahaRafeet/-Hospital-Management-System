@@ -66,6 +66,17 @@ public class NurseService implements Searchable, Manageable {
             System.out.println("Nurse ID not found.");
             return null;
         }
+        System.out.println("\n===== Edit Nurse Details =====");
+        System.out.println("1. Edit First Name");
+        System.out.println("2. Edit Last Name");
+        System.out.println("3. Edit Email");
+        System.out.println("4. Edit Phone Number");
+        System.out.println("5. Edit Qualification");
+        System.out.println("6. Edit Shift");
+        System.out.println("7. Edit Assigned Patients");
+        System.out.println("8. Edit Department ID");
+        System.out.println("0. Cancel Edit");
+
         String choice = InputHandler.getStringInput("Enter choice: ").trim();
 
         switch (choice) {
@@ -76,7 +87,8 @@ public class NurseService implements Searchable, Manageable {
             case "5" -> nurseToEdit.setQualification(InputHandler.getStringInput("Enter new Qualification: "));
             case "6" -> nurseToEdit.setShift(InputHandler.getStringInput("Enter new shift: "));
             case "7" -> {
-                String assignedPatient = InputHandler.getStringInput("Enter new Assigned Patients (comma separated, or leave empty): ");
+                System.out.print("Enter new Assigned Patients (comma separated, or leave empty):");
+                String assignedPatient = scanner.nextLine();
                 nurseToEdit.setAssignedPatients(
                         assignedPatient.isEmpty() ? new ArrayList<>() : Arrays.asList(assignedPatient.split("\\s*,\\s*"))
                 );

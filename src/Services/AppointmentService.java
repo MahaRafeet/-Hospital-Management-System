@@ -23,7 +23,6 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
     public static Appointment addAppointment() {
         Appointment appointment = new Appointment();
         System.out.println("\n===== Add New Appointment =====");
-
         appointment.setPatientId();
         appointment.setDoctorId();
         appointment.setAppointmentDate();
@@ -332,7 +331,7 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
 
     }
 
-    public static boolean checkIfIdExist(String appointmentId) {
+    public static boolean checkIfIdExist(String appointmentId){
         for (Appointment appointment : appointmentList) {
             if (appointment.getAppointmentId().equals(appointmentId)) {
                 return true;
