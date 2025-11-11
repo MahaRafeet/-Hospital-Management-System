@@ -115,7 +115,7 @@ public class Main {
 
     // ================= DOCTOR MANAGEMENT =================
     private static void doctorMenu() {
-        Integer doctorChoice = 0;
+        int doctorChoice = 0;
         while (doctorChoice != 11) {
             System.out.println("\n--- Doctor Management Menu ---");
             System.out.println("1- Add Doctor");
@@ -163,10 +163,7 @@ public class Main {
                     DoctorService service = new DoctorService();
                     service.getAll();
                 }
-                case 6 -> {
-                    DoctorService service = new DoctorService();
-                    service.displayDoctors();
-                }
+                case 6 -> DoctorService.displayDoctors();
                 case 7 -> {
                     DoctorService service = new DoctorService();
                     service.getAvailableDoctors();
@@ -191,7 +188,7 @@ public class Main {
 
     // ================= NURSE MANAGEMENT =================
     private static void nurseMenu() {
-        Integer nurseChoice = 0;
+        int nurseChoice = 0;
         while (nurseChoice != 8) {
             System.out.println("\n--- Nurse Management Menu ---");
             System.out.println("1- Add Nurse");
@@ -243,7 +240,7 @@ public class Main {
 
     // ================= APPOINTMENT MANAGEMENT =================
     private static void appointmentMenu() {
-        Integer choice = 0;
+        int choice = 0;
         while (choice != 10) {
             System.out.println("\n--- Appointment Management Menu ---");
             System.out.println("1- Schedule New Appointment");
@@ -274,12 +271,8 @@ public class Main {
                 case 6 -> AppointmentService.rescheduleAppointment();
                 case 7 -> {
                     AppointmentService service = new AppointmentService();
-                    service.cancelAppointment();
-                }
-                case 8 -> {
-                    AppointmentService service = new AppointmentService();
-                    service.completeAppointment();
-                }
+                    service.cancelAppointment();}
+                case 8 -> AppointmentService.completeAppointment();
                 case 9 -> AppointmentService.viewUpcomingAppointments();
                 case 10 -> System.out.println("Returning to Main Menu...");
                 default -> System.out.println("Invalid choice!");
