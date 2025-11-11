@@ -185,12 +185,11 @@ public class InPatient extends Patient implements Displayable, Billable {
     @Override
     public void calculateCharges() {
         if (admissionDate == null || dischargeDate == null) {
-            System.out.println("Cannot calculate total charges without both dates.");
-        } else {
-            long days = ChronoUnit.DAYS.between(admissionDate, dischargeDate);
-            double total = days * dailyCharges;
-            System.out.println("Total Charges: " + total + " OMR");
+            return; // silently skip if dates are missing
         }
+
+        long days = ChronoUnit.DAYS.between(admissionDate, dischargeDate);
+        this.totalCharges = days * dailyCharges; // ✅ store in the field, no print
     }
 
     @Override

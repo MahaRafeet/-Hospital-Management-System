@@ -415,7 +415,6 @@ public class PatientService implements Searchable, Manageable {
             inPatient.setDailyCharges(100.0 + i * 50);
             inPatient.calculateCharges(); // calculate totalCharges properly
             inPatient.setPaid();      // Mark as paid automatically
-            inPatient.processPayment();
             inPatient.setAdmittingDoctorId("DOC-" + (300 + i));
 
             patientList.add(inPatient);
