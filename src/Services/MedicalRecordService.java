@@ -135,7 +135,7 @@ public class MedicalRecordService implements Manageable, Searchable {
 
 
     // ========================= SEARCH BY DOCTOR =========================
-    public static List<MedicalRecord> getRecordsByDoctorId() {
+    public static void getRecordsByDoctorId() {
         String doctorId = InputHandler.getStringInput("Please enter Doctor ID to search records:").trim();
         List<MedicalRecord> doctorRecords = new ArrayList<>();
         boolean found = false;
@@ -148,9 +148,8 @@ public class MedicalRecordService implements Manageable, Searchable {
             }
         }
         if (!found) {
-            System.out.println("⚠️ No records found for this doctor.");
+            System.out.println(" No records found for this doctor.");
         }
-        return doctorRecords;
     }
 
     // ========================= PATIENT HISTORY =========================
@@ -169,7 +168,7 @@ public class MedicalRecordService implements Manageable, Searchable {
             }
         }
         if (!found) {
-            System.out.println("⚠️ No medical history found for this patient.");
+            System.out.println("No medical history found for this patient.");
         }
     }
 

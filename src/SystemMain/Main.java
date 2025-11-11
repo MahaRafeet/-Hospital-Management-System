@@ -289,7 +289,7 @@ public class Main {
 
     // ================= MEDICAL RECORD MANAGEMENT =================
     private static void medicalRecordMenu() {
-        Integer choice = 0;
+        int choice = 0;
         while (choice != 8) {
             System.out.println("\n--- Medical Records Management Menu ---");
             System.out.println("1- Create Medical Record");
@@ -317,8 +317,7 @@ public class Main {
                 case 4 -> MedicalRecordService.getRecordsByDoctorId();
                 case 5 -> {
                     MedicalRecord medicalRecord = new MedicalRecord();
-                    MedicalRecordService service = new MedicalRecordService();
-                    service.editMedicalRecord(medicalRecord);
+                    MedicalRecordService.editMedicalRecord(medicalRecord);
                 }
                 case 6 -> {
                     MedicalRecordService service = new MedicalRecordService();
@@ -389,7 +388,7 @@ public class Main {
 
     // ================= REPORTS AND STATISTICS =================
     private static void reportsMenu() {
-        Integer choice = 0;
+        int choice = 0;
         while (choice != 6) {
             System.out.println("\n--- Reports and Statistics Menu ---");
             System.out.println("1- Daily Appointments Report");
@@ -402,26 +401,11 @@ public class Main {
 
 
             switch (choice) {
-                case 1 -> {
-                    ReportsService service = new ReportsService();
-                    service.generateDailyAppointmentsReport();
-                }
-                case 2 -> {
-                    ReportsService service = new ReportsService();
-                    service.generateDoctorPerformanceReport();
-                }
-                case 3 -> {
-                    ReportsService service = new ReportsService();
-                    service.generateDepartmentOccupancyReport();
-                }
-                case 4 -> {
-                    ReportsService service = new ReportsService();
-                    service.generatePatientStatistics();
-                }
-                case 5 -> {
-                    ReportsService service = new ReportsService();
-                    service.generateEmergencyCasesReport();
-                }
+                case 1 -> ReportsService.generateDailyAppointmentsReport();
+                case 2 -> ReportsService.generateDoctorPerformanceReport();
+                case 3 -> ReportsService.generateDepartmentOccupancyReport();
+                case 4 -> ReportsService.generatePatientStatistics();
+                case 5 -> ReportsService.generateEmergencyCasesReport();
                 case 6 -> System.out.println("Returning to Main Menu...");
                 default -> System.out.println("Invalid choice!");
             }
