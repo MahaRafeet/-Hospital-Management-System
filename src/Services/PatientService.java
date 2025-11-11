@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.*;
 
 import Utils.InputHandler;
-import Utils.ValidationUtils;
 
 import java.util.stream.Collectors;
 
@@ -160,7 +159,7 @@ public class PatientService implements Searchable, Manageable {
     }
 
     // Edit patient
-    public Patient editPatient() {
+    public void editPatient() {
         String patientId = InputHandler.getStringInput("Enter the patient ID to edit: ");
 
         Optional<Patient> patientOpt = patientList.stream()
@@ -169,7 +168,7 @@ public class PatientService implements Searchable, Manageable {
 
         if (patientOpt.isEmpty()) {
             System.out.println("The patient ID does not exist.");
-            return null;
+            return;
         }
 
         Patient updatedPatient = patientOpt.get();
@@ -212,16 +211,15 @@ public class PatientService implements Searchable, Manageable {
             }
             case "0" -> {
                 System.out.println("Exiting editing menu...");
-                return updatedPatient;
+                return;
             }
             default -> {
                 System.out.println("Invalid choice. No changes made.");
-                return updatedPatient;
+                return;
             }
         }
 
         System.out.println(" Patient updated successfully!");
-        return updatedPatient;
     }
 
 
@@ -385,7 +383,7 @@ public class PatientService implements Searchable, Manageable {
             patient.setGender(i % 2 == 0 ? "Male" : "Female");
             patient.setAddress("Street " + (i + 1));
             patient.setBloodGroup("O+");
-            patient.setAllergies(Arrays.asList("None"));
+            patient.setAllergies(List.of("None"));
             patient.setEmergencyContact("98888888" + i);
             patient.setRegistrationDate(LocalDate.now().minusMonths(i));
             patient.setInsuranceId("INS-" + (1000 + i));
@@ -404,7 +402,7 @@ public class PatientService implements Searchable, Manageable {
             inPatient.setGender(i % 2 == 0 ? "Male" : "Female");
             inPatient.setAddress("Hospital Street " + (i + 1));
             inPatient.setBloodGroup("A+");
-            inPatient.setAllergies(Arrays.asList("Peanuts"));
+            inPatient.setAllergies(List.of("Peanuts"));
             inPatient.setEmergencyContact("97777777" + i);
             inPatient.setRegistrationDate(LocalDate.now().minusMonths(i));
             inPatient.setInsuranceId("INS-" + (2000 + i));
@@ -432,7 +430,7 @@ public class PatientService implements Searchable, Manageable {
             outPatient.setGender(i % 2 == 0 ? "Male" : "Female");
             outPatient.setAddress("Clinic Street " + (i + 1));
             outPatient.setBloodGroup("B+");
-            outPatient.setAllergies(Arrays.asList("None"));
+            outPatient.setAllergies(List.of("None"));
             outPatient.setEmergencyContact("96666666" + i);
             outPatient.setRegistrationDate(LocalDate.now().minusMonths(i));
             outPatient.setInsuranceId("INS-" + (3000 + i));
@@ -455,7 +453,7 @@ public class PatientService implements Searchable, Manageable {
             emergencyPatient.setGender(i % 2 == 0 ? "Male" : "Female");
             emergencyPatient.setAddress("ER Street " + (i + 1));
             emergencyPatient.setBloodGroup("AB+");
-            emergencyPatient.setAllergies(Arrays.asList("Dust"));
+            emergencyPatient.setAllergies(List.of("Dust"));
             emergencyPatient.setEmergencyContact("95555555" + i);
             emergencyPatient.setRegistrationDate(LocalDate.now().minusMonths(i));
             emergencyPatient.setInsuranceId("INS-" + (4000 + i));
@@ -475,7 +473,7 @@ public class PatientService implements Searchable, Manageable {
         }
     }
 
-    }
+}
 
 
 

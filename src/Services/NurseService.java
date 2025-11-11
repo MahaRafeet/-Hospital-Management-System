@@ -50,7 +50,7 @@ public class NurseService implements Searchable, Manageable {
         System.out.println("Nurse added successfully.");
     }
 
-    public Nurse editNurse() {
+    public void editNurse() {
         System.out.println("\n===== Edit Nurse =====");
         String nurseId = InputHandler.getStringInput("Enter the nurse ID to edit: ").trim();
 
@@ -62,9 +62,9 @@ public class NurseService implements Searchable, Manageable {
             }
         }
 
-        if (nurseToEdit == null) {
+        if (!checkIfNurseIdExist(nurseId)) {
             System.out.println("Nurse ID not found.");
-            return null;
+            return;
         }
         System.out.println("\n===== Edit Nurse Details =====");
         System.out.println("1. Edit First Name");
@@ -96,16 +96,15 @@ public class NurseService implements Searchable, Manageable {
             case "8" -> nurseToEdit.setDepartmentId();
             case "0" -> {
                 System.out.println("Edit cancelled.");
-                return nurseToEdit;
+                return;
             }
             default -> {
                 System.out.println("Invalid choice.");
-                return nurseToEdit;
+                return;
             }
         }
 
-        System.out.println("✅ Nurse updated successfully.");
-        return nurseToEdit;
+        System.out.println(" Nurse updated successfully.");
     }
 
     public void getNursesByDepartment() {
@@ -186,6 +185,10 @@ public class NurseService implements Searchable, Manageable {
     public void assignNurseToPatient() {
         System.out.println("\n===== Assign Nurse to Patient =====");
         String nurseId = InputHandler.getStringInput("Enter Nurse ID: ").trim();
+        if(!checkIfNurseIdExist(nurseId)){
+            System.out.println("Nurse not found!");
+            return;
+        }
 
         Nurse selectedNurse = null;
         for (Nurse nurse : nurseList) {
@@ -195,10 +198,6 @@ public class NurseService implements Searchable, Manageable {
             }
         }
 
-        if (selectedNurse == null) {
-            System.out.println("Nurse not found!");
-            return;
-        }
 
         String patientId = InputHandler.getStringInput("Enter Patient ID to assign: ").trim();
 

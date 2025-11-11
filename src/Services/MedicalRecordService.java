@@ -26,12 +26,12 @@ public class MedicalRecordService implements Manageable, Searchable {
         medicalRecord.setTestResults(InputHandler.getStringInput("Enter Test Results: ").trim());
         medicalRecord.setNotes(InputHandler.getStringInput("Enter Notes: ").trim());
 
-        System.out.println("✅ The new Medical Record information collected successfully!");
+        System.out.println("The new Medical Record information collected successfully!");
     }
 
     public void saveNewRecord(MedicalRecord medicalRecord) {
         medicalRecordList.add(medicalRecord);
-        System.out.println("\n✅ Medical Record added successfully!");
+        System.out.println("Medical Record added successfully!");
     }
 
     // ========================= EDIT =========================
@@ -47,7 +47,7 @@ public class MedicalRecordService implements Manageable, Searchable {
         }
 
         if (recordToEdit == null) {
-            System.out.println("⚠️ Record not found!");
+            System.out.println("Record not found!");
             return;
         }
 
@@ -110,7 +110,7 @@ public class MedicalRecordService implements Manageable, Searchable {
         getRecordsByPatientId(patientId);
     }
 
-    // ✅ version 2: used internally (like inside displayInfo)
+    // version 2: used internally (like inside displayInfo)
     public static List<MedicalRecord> getRecordsByPatientId(String patientId) {
         List<MedicalRecord> records = new ArrayList<>();
         for (MedicalRecord record : medicalRecordList) {
@@ -194,9 +194,9 @@ public class MedicalRecordService implements Manageable, Searchable {
 
         if (recordToRemove != null) {
             medicalRecordList.remove(recordToRemove);
-            System.out.println("✅ Medical Record removed successfully!");
+            System.out.println("Medical Record removed successfully!");
         } else {
-            System.out.println("⚠️ Record not found in the list!");
+            System.out.println("Record not found in the list!");
         }
 
     }
@@ -234,7 +234,7 @@ public class MedicalRecordService implements Manageable, Searchable {
             }
         }
         if (!found) {
-            System.out.println("⚠️ No medical records found matching the keyword.");
+            System.out.println(" No medical records found matching the keyword.");
         }
 
     }
