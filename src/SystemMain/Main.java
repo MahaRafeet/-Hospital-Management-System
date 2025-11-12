@@ -239,9 +239,9 @@ public class Main {
     }
 
     // ================= APPOINTMENT MANAGEMENT =================
-    private static void appointmentMenu() {
+    private static void appointmentMenu(){
         int choice = 0;
-        while (choice != 10) {
+        while (choice != 10){
             System.out.println("\n--- Appointment Management Menu ---");
             System.out.println("1- Schedule New Appointment");
             System.out.println("2- View All Appointments");

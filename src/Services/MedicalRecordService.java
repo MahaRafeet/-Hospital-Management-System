@@ -1,6 +1,7 @@
 package Services;
 
 import Entities.MedicalRecord;
+import Entities.Patient;
 import Interfaces.Manageable;
 import Interfaces.Searchable;
 import Utils.InputHandler;
@@ -256,6 +257,7 @@ public class MedicalRecordService implements Manageable, Searchable {
         }
 
     }
+
     public static void addSampleMedicalRecords() {
         String[] diagnoses = {
                 "Flu", "Cold", "Back Pain", "Headache", "Hypertension", "Diabetes",
@@ -280,29 +282,23 @@ public class MedicalRecordService implements Manageable, Searchable {
                 "Surgery suggested", "Observation required", "Referral to specialist", "No additional notes"
         };
 
-        for (int i = 0; i < 12; i++) {
-            MedicalRecord record = new MedicalRecord();
+        for (Patient patient : PatientService.patientList) {
+            for (int j = 0; j < 2; j++) { // 3 records per patient
+                MedicalRecord record = new MedicalRecord();
+                record.setPatientId(patient.getPatientId());
+                record.setDoctorRecId(
+                        DoctorService.doctorList.isEmpty() ? "DOC-UNKNOWN" :
+                                DoctorService.doctorList.get(j % DoctorService.doctorList.size()).getDoctorId()
+                );
+                record.setVisitDate(LocalDate.now().minusDays(j));
+                record.setDiagnosis(diagnoses[j % diagnoses.length]);
+                record.setPrescription(prescriptions[j % prescriptions.length]);
+                record.setTestResults(testResults[j % testResults.length]);
+                record.setNotes(notes[j % notes.length]);
 
-            // Assign patient and doctor IDs even if the lists are empty
-            String patientId = (PatientService.patientList.isEmpty())
-                    ? "PAI-" + String.format("%05d", i + 1)
-                    : PatientService.patientList.get(i % PatientService.patientList.size()).getPatientId();
-            String doctorId = (DoctorService.doctorList.isEmpty())
-                    ? "DOC-" + String.format("%05d", i + 1)
-                    : DoctorService.doctorList.get(i % DoctorService.doctorList.size()).getDoctorId();
-
-            record.setPatientId(patientId);
-            record.setDoctorRecId(doctorId);
-            record.setVisitDate(LocalDate.now().minusDays(i * 2)); // different dates
-            record.setDiagnosis(diagnoses[i % diagnoses.length]);
-            record.setPrescription(prescriptions[i % prescriptions.length]);
-            record.setTestResults(testResults[i % testResults.length]);
-            record.setNotes(notes[i % notes.length]);
-
-            medicalRecordList.add(record);
+                medicalRecordList.add(record);
+            }
         }
 
     }
-
-
 }

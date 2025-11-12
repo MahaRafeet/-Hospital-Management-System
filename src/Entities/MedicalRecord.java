@@ -78,7 +78,7 @@ public class MedicalRecord implements Displayable {
         this.patientId=patientId;
     }
     public void setDoctorRecId(String doctorRecId ){
-        this.patientId=doctorRecId;
+        this.doctorId = doctorRecId;
     }
 
 
