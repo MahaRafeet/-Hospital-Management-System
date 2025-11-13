@@ -129,7 +129,7 @@ public class Main {
             System.out.println("9- Update Doctor Information");
             System.out.println("10- Remove Doctor");
             System.out.println("11- Go Back to Main Menu");
-            System.out.print("Enter your choice: ");
+            System.out.print("Enter your choice:");
             doctorChoice = InputHandler.getIntInput("Please Enter your choice:", 1, 11);
 
             switch (doctorChoice) {

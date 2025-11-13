@@ -170,7 +170,7 @@ public class DepartmentService implements Manageable, Searchable {
     }
 
     public void assignNurseToDepartment() {
-        System.out.println("\n*** Assign Nurse to Department ***");
+        System.out.println("*** Assign Nurse to Department ***");
 
         // Get Nurse ID
         String nurseId = InputHandler.getStringInput("Enter the Nurse ID: ");
@@ -325,8 +325,15 @@ public class DepartmentService implements Manageable, Searchable {
             String id = String.format("DEP-%03d", departmentList.size() + 1);
             Department dept = new Department(id, names[i]);
             dept.setDepartmentId(id);
-            String headDoctorId = DoctorService.doctorList.get(i % DoctorService.doctorList.size()).getDoctorId();
-            dept.setHeadDoctorId(headDoctorId);
+            // ✅ Safely handle doctor list
+            if (!DoctorService.doctorList.isEmpty()) {
+                String headDoctorId = DoctorService.doctorList
+                        .get(i % DoctorService.doctorList.size())
+                        .getDoctorId();
+                dept.setHeadDoctorId(headDoctorId);
+            } else {
+                dept.setHeadDoctorId("N/A"); // or leave null if allowed
+            }
             dept.setDepartmentName(names[i]);
             dept.setBedCapacity(bedCapacities[i]);
             dept.setAvailableBeds(bedCapacities[i]); // Initially all beds available
