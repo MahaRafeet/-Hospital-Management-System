@@ -6,6 +6,7 @@ import Entities.Nurse;
 import Interfaces.Manageable;
 import Interfaces.Searchable;
 import Utils.InputHandler;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -247,6 +248,7 @@ public class DepartmentService implements Manageable, Searchable {
             System.out.println("Invalid entity type. Expected a Department.");
         }
     }
+
     @Override
     public void remove() {
         String depIdToRemove = InputHandler.getStringInput("Enter Department ID to remove: ").trim();
@@ -264,6 +266,7 @@ public class DepartmentService implements Manageable, Searchable {
             System.out.println(" Department not found in the list!");
         }
     }
+
     @Override
     public void getAll() {
         System.out.println("-----Display All Department -----");
@@ -277,6 +280,7 @@ public class DepartmentService implements Manageable, Searchable {
             System.out.println("---------------");
         }
     }
+
     @Override
     public void search(String keyword) {
         System.out.println("----- Search Departments by keyword: " + keyword + " -----");

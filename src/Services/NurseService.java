@@ -330,7 +330,6 @@ public class NurseService implements Searchable, Manageable {
             nurseList.add(nurse);
         }
     }
-
 }
 
 
