@@ -87,22 +87,32 @@ public class AppointmentService implements Manageable, Searchable, Appointable {
         return appointment;
     }
 
-    // ✅ Version 1: used when you want to ask the user for the ID (menu use)
+    // Version 1: Interactive (ask user)
     public static List<Appointment> getAppointmentsByPatientIdInteractive() {
         String patientId = InputHandler.getStringInput("Please enter Patient ID to view appointments: ");
-        return getAppointmentsByPatientId(patientId);
+        List<Appointment> apps = getAppointmentsByPatientId(patientId);
+
+        if (apps.isEmpty()) {
+            System.out.println("No appointments found for patient ID: " + patientId);
+        } else {
+            System.out.println("\n===== Appointments for Patient ID: " + patientId + " =====");
+            for (Appointment a : apps) {
+                System.out.println("------------------------");
+                System.out.println(a.toString());
+            }
+            System.out.println("------------------------");
+        }
+        return apps;
     }
 
-    // ✅ Version 2: used internally (like inside Patient.displayInfo)
+    // Version 2: Internal (used in Patient.displayInfo)
     public static List<Appointment> getAppointmentsByPatientId(String patientId) {
         List<Appointment> appointments = new ArrayList<>();
-
         for (Appointment app : appointmentList) {
             if (app.getPatientId().equalsIgnoreCase(patientId)) {
                 appointments.add(app);
             }
         }
-
         return appointments;
     }
 

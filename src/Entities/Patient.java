@@ -190,8 +190,8 @@ public class Patient extends Person implements Displayable {
         List<MedicalRecord> records = MedicalRecordService.getRecordsByPatientId(this.patientId);
 
         if (records != null && !records.isEmpty()) {
-            for (MedicalRecord r : records) {
-                System.out.println(r);
+            for (MedicalRecord record : records) {
+             record.displayInfo();
             }
         } else {
             System.out.println("None");

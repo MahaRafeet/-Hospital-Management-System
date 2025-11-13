@@ -106,22 +106,12 @@ public class MedicalRecordService implements Manageable, Searchable {
 
     // ========================= SEARCH BY PATIENT =========================
 //  version 1: used when you want to ask the user (like from a menu)
+    // Version 1: Interactive (ask user)
     public static void getRecordsByPatientIdInteractive() {
         String patientId = InputHandler.getStringInput("Please enter Patient ID to search records:").trim();
-        getRecordsByPatientId(patientId);
-    }
-
-    // version 2: used internally (like inside displayInfo)
-    public static List<MedicalRecord> getRecordsByPatientId(String patientId) {
-        List<MedicalRecord> records = new ArrayList<>();
-        for (MedicalRecord record : medicalRecordList) {
-            if (record.getPatientId().equalsIgnoreCase(patientId)) {
-                records.add(record);
-            }
-        }
-
+        List<MedicalRecord> records = getRecordsByPatientId(patientId);
         if (records.isEmpty()) {
-            System.out.println(" No medical records found for patient ID: " + patientId);
+            System.out.println("No medical records found for patient ID: " + patientId);
         } else {
             System.out.println("\n===== Medical Records for Patient ID: " + patientId + " =====");
             for (MedicalRecord record : records) {
@@ -130,9 +120,20 @@ public class MedicalRecordService implements Manageable, Searchable {
             }
             System.out.println("------------------------");
         }
-
-        return records; // always return the list
     }
+
+    // Version 2: Internal (used in Patient.displayInfo)
+    public static List<MedicalRecord> getRecordsByPatientId(String patientId) {
+        List<MedicalRecord> records = new ArrayList<>();
+        for (MedicalRecord record : medicalRecordList) {
+            if (record.getPatientId().equalsIgnoreCase(patientId)) {
+                records.add(record);
+            }
+        }
+        return records;
+    }
+
+
 
 
     // ========================= SEARCH BY DOCTOR =========================
@@ -204,7 +205,7 @@ public class MedicalRecordService implements Manageable, Searchable {
 
     @Override
     public void getAll() {
-        System.out.println("\n===== Display All Medical Records =====");
+        System.out.println("===== Display All Medical Records =====");
         if (medicalRecordList.isEmpty()) {
             System.out.println("There are no medical records to display.");
         } else {
@@ -282,22 +283,21 @@ public class MedicalRecordService implements Manageable, Searchable {
                 "Surgery suggested", "Observation required", "Referral to specialist", "No additional notes"
         };
 
-        for (Patient patient : PatientService.patientList) {
-            for (int j = 0; j < 2; j++) { // 3 records per patient
+
+            for (int i = 0; i < PatientService.patientList.size(); i++) {
+              Patient patient=PatientService.patientList.get(i);
                 MedicalRecord record = new MedicalRecord();
                 record.setPatientId(patient.getPatientId());
                 record.setDoctorRecId(
-                        DoctorService.doctorList.isEmpty() ? "DOC-UNKNOWN" :
-                                DoctorService.doctorList.get(j % DoctorService.doctorList.size()).getDoctorId()
+                        DoctorService.doctorList.get(i% DoctorService.doctorList.size()).getDoctorId()
                 );
-                record.setVisitDate(LocalDate.now().minusDays(j));
-                record.setDiagnosis(diagnoses[j % diagnoses.length]);
-                record.setPrescription(prescriptions[j % prescriptions.length]);
-                record.setTestResults(testResults[j % testResults.length]);
-                record.setNotes(notes[j % notes.length]);
-
+                record.setVisitDate(LocalDate.now().minusDays(i));
+                record.setDiagnosis("Diagnosis " + diagnoses[i]);
+                record.setPrescription("Prescription " + prescriptions[i]);
+                record.setTestResults("Test Result" + testResults[i]);
+                record.setNotes("Note for " + patient.getFirstName() +notes[i]);
                 medicalRecordList.add(record);
-            }
+
         }
 
     }
