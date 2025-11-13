@@ -343,7 +343,6 @@ public class Main {
 
             switch (choice) {
                 case 1 -> {
-                    Department newDepartment = new Department("DEP-001", "Cardiology", 20);
                     DepartmentService service = new DepartmentService();
                     service.addDepartment();
                 }

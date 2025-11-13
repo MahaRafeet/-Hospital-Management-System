@@ -94,42 +94,56 @@ public class ReportsService {
     public static void generateEmergencyCasesReport() {
         System.out.println("\n===== Emergency Cases Report =====");
 
-        if (AppointmentService.appointmentList.isEmpty()) {
-            System.out.println("No appointments available.");
+        // 1. Create a list for emergency patients
+        List<EmergencyPatient> emergencyList = new ArrayList<>();
+
+        // 2. Loop through patientList and find only EmergencyPatient
+        for (Patient p : PatientService.patientList) {
+            if (p instanceof EmergencyPatient) {
+                emergencyList.add((EmergencyPatient) p);
+            }
+        }
+
+        // 3. Check if list is empty
+        if (emergencyList.isEmpty()) {
+            System.out.println("No emergency cases recorded.");
             return;
         }
 
-        List<Appointment> emergencyCases = new ArrayList<>();
+        // 4. Display each emergency patient
+        int count = 1;
+        for (EmergencyPatient ep : emergencyList) {
+            System.out.println("\n---- Emergency Case #" + count + " ----");
+            System.out.println("Patient Name      : " + ep.getFirstName() + " " + ep.getLastName());
+            System.out.println("Patient ID        : " + ep.getPatientId());
+            System.out.println("Emergency Type    : " + ep.getEmergencyType());
+            System.out.println("Arrival Mode      : " + ep.getArrivalMode());
+            System.out.println("Triage Level      : " + ep.getTriageLevel());
+            System.out.println("Admitted via ER   : " + (ep.isAdmittedViaER() ? "Yes" : "No"));
+            System.out.println("Admitting Doctor  : " + ep.getAdmittingDoctorId());
+            System.out.println("Room / Bed        : " + ep.getRoomNumber() + " / " + ep.getBedNumber());
+            System.out.println("Admission Date    : " + ep.getAdmissionDate());
+            System.out.println("Discharge Date    : " + ep.getDischargeDate());
+            count++;
+        }
 
-        // Go through each appointment
-        for (Appointment appointment : AppointmentService.appointmentList) {
+        // 5. Summary section
+        int accidentCount = 0;
+        int heartAttackCount = 0;
 
-            // Find the doctor of this appointment
-            Doctor doctorFound = null;
-            for (Doctor doctor : DoctorService.doctorList) {
-                if (doctor.getDoctorId().equalsIgnoreCase(appointment.getDoctorId())) {
-                    doctorFound = doctor;
-                    break;
-                }
+        for (EmergencyPatient ep : emergencyList) {
+            if (ep.getEmergencyType().equalsIgnoreCase("Accident")) {
+                accidentCount++;
             }
-
-            // If doctor is found and belongs to Emergency department
-            if (doctorFound != null && doctorFound.getDepartmentId().equalsIgnoreCase("DEP-006")) {
-                emergencyCases.add(appointment);
+            if (ep.getEmergencyType().equalsIgnoreCase("Heart Attack")) {
+                heartAttackCount++;
             }
         }
 
-        // Show results
-        if (emergencyCases.isEmpty()) {
-            System.out.println("No emergency cases found.");
-        } else {
-            System.out.println("Emergency Cases:");
-            for (Appointment appt : emergencyCases) {
-                System.out.println("Appointment ID: " + appt.getAppointmentId()
-                        + " | Patient ID: " + appt.getPatientId()
-                        + " | Doctor ID: " + appt.getDoctorId()
-                        + " | Date: " + appt.getAppointmentDate());
-            }
-        }
+        System.out.println("\n===== Emergency Summary =====");
+        System.out.println("Total Emergency Cases : " + emergencyList.size());
+        System.out.println("Accident Cases        : " + accidentCount);
+        System.out.println("Heart Attacks         : " + heartAttackCount);
     }
+
 }
