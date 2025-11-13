@@ -1,0 +1,13 @@
+# Ignore IntelliJ IDEA project files
+.idea/
+*.iml
+
+# Ignore build and output folders
+out/
+
+# Ignore compiled Java files
+*.class
+
+# Ignore logs and temporary files
+*.log
+.DS_Store
